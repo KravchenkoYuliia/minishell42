@@ -1,0 +1,320 @@
+#################################
+#         readline              #
+#################################
+
+
+#################################
+#     rl_clear_history          #
+#################################
+
+
+#################################
+#           rl_on_new_line      #
+#################################
+
+
+#################################
+#           rl_replace_line     #
+#################################
+
+
+#################################
+#           rl_rediplay         #
+#################################
+
+
+#################################
+#           add_history         #
+#################################
+
+
+#################################
+#        access                 #
+#################################
+#include <unistd.h>
+int access(const char *pathname, int mode)
+On success returns 0, error -1.
+Access() checks if we can access the file. Useful to check if file exists or has permitions
+Example: access("/home/minishell/test.c", F_OK);
+F_OK  - mode that tests if file exists
+R_OK  - mode that tests if file exists and has read permissions
+W_OK  - mode that tests if file exists and has write permissions
+X_OK  - mode that tests if file exists and has execute permissions
+
+
+
+#################################
+#           fork                #
+#################################
+#include <sys/types.h>
+#include <unistd.h>
+
+Creates a child process in our current program. We need it to execute commands in, because every execution exit a program. So we execute it in child program and still have access to the code in parent process.
+pid_t fork(void);
+
+Returns pid_t(it's the same as int, don't worry) -1 in case of a problem, 0 - in the child process and PID (process id) of a child is return in parent process (can be any number, like 24698)
+Example:
+	pid_t	i; 
+	i = fork(); //creates a child process
+	if (i == -1)
+		Error
+	if (i == 0)
+		We are in child process
+	We are in parent process
+
+
+
+#################################
+#           wait                #
+#################################
+
+
+#################################
+#           waitpid             #
+#################################
+
+
+#################################
+#           wait3               #
+#################################
+
+#################################
+#           wait4               #
+#################################
+
+
+#################################
+#           signal              #
+#################################
+
+
+#################################
+#        sigaction              #
+#################################
+
+
+#################################
+#        sigemptyset            #
+#################################
+
+#################################
+#           sigaddset           #
+#################################
+
+
+#################################
+#           kill                #
+#################################
+
+
+#################################
+#           getcwd              #
+#################################
+
+
+#################################
+#           chdir               #
+#################################
+
+
+#################################
+#           stat                #
+#################################
+
+
+#################################
+#           lstat               #
+#################################
+
+
+#################################
+#           fstat               #
+#################################
+
+
+#################################
+#           unlink              #
+#################################
+#include <unistd.h>
+
+Deletes file
+
+int unlink(const char *path);
+Success = 0
+Fail = -1
+Example:
+	unlink("/home/minishell/deleteme.c");
+
+
+#################################
+#           execve              #
+#################################
+#include <unistd.h>
+
+Fail = -1
+Success - just executes command
+
+Example:
+	char **args = {"/bin/ls", "-l", NULL};
+	
+	execve(args[0], args, NULL);
+	* Executes "ls" on Terminal, free all mallocs of current process, kill the process*
+
+
+
+
+#################################
+#           dup                 #
+#################################
+#include <unistd.h>
+dup  — duplicate an open file descriptor
+
+//I didn't use it in pipex, because dup2 was more useful
+
+int dup(int fd);
+Duplicates fd (for example fd = 3) and returns a new fd (next number that is free, for example new fd will be = 4 which is copy of fd 3)
+
+
+#################################
+#           dup2                #
+#################################
+#include <unistd.h>
+dup2 — same as dup but fd copy is not random, we precise where duplicate
+
+int	dup2(int fd1, int fd2);
+Fail = -1
+Success = new file descriptor
+
+Example:
+	int fd = open("outfile", O_RDWR);
+	dup2(fd, STDOUT_FILENO); (stdouta_fileno - macro pour dire au compilateur stdout, terminal)
+	
+	We duplicated our outfile and put it at the place of STDOUT, so any printf after it will be not at Terminal but in outfile
+
+
+#################################
+#           pipe                #
+#################################
+#include <unistd.h>
+int pipe(int fildes[2]);
+
+
+Internal file pipe with 2 ends to access it
+int pipes[2]; //declaration of 2 ends(2 files)
+pipe(pipes); //calling the function pipe
+pipe[0] - is used to read from file
+pipe[1] - is used to write on file
+
+cmd1 | cmd2
+
+cmd1 is executed, the result is not on terminal, we don't see it because it is written on pipe[1]
+cmd2 take the input not from STDIN (from terminal) but from pipe[0] and executes cmd2 on terminal
+
+pipe is used like intermediary between 2 cmd
+
+
+
+
+
+
+#################################
+#           opendir             #
+#################################
+
+
+#################################
+#           readdir             #
+#################################
+
+
+#################################
+#           closedir            #
+#################################
+
+
+
+#################################
+#           strerror            #
+#################################
+
+
+#################################
+#           perror              #
+#################################
+
+
+
+#################################
+#           isatty              #
+#################################
+
+
+
+#################################
+#           ttyname             #
+#################################
+
+
+
+#################################
+#           ttyslot             #
+#################################
+
+
+
+
+#################################
+#           ioctl               #
+#################################
+
+
+#################################
+#           getenv              #
+#################################
+
+
+
+#################################
+#           tcsetattr           #
+#################################
+
+
+
+#################################
+#           tcgetattr           #
+#################################
+
+
+
+#################################
+#           tgetent             #
+#################################
+
+
+#################################
+#           tgetflag            #
+#################################
+
+
+
+#################################
+#           tgetnum             #
+#################################
+
+
+
+#################################
+#           tgetstr             #
+#################################
+
+
+
+#################################
+#           tgoto               #
+#################################
+
+
+
+#################################
+#           tputs               #
+#################################
