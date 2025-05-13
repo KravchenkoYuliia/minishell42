@@ -86,11 +86,51 @@ Example:
 #################################
 #           signal              #
 #################################
+#include <signal.h>
 
+void (*signal(int sig, void (*func)(int)))(int);
+
+Handle asyncronous event (event that happens outside of the program; ex : ctrl-C)
+it takes as parameters a type of signal (ex : SIGINT) and a pointer to a function which handle the signal sent in parameter
+This function can be custom made by the programmer or taken from a set list of predefined function
+It is called signal handler
+
+Return values :
+	Success = the previous return value of the signal handler
+	Fail = SIG_ERR which must be handled in the signal handler
+
+Exemple :
+
+void sig_handler(int singal)
+{
+	if (signal == SIGUSR1)
+		printf("Success\n");
+	else if (signal == SIG_ERR)
+		printf("Failure\n");
+}
+int	main()
+{
+	signal(SIGUSR1, sig_handler);
+	while (1)
+		pause;
+	return (0);
+}
 
 #################################
 #        sigaction              #
 #################################
+#include <signal.h>
+
+sigaction has the same uses as signal but is much more flexible and useful
+it take the form of a structure as follows :
+	struct sigaction
+	{
+		void		(*sa_handler)(int);
+		void		(*sa_sigaction)(int, siginfo_t*, void*);
+		sigset_t	sa_mask;
+		int			sa_flags;
+		void		(*sa_restorer)(void);
+	};
 
 
 #################################
