@@ -30,7 +30,7 @@ Compile with -lreadline -lhistory
 	#################################   1
 	#           rl_replace_line     #
 	#################################
-
+	void rl_replace_line(char* arg1, int arg2);
 1 step:
 	clean the current line
 
@@ -39,9 +39,10 @@ Compile with -lreadline -lhistory
 	#################################  2
 	#           rl_on_new_line      #
 	#################################
-
+	int rl_on_new_line (void)
 2 step:
-	Inform readline about new line
+	Inform readline about new line (jump to the next line)
+
 
 
 
@@ -49,9 +50,32 @@ Compile with -lreadline -lhistory
 	#################################  3
 	#           rl_rediplay         #
 	#################################
-
+	void rl_redisplay (void)
 3 step:
 	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+
+
+
+Example:
+	while (1)
+                {
+                        char* line = readline("BabyShell: ");
+                        if (line[0] == '\0')
+                                break ;
+                        while (line[0] == 'C') #this will be Ctr C when Lyes show me how to use signals
+                        {
+                                rl_replace_line(line, 0);
+                                rl_on_new_line();
+                                line = readline("BabyShell: ");
+                                rl_redisplay();
+                                line = readline("BabyShell: ");
+                        }
+                        add_history(line);
+                        printf("%s\n", line);
+                        rl_clear_history();
+                        free(line);
+                }
+
 
 ###############################################################################################
 
@@ -60,9 +84,8 @@ Compile with -lreadline -lhistory
 
 
 
-#################################
-#     rl_clear_history          #
-#################################
+
+
 
 #################################
 #           add_history         #
@@ -80,6 +103,16 @@ Example:
                         printf("%s\n", line);
                 }
 While our program is working we can press ↑ and see previous commands. (if we want to recreate the behaviour of shell command 'history' we can make it manually after using add_history)
+
+
+#################################
+#     rl_clear_history          #
+#################################
+This function clears the entire command line history.
+Has no parameters.
+ 
+
+
 
 
 
@@ -316,22 +349,71 @@ pipe is used like intermediary between 2 cmd
 #################################
 #           opendir             #
 #################################
+#include <sys/types.h>
+#include <dirent.h>
+
+  DIR *opendir(const char *name);
+
+Success: return a pointer to the directory stream
+Fail: NULL
+
+
+
 
 
 #################################
 #           readdir             #
 #################################
+ #include <dirent.h>
+
+    struct dirent *readdir(DIR *dirp);
+
+Success: returns a pointer to a dirent structure (no need to free)
+Fail: NULL
+
+Example:
+	int main()      
+	{
+        	DIR             *directory = NULL;
+	        struct dirent   *dir;
+
+        	directory = opendir("TEST");
+
+	        while((dir = readdir(directory)) != NULL)
+        	{
+                	printf("%s\n", dir->d_name); #print every file from directory TEST
+	        }
+	}
+
 
 
 #################################
 #           closedir            #
 #################################
+int closedir(DIR *dirp);
+
+DEVINE :)
+
+
+
 
 
 
 #################################
 #           strerror            #
 #################################
+#include <string.h>
+
+       char *strerror(int errnum);
+
+
+Parameter 
+Success: error message;
+Fail: NULL;
+
+
+
+
 
 
 #################################
