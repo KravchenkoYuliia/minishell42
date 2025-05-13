@@ -6,12 +6,12 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/13 09:57:24 by yukravch         ###   ########.fr        #
+#    Updated: 2025/05/13 11:22:31 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
+CFLAGS = -Wall -Werror -Wextra -lreadline -lhistory -g3 -I $(INC_DIR)
 
 all: $(NAME)
 	@echo "                      "

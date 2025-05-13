@@ -1,31 +1,87 @@
 #################################
 #         readline              #
 #################################
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+This is our get_next_line but with leaks and only read from STDIN.
+
+Compile with -lreadline
+char *readline (const char *prompt);
+Reads a line from the terminal and returns it, using prompt as a prompt. We need to free it at the end.
+
+Example:
+
+	int main()
+	{
+		char* line = readline("BabyShell: ");
+		if (line)
+			printf("%s\n", line);
+		else
+			printf("Fail\n");
+
+	}
+
+################################################################################################
+These 3 functions we need to recreate Ctr C
+Compile with -lreadline -lhistory
+
+	#################################   1
+	#           rl_replace_line     #
+	#################################
+
+1 step:
+	clean the current line
+
+
+
+	#################################  2
+	#           rl_on_new_line      #
+	#################################
+
+2 step:
+	Inform readline about new line
+
+
+
+
+	#################################  3
+	#           rl_rediplay         #
+	#################################
+
+3 step:
+	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+
+###############################################################################################
+
+
+
+
 
 
 #################################
 #     rl_clear_history          #
 #################################
 
-
-#################################
-#           rl_on_new_line      #
-#################################
-
-
-#################################
-#           rl_replace_line     #
-#################################
-
-
-#################################
-#           rl_rediplay         #
-#################################
-
-
 #################################
 #           add_history         #
 #################################
+Save a line in history so user can get at the line later. Avoid to use it for an empty line.
+
+void add_history (const char *string)
+Example:
+	while (1)
+                {
+                        char* line = readline("BabyShell: ");
+                        if (line[0] == '\0')
+                                break ;
+                        add_history(line);
+                        printf("%s\n", line);
+                }
+While our program is working we can press ↑ and see previous commands. (if we want to recreate the behaviour of shell command 'history' we can make it manually after using add_history)
+
+
 
 
 #################################
