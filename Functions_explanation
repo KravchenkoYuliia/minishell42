@@ -24,7 +24,7 @@ Example:
 	}
 
 ################################################################################################
-These 3 functions we need to recreate Ctr C
+These 3 functions we need to recreate Ctrl-C
 Compile with -lreadline -lhistory
 
 	#################################   1
@@ -118,7 +118,7 @@ X_OK  - mode that tests if file exists and has execute permissions
 Creates a child process in our current program. We need it to execute commands in, because every execution exit a program. So we execute it in child program and still have access to the code in parent process.
 pid_t fork(void);
 
-Returns pid_t(it's the same as int, don't worry) -1 in case of a problem, 0 - in the child process and PID (process id) of a child is return in parent process (can be any number, like 24698)
+Returns pid_t(its the same as int, dont worry) -1 in case of a problem, 0 - in the child process and PID (process id) of a child is return in parent process (can be any number, like 24698)
 Example:
 	pid_t	i; 
 	i = fork(); //creates a child process
@@ -136,7 +136,14 @@ Example:
 
 pid_t	wait(int status);
 
-//A DOCUMENTER !!//
+wait() is a system call pausing a parent process to wait for the execution of a child process
+The child process must be properly exited (with the exit() function) for the parent process to continue its execution
+The usage of wait() prevents the creation of zombie processes
+//May be used to update the signal in the global variable, still unsure how//
+
+Return values :
+	Success = the pid of the terminated child process;
+	Fail = -1;
 
 #################################
 #           waitpid             #
@@ -146,31 +153,7 @@ pid_t	wait(int status);
 
 pid_t waitpid(pid_t pid, int *status, int options);
 
-//A DOCUMENTER !!//
-
-#################################
-#           wait3               #
-#################################
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-
-pid_t wait3(int *status, int options, struct rusage *rusage);
-
-//A DOCUMENTER !!//
-
-#################################
-#           wait4               #
-#################################
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-
-pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
-
-//A DOCUMENTER !!//
+//We may not need it, put on hold until proven otherwise//
 
 #################################
 #           signal              #
@@ -213,16 +196,16 @@ int	main()
 int	kill(pid_t pid, int sig);
 
 This function sends a signal to a running process of which you put the pid as first parameter
-Kill must have access rights to the process to successfully send a signal
+kill() must have access rights to the process to successfully send a signal
 Pid can be any number above 0 or below -1 (it takes the absolute value) to send to a specific process
-If pid is 0, kill sends a signal to all reachable processes with the same group ID to which it has access rights
-If pid is -1, kill sends a signal to all reachable processes to which it has access rights
+If pid is 0, kill() sends a signal to all reachable processes with the same group ID to which it has access rights
+If pid is -1, kill() sends a signal to all reachable processes to which it has access rights
+kill() can fail if the value of sig doesnt match a valid signal;
+if kill() doesnt have access right the process or if nor processes match the pid entered
 
 Return values :
 	Success = 0;
 	Fail = -1;
-
-Kill can fail if the value of sig doesnt match a valid signal; if kill doesnt have access right the process or if nor processes match the pid entered
 
 #################################
 #           getcwd              #
@@ -232,7 +215,7 @@ Kill can fail if the value of sig doesnt match a valid signal; if kill doesnt ha
 char *getcwd(char *buffer, size_t size);
 
 This function stocks in a buffer the abolute path of the current directory
-The size parameter needs to be big enough for the buffer to properly stocks the path
+The size parameter needs to be big enough for getcwd() to properly stock the path in the buffer
 
 Return values :
 	Success = a char string containing the absolute path to the current directory;
@@ -257,21 +240,43 @@ Return values :
 #################################
 #include <sys/stat.h>
 
-int stat(const char *restict path, struct stat *restict buf);
+int stat(const char *restrict path, struct stat *restrict buf);
 
-//A DOCUMENTER !!//
+stat() stocks all the information of the targeted file into a stat structure to be used as needed
+If the path given lead to a symbolic link, stat() will get the information of the linked file
+
+Return values :
+	Success = 0;
+	Fail = -1;
 
 #################################
 #           lstat               #
 #################################
+#include <sys/stat.h>
 
-//A DOCUMENTER !!//
+int lstat(const char *restrict path, struct stat *restrict buf);
+
+lstat() functions almost the same as stat(); 
+the only difference being, in case of the path leading to a symbolic link, 
+lstat() will get the information of the link itself instead of the linked file
+
+Return values :
+	Success = 0;
+	Fail = -1;
 
 #################################
 #           fstat               #
 #################################
+#include <sys/stat.h>
 
-//A DOCUMENTER !!//
+int fstat(int fildes, struct stat *buf);
+
+fstat() functions almost the same as stat();
+the only difference being that it takes a file descriptor as parameters instead of a path to a file
+
+Return values :
+	Success = 0;
+	Fail = -1;
 
 #################################
 #           unlink              #
@@ -408,83 +413,120 @@ Fail: NULL;
 #################################
 #           perror              #
 #################################
+#include <stdio.h>
 
-//A DOCUMENTER !!//
+void perror(const char *prefix);
+
+perror() prints on the stderr (the error output, which can be redirected to a file) the current error saved on the errno global variable
+The parameter "prefix" can be used to input a custom message to be printed before the error itself
+If left empty, no message will appear before the error altought the function will still works normally
 
 #################################
 #           isatty              #
 #################################
+#include <unistd.h>
 
-//A DOCUMENTER !!//
+int isatty(int fildes);
+
+isatty() tests the file descriptor put in parameter to check if it is associated with the terminal
+By default fildes == 0(stdin), fildes == 1(stdout) and fildes == 2(stderr) are all associated with the terminal
+The function fails if the fildes isnt opened or isnt associated with the terminal
+
+Return values :
+	Success = 1;
+	Fail = 0;
 
 #################################
 #           ttyname             #
 #################################
+#include <unistd.h>
 
-//A DOCUMENTER !!//
+char *ttyname(int fd);
+
+ttyname() returns the path to the terminal associated with the fd
+The fd need to be associated with a terminal or the function will fail (check isatty() function)
+
+Return values :
+	Success = path to the terminal associated with the fd;
+	Fail = NULL;
 
 #################################
 #           ttyslot             #
 #################################
+#include <unistd.h>
+#include <stdlib.h>
 
-//A DOCUMENTER !!//
+int ttyslot(void);
+
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           ioctl               #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           getenv              #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tcsetattr           #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tcgetattr           #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tgetent             #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tgetflag            #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tgetnum             #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tgetstr             #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tgoto               #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
 
 #################################
 #           tputs               #
 #################################
 
-//A DOCUMENTER !!//
+/!\
+/NEEDS DOCUMENTATION/
