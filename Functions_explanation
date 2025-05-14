@@ -34,8 +34,6 @@ Compile with -lreadline -lhistory
 1 step:
 	clean the current line
 
-
-
 	#################################  2
 	#           rl_on_new_line      #
 	#################################
@@ -43,16 +41,12 @@ Compile with -lreadline -lhistory
 2 step:
 	Inform readline about new line (jump to the next line)
 
-
-
-
-
 	#################################  3
 	#           rl_rediplay         #
 	#################################
 	void rl_redisplay (void)
 3 step:
-	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+	Change whats displayed on the screen to reflect the current contents of rl_line_buffer.
 
 
 
@@ -79,14 +73,6 @@ Example:
 
 ###############################################################################################
 
-
-
-
-
-
-
-
-
 #################################
 #           add_history         #
 #################################
@@ -104,18 +90,11 @@ Example:
                 }
 While our program is working we can press ↑ and see previous commands. (if we want to recreate the behaviour of shell command 'history' we can make it manually after using add_history)
 
-
 #################################
 #     rl_clear_history          #
 #################################
 This function clears the entire command line history.
 Has no parameters.
- 
-
-
-
-
-
 
 #################################
 #        access                 #
@@ -129,8 +108,6 @@ F_OK  - mode that tests if file exists
 R_OK  - mode that tests if file exists and has read permissions
 W_OK  - mode that tests if file exists and has write permissions
 X_OK  - mode that tests if file exists and has execute permissions
-
-
 
 #################################
 #           fork                #
@@ -151,26 +128,49 @@ Example:
 		We are in child process
 	We are in parent process
 
-
-
 #################################
 #           wait                #
 #################################
+#include <sys/types.h>
+#include <sys/wait.h>
 
+pid_t	wait(int status);
+
+//A DOCUMENTER !!//
 
 #################################
 #           waitpid             #
 #################################
+#include <sys/types.h>
+#include <sys/wait.h>
 
+pid_t waitpid(pid_t pid, int *status, int options);
+
+//A DOCUMENTER !!//
 
 #################################
 #           wait3               #
 #################################
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <sys/wait.h>
+
+pid_t wait3(int *status, int options, struct rusage *rusage);
+
+//A DOCUMENTER !!//
 
 #################################
 #           wait4               #
 #################################
+#include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <sys/wait.h>
 
+pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
+
+//A DOCUMENTER !!//
 
 #################################
 #           signal              #
@@ -190,7 +190,7 @@ Return values :
 
 Exemple :
 
-void sig_handler(int singal)
+void sig_handler(int signal)
 {
 	if (signal == SIGUSR1)
 		printf("Success\n");
@@ -206,60 +206,72 @@ int	main()
 }
 
 #################################
-#        sigaction              #
+#           kill                #
 #################################
 #include <signal.h>
 
-sigaction has the same uses as signal but is much more flexible and useful
-it take the form of a structure as follows :
-	struct sigaction
-	{
-		void		(*sa_handler)(int);
-		void		(*sa_sigaction)(int, siginfo_t*, void*);
-		sigset_t	sa_mask;
-		int			sa_flags;
-		void		(*sa_restorer)(void);
-	};
+int	kill(pid_t pid, int sig);
 
+This function sends a signal to a running process of which you put the pid as first parameter
+Kill must have access rights to the process to successfully send a signal
+Pid can be any number above 0 or below -1 (it takes the absolute value) to send to a specific process
+If pid is 0, kill sends a signal to all reachable processes with the same group ID to which it has access rights
+If pid is -1, kill sends a signal to all reachable processes to which it has access rights
 
-#################################
-#        sigemptyset            #
-#################################
+Return values :
+	Success = 0;
+	Fail = -1;
 
-#################################
-#           sigaddset           #
-#################################
-
-
-#################################
-#           kill                #
-#################################
-
+Kill can fail if the value of sig doesnt match a valid signal; if kill doesnt have access right the process or if nor processes match the pid entered
 
 #################################
 #           getcwd              #
 #################################
+#include <unistd.h>
 
+char *getcwd(char *buffer, size_t size);
+
+This function stocks in a buffer the abolute path of the current directory
+The size parameter needs to be big enough for the buffer to properly stocks the path
+
+Return values :
+	Success = a char string containing the absolute path to the current directory;
+	Fail = NULL;
 
 #################################
 #           chdir               #
 #################################
+#include <unistd.h>
 
+int chdir(const char *path);
+
+This function allows to move to a different directory
+It can either take the abolute path to the target directory or the relative path from the current directory to the target directory
+
+Return values : 
+	Success = 0;
+	Fail = -1
 
 #################################
 #           stat                #
 #################################
+#include <sys/stat.h>
 
+int stat(const char *restict path, struct stat *restict buf);
+
+//A DOCUMENTER !!//
 
 #################################
 #           lstat               #
 #################################
 
+//A DOCUMENTER !!//
 
 #################################
 #           fstat               #
 #################################
 
+//A DOCUMENTER !!//
 
 #################################
 #           unlink              #
@@ -273,7 +285,6 @@ Success = 0
 Fail = -1
 Example:
 	unlink("/home/minishell/deleteme.c");
-
 
 #################################
 #           execve              #
@@ -289,16 +300,13 @@ Example:
 	execve(args[0], args, NULL);
 	* Executes "ls" on Terminal, free all mallocs of current process, kill the process*
 
-
-
-
 #################################
 #           dup                 #
 #################################
 #include <unistd.h>
 dup  — duplicate an open file descriptor
 
-//I didn't use it in pipex, because dup2 was more useful
+//I didn't use it in pipex, because dup2 was more useful//
 
 int dup(int fd);
 Duplicates fd (for example fd = 3) and returns a new fd (next number that is free, for example new fd will be = 4 which is copy of fd 3)
@@ -336,15 +344,10 @@ pipe[1] - is used to write on file
 
 cmd1 | cmd2
 
-cmd1 is executed, the result is not on terminal, we don't see it because it is written on pipe[1]
+cmd1 is executed, the result is not on terminal, we dont see it because it is written on pipe[1]
 cmd2 take the input not from STDIN (from terminal) but from pipe[0] and executes cmd2 on terminal
 
 pipe is used like intermediary between 2 cmd
-
-
-
-
-
 
 #################################
 #           opendir             #
@@ -356,10 +359,6 @@ pipe is used like intermediary between 2 cmd
 
 Success: return a pointer to the directory stream
 Fail: NULL
-
-
-
-
 
 #################################
 #           readdir             #
@@ -385,8 +384,6 @@ Example:
 	        }
 	}
 
-
-
 #################################
 #           closedir            #
 #################################
@@ -394,10 +391,7 @@ int closedir(DIR *dirp);
 
 DEVINE :)
 
-
-
-
-
+je sais pas :(
 
 #################################
 #           strerror            #
@@ -411,88 +405,86 @@ Parameter
 Success: error message;
 Fail: NULL;
 
-
-
-
-
-
 #################################
 #           perror              #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           isatty              #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           ttyname             #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           ttyslot             #
 #################################
 
-
-
+//A DOCUMENTER !!//
 
 #################################
 #           ioctl               #
 #################################
 
+//A DOCUMENTER !!//
 
 #################################
 #           getenv              #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tcsetattr           #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tcgetattr           #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tgetent             #
 #################################
 
+//A DOCUMENTER !!//
 
 #################################
 #           tgetflag            #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tgetnum             #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tgetstr             #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tgoto               #
 #################################
 
-
+//A DOCUMENTER !!//
 
 #################################
 #           tputs               #
 #################################
+
+//A DOCUMENTER !!//
