@@ -1,49 +1,44 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+
+#include "minishell.h"
 
 
-int	ft_check_quotes(char *str)
+bool	ft_check_quotes(char *str)
 {
-	int i = 0;
+	int 	i;
+	t_quote	quote;
+
+	i = 0;
+	quote.sp = 0;
+	quote.db = 0;
 	while (str[i])
 	{
-		if (str[i] == 34 || str[i] == 39)
-			return (1);
-			i++;
-	}
-	return (0);
-}
-
-int	ft_check_if_quote_closed(char* line)
-{
-	int i = 0;
-	int q = 0;
-	while (line[i])
-	{
-		if (line[i] == 34)
-			q++;
+		if ((str[i] == 34 && quote.sp != 0) || (str[i] == 39 && quote.db != 0))
+			return (false);
+		if (str[i] == 39)
+			quote.sp++;
+		else if (str[i] == 34)
+			quote.db++;
 		i++;
 	}
-	return (q);
-}
-
-void	ft_handle_quotes(char* line)
-{
-	int	i = ft_check_if_quote_closed(line);
-	if (i % 2 == 0)
-		printf("Good, we can work with it\n");
-	else
-		printf("Error. Code stops here\n");
+	if (quote.sp % 2 != 0 || quote.db % 2 != 0)
+		return (false);
+	return (true);
 }
 
 int main()
 {
-	char* line = readline("babyshell: ");
-
-	int i = ft_check_quotes(line);
-	if (i == 1)
-		ft_handle_quotes(line);
-	if (i == 0)
-		printf("NO quotes\n");
+	char* line;
+	
+	while (1)
+	{
+		line = readline("babyshell: ");
+		if (ft_check_quotes(line))
+			printf ("All is good my dood\n");
+		else
+			printf("quotes no good ouinouin\n");
+		if (line[0] == 'C')
+			exit(EXIT_SUCCESS);
+		free(line);
+	}
+	return (0);
 }

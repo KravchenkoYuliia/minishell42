@@ -206,15 +206,12 @@ int	kill(pid_t pid, int sig);
 This function sends a signal to a running process of which you put the pid as first parameter
 kill() must have access rights to the process to successfully send a signal
 Pid can be any number above 0 or below -1 (it takes the absolute value) to send to a specific process
-If pid is 0, kill() sends a signal to all reachable processes with the same group ID to which it has access rights
-If pid is -1, kill() sends a signal to all reachable processes to which it has access rights
-kill() can fail if the value of sig doesnt match a valid signal;
-if kill() doesnt have access right the process or if nor processes match the pid entered
-
-Return values :
-	Success = 0;
-	Fail = -1;
-
+If pid is  echo with option -n
+◦ cd with only a relative or absolute path
+◦ pwd with no options
+◦ export with no options
+◦ unset with no options
+◦ env with no options o
 #################################
 #           getcwd              #
 #################################
