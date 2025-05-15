@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/15 14:56:04 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:21:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,10 @@ typedef struct s_token
 # include <sys/types.h>
 # include <dirent.h>
 # include <stdbool.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+
+void	ft_redirect_input(char *infile);
+
 
 #endif

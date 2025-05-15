@@ -2,4 +2,8 @@ a.out
 test.c
 minishell
 objects
+infile
+outfile
+sources/infile
+sources/outfile
 
