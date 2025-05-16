@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/15 16:21:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:07:52 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_quote
 
 typedef struct s_token
 {
-	char	*element;
+	char	*token;
 	int		type;
 	void	*next;	
 }			t_token;
