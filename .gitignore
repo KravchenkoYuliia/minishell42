@@ -6,4 +6,5 @@ infile
 outfile
 sources/infile
 sources/outfile
-
+libft42/libft.a
+libft42/objects
