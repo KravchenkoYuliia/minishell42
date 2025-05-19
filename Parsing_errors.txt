@@ -1,0 +1,6 @@
+This file lists the potential parsing errors :
+
+	- Unclosed quotes or double quotes
+	- pipe symbol at the begining or end of the prompt
+	- two or more consecutive pipe symbols
+	- 
