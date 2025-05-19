@@ -6,14 +6,15 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/19 11:30:35 by lfournie         ###   ########.fr        #
+#    Updated: 2025/05/19 14:49:04 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CFLAGS = -Wall -Werror -Wextra -g -I $(INC_DIR)
+LIBFT = libft42/libft.a
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 	@echo "                      "
 	@echo "✨✨✨✨✨✨✨✨✨✨✨🔥​🔥​🔥​🔥​🔥​🔥​🔥​🔥​🔥​🔥​🔥​"
 	@echo "✨                  ✨🔥​                  🔥​"
@@ -40,8 +41,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(NAME): $(OBJ)
 	cc $(CFLAGS) -lreadline -lhistory $(OBJ) -o $(NAME)
 
+$(LIBFT):
+	make -C libft42
+
 
 clean:
+	make fclean -C libft42
 	rm -rf $(OBJ_DIR)
 
 fclean: clean

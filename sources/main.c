@@ -27,8 +27,6 @@ static bool	ft_check_unclosed_quotes(char *str)
 		return (false);
 	return (true);
 }
-static 
-
 
 int main(int ac, char **av)
 {
