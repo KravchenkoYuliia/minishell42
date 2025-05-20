@@ -6,21 +6,25 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/19 14:36:34 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/20 09:54:20 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+# include "../libft42/includes/ft_printf.h"
+# include "../libft42/includes/get_next_line.h"
+# include "../libft42/includes/libft.h"
+
 typedef struct s_token
 {
-	char	*token;
+	char	*value;
 	int		type;
 	void	*next;
 }			t_token;
 
-typedef	enum s_type
+enum s_type
 {
 	CMD,
 	PIPE,
@@ -28,7 +32,7 @@ typedef	enum s_type
 	INPUT,
 	OUTPUT,
 	APPEND,
-}			t_type;
+};
 
 # include <unistd.h>
 # include <stdio.h>
