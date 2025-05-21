@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/21 09:59:52 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:04:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_token
 	void	*next;
 }			t_token;
 
-enum s_type
+enum e_type
 {
 	CMD,
 	PIPE,
@@ -50,6 +50,26 @@ enum s_type
 # include <fcntl.h>
 
 void	ft_redirect_input(char *infile);
+bool	ft_lexer(char *input);
+void	lexer_err_handler(int err_code);
+
+//lexer
+/////////////////
+bool	ft_lexer(char *input);
+bool	ft_check_unclosed_quotes(char *str);
+bool 	ft_check_pipes(char *input);
+bool 	ft_check_redir_heredoc(char *input);
+bool 	ft_check_redir_append(char *input);
+bool 	ft_check_redir_input(char *input);
+bool 	ft_check_redir_output(char *input);
+/////////////////
+
+
+
+
+
+
+
 
 
 #endif

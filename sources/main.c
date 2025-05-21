@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/21 10:00:11 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:38:19 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,6 @@ static void	ft_lstadd_back_tok(t_token **lst, t_token *new)
 		*lst = new;
 	else
 		s_temp->next = new;	
-}
-
-static bool	ft_check_unclosed_quotes(char *str)
-{
-	int 	i;
-	int		sp;
-	int		db;
-
-	i = 0;
-	sp = 0;
-	db = 0;
-	while (str[i])
-	{
-		if (str[i] == 39 && db == 0)
-			sp++;
-		else if (str[i] == 34 && sp == 0)
-			db++;
-		if (sp % 2 == 0)
-			sp = 0;
-		if ( db % 2 == 0)
-			db = 0;
-		i++;
-	}
-	if (sp % 2 != 0 || db % 2 != 0)
-		return (false);
-	return (true);
 }
 
 static t_token *new_token_nd(char *value, int type)
@@ -250,8 +224,11 @@ int main(int ac, char **av)
 	while (1)
 	{
 		input = readline("babyshell: ");
-		if (!ft_check_unclosed_quotes(input))
+		if (!ft_lexer(input))
+		{
+			free(input);
 			return (1);
+		}
 		token_lst = NULL;
 		token_lst = new_prompt(input);
 		if (!token_lst)

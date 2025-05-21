@@ -1,12 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   parsing_err_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/21 09:51:41 by lfournie         ###   ########.fr       */
+/*   Created: 2025/05/21 11:26:49 by lfournie          #+#    #+#             */
+/*   Updated: 2025/05/21 11:51:30 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+void	lexer_err_handler(int err_code)
+{
+	printf("syntax error : ");
+	if (err_code == 1)
+		printf("unclosed quotes\n");
+	if (err_code == 2)
+		printf("wrong usage of '|'\n");
+	if (err_code == 3)
+		printf("");
+	if (err_code == 4)
+		printf("");
+	if (err_code == 5)
+		printf("");
+	if (err_code == 6)
+		printf("");
+}
