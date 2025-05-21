@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/21 12:06:40 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:51:04 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ bool	ft_check_unclosed_quotes(char *input)
 	return (true);
 }
 
-bool ft_check_pipes(char *input)
+/* bool ft_check_pipes(char *input)
 {
 	
-}
+} */
 
 
 
@@ -49,7 +49,7 @@ bool	ft_lexer(char *input)
 {
 	if (!input)
 		return (false);
-	if (!ft_check_unclosed_quotes(input))
+	/* if (!ft_check_unclosed_quotes(input))
 		return (lexer_err_handler(1), false);
 	if (!ft_check_pipes(input))
 		return (lexer_err_handler(2), false);
@@ -60,6 +60,6 @@ bool	ft_lexer(char *input)
 	if (!ft_check_redir_input(input))
 		return (lexer_err_handler(5), false);
 	if (!ft_check_redir_output(input))
-		return (lexer_err_handler(6), false);
+		return (lexer_err_handler(6), false); */
 	return (true);
 }

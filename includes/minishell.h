@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/21 12:04:50 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:13:54 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ enum e_type
 # include <fcntl.h>
 
 void	ft_redirect_input(char *infile);
-bool	ft_lexer(char *input);
 void	lexer_err_handler(int err_code);
 
 //lexer
@@ -64,8 +63,11 @@ bool 	ft_check_redir_input(char *input);
 bool 	ft_check_redir_output(char *input);
 /////////////////
 
-
-
+//execution
+///////////////////////////////////////
+void	ft_execution(t_token *tokens);
+void	ft_exit_msg(char *msg);
+//////////////////////////////////////
 
 
 
