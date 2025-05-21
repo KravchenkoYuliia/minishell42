@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/20 14:50:17 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:00:11 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ static t_token *new_token_nd(char *value, int type)
 	if (!token)
 		return (NULL);
 	token->value = ft_strdup(value);
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
 	token->type = type;
 	token->next = NULL;
 	return(token);
@@ -100,6 +105,7 @@ static t_token *new_prompt(char *input)
 			value_buf[k] = '\0';
 			new_token = new_token_nd(value_buf, CMD);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 34)
 		{
@@ -117,6 +123,7 @@ static t_token *new_prompt(char *input)
 			value_buf[k] = '\0';
 			new_token = new_token_nd(value_buf, CMD);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (ft_isalnum(input[i]))
 		{
@@ -132,7 +139,10 @@ static t_token *new_prompt(char *input)
 			}
 			value_buf[k] = '\0';
 			new_token = new_token_nd(value_buf, CMD);
+			if (!new_token)
+				return (NULL);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 124)
 		{
@@ -145,6 +155,7 @@ static t_token *new_prompt(char *input)
 			k = 2;
 			new_token = new_token_nd(value_buf, PIPE);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 60 && input[i + 1] == 60)
 		{
@@ -164,6 +175,7 @@ static t_token *new_prompt(char *input)
 			value_buf[k] = '\0';
 			new_token = new_token_nd(value_buf, HEREDOC);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 60 && input[i + 1] != 60)
 		{
@@ -176,6 +188,7 @@ static t_token *new_prompt(char *input)
 			k = 2;
 			new_token = new_token_nd(value_buf, INPUT);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 62 && input[i + 1] == 62)
 		{
@@ -189,6 +202,7 @@ static t_token *new_prompt(char *input)
 			k = 3;
 			new_token = new_token_nd(value_buf, APPEND);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		else if (input[i] == 62 && input[i + 1] != 62)
 		{
@@ -201,16 +215,29 @@ static t_token *new_prompt(char *input)
 			k = 2;
 			new_token = new_token_nd(value_buf, OUTPUT);
 			ft_lstadd_back_tok(&token_lst, new_token);
+			free(value_buf);
 		}
 		i++;
 	}
 	return (token_lst);
 }
 
+static void free_token_list(t_token *head)
+{
+	t_token *tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->value);
+		free(tmp);
+	}
+}
+
 int main(int ac, char **av)
 {
 	t_token	*token_lst;
-	t_token	*cursor;
 	char	*input;
 	(void)av;
 
@@ -218,6 +245,7 @@ int main(int ac, char **av)
 	{
 		return(0);
 	}
+	
 	//printf("%s\n", getenv("PATH"));
 	while (1)
 	{
@@ -228,11 +256,11 @@ int main(int ac, char **av)
 		token_lst = new_prompt(input);
 		if (!token_lst)
 			printf("OUPS");
-		cursor = token_lst;
-		while (cursor)
+		free_token_list(token_lst);
+		if (input[0] == 'C')
 		{
-			printf("/%s/ type: %d\n", cursor->value, cursor->type);
-			cursor = cursor->next;
+			free(input);
+			exit(EXIT_SUCCESS);
 		}
 		free(input);
 	}

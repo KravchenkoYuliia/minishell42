@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/20 17:48:22 by yukravch          #+#    #+#              #
-#    Updated: 2025/04/25 16:30:48 by yukravch         ###   ########.fr        #
+#    Updated: 2025/05/21 08:24:25 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ INC = includes/
 OBJ_DIR = objects
 
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
-CFLAGS = -Wall -Wextra -Werror -I $(INC)
+CFLAGS = -Wall -Wextra -Werror -I $(INC) -g3
 
 $(NAME): $(OBJ_DIR) $(OBJECTS)
 	ar rcs $(NAME) $(OBJECTS)
