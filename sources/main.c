@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/21 11:38:19 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:28:35 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,11 +224,11 @@ int main(int ac, char **av)
 	while (1)
 	{
 		input = readline("babyshell: ");
-		if (!ft_lexer(input))
+		/* if (!ft_lexer(input))
 		{
 			free(input);
 			return (1);
-		}
+		} */
 		token_lst = NULL;
 		token_lst = new_prompt(input);
 		if (!token_lst)

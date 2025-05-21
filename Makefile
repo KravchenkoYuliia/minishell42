@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/21 12:10:32 by lfournie         ###   ########.fr        #
+#    Updated: 2025/05/21 13:28:29 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_DIR = sources
 OBJ_DIR = objects
 INC_DIR = includes
 
-FILES = main.c lexer/lexing_a.c lexer/lexing_b.c
+FILES = main.c #lexer/lexing_a.c lexer/lexing_b.c lexer/lexer_err_handler.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
