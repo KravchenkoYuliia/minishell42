@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/22 13:38:45 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:04:22 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ t_token	*ft_if_command(char *input, int start)
 		exit(EXIT_FAILURE);
 	j = 0;
 	while ((input[start] != 39 && input[start] != 34 && input[start] != 124 
-			&& input[start] != 60 && input[start] != 62 && input[start] != 32) && input[start])
+			&& input[start] != 60 && input[start] != 62)
+			&& input[start])
 	{
 		value_buf[j] = input[start];
 		start++;
@@ -98,7 +99,6 @@ t_token	*ft_if_command(char *input, int start)
 
 t_token *ft_parser(char *input)
 {
-	//char	*value_buf;
 	t_token	*token_lst;
 	t_token	*new_token;
 	int		i;
@@ -131,43 +131,24 @@ t_token *ft_parser(char *input)
 			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
 		}
-		/*else if (input[i] == 60 && input[i + 1] != 60)
+		else if (input[i] == 60 && input[i + 1] != 60)
 		{
-			value_buf = malloc(100);
-			if (!value_buf)
-				exit(EXIT_FAILURE);
-			value_buf[0] = 60;
-			value_buf[1] = '\0';
-			i++;
-			new_token = new_token_nd(value_buf, INPUT);
+			new_token = ft_if_input(input, i);
+			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
-			free(value_buf);
 		}
 		else if (input[i] == 62 && input[i + 1] == 62)
 		{
-			value_buf = malloc(100);
-			if (!value_buf)
-				exit(EXIT_FAILURE);
-			value_buf[0] = 62;
-			value_buf[1] = 62;
-			value_buf[3] = '\0';
-			i += 2;
-			new_token = new_token_nd(value_buf, APPEND);
+			new_token = ft_if_append(input, i);
+			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
-			free(value_buf);
 		}
 		else if (input[i] == 62 && input[i + 1] != 62)
 		{
-			value_buf = malloc(100);
-			if (!value_buf)
-				exit(EXIT_FAILURE);
-			value_buf[0] = 62;
-			value_buf[1] = '\0';
-			i++;
-			new_token = new_token_nd(value_buf, OUTPUT);
+			new_token = ft_if_output(input, i);
+			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
-			free(value_buf);
-		}*/
+		}
 		else if (input[i] == 32)
 			i++;
 		else
