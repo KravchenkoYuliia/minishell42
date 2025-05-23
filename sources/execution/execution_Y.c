@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 10:15:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:56:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -64,6 +64,65 @@ void	ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd
 	}
 }
 
+void	ft_printf_content(char **args)
+{
+	int	word = 0;
+
+	while (args[word])
+	{
+		printf("%s\n", args[word]);
+		word++;
+	}
+}
+
+void	ft_fill_struct_foreach_cmd(t_token *tokens, t_cmd_struct **cmds, int nb)
+{
+	int	i;
+	t_token	*temp;
+
+	i = 0;
+	temp = tokens;
+	while (temp && i < nb)
+	{
+		if (temp->type == HEREDOC)
+			cmds[i]->heredoc = 1;
+		if (temp->type == INPUT)
+			cmds[i]->input = temp->value;
+		if (temp->type == CMD)
+			cmds[i]->args = ft_split(temp->value, ' ');
+		if (temp->type == APPEND || temp->type == OUTPUT)
+		{
+			cmds[i]->output = temp->value;
+			cmds[i]->append = APPEND;
+		}
+		if (temp->type == PIPE)
+		{
+			cmds[i]->pipe = 1;
+			
+			i++;
+		}
+		temp = temp->next;
+	}
+}
+
+void	ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		cmds[i]->input = NULL;
+		cmds[i]->output = NULL;
+		cmds[i]->append = 0;
+		cmds[i]->heredoc = 0;
+		cmds[i]->pipe = 0;
+		i++;
+	}
+}
+
+
+
 void	ft_execution(t_token *tokens)
 {
 	int		nb_of_cmd; //in line
@@ -71,10 +130,19 @@ void	ft_execution(t_token *tokens)
 
 	nb_of_cmd = ft_count_cmds(tokens);
 	ft_malloc_struct_foreach_cmd(&struct_for_cmds, nb_of_cmd);
-//	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
-	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
+	ft_initialize_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
+	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
+
 	
-}
+	int i = 0;
+	while (i < nb_of_cmd)
+	{
+		ft_printf_content(struct_for_cmds[i]->args);
+		printf("{input file: %s | output file: %s | append: %d | heredoc: %d | pipe: %d\n", struct_for_cmds[i]->input, struct_for_cmds[i]->output, struct_for_cmds[i]->append, struct_for_cmds[i]->heredoc, struct_for_cmds[i]->pipe);
+		i++;
+	}
+	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
+}	
 	/*
 	t_token		*token;
 	const char	*cmd;

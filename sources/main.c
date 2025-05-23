@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/22 13:41:42 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:15:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int main(int ac, char **av)
 			token_lst = ft_parser(input);
 			if (!token_lst)
 				printf("OUPS");
+			/*while(token_lst)
+			{
+				printf("value: %s, type: %d\n", token_lst->value, token_lst->type);
+				token_lst = token_lst->next;
+			}*/
 			ft_execution(token_lst);
 			free_token_list(token_lst);
 		}
