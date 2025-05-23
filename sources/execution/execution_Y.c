@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/21 14:41:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:15:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -28,11 +28,56 @@ const char	*ft_check_if_build_in_cmd(t_token *token)
 	return (NULL);
 }
 
+int	ft_count_cmds(t_token *tokens)
+{
+	int	i;
+	t_token	*temp;
+
+	i = 0;
+	temp = tokens;
+	while (temp)
+	{
+		if (temp->type == CMD)
+			i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+void	ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd)
+{
+	int	i;
+
+	i = 0;
+	(*struct_for_cmds) = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * nb_of_cmd);
+	if (!*struct_for_cmds)
+		ft_exit_msg("Malloc failed for struct for cmds");
+	while (i < nb_of_cmd)
+	{
+		(*struct_for_cmds)[i] = (t_cmd_struct *)malloc(sizeof(t_cmd_struct));
+		if (!(*struct_for_cmds)[i])
+		{
+			ft_free_struct_foreach_cmd(*struct_for_cmds, i);
+			ft_exit_msg("Malloc failed for struct_for_cmds[i]");
+		}
+		i++;
+	}
+}
+
 void	ft_execution(t_token *tokens)
 {
+	int		nb_of_cmd; //in line
+	t_cmd_struct	**struct_for_cmds;
+
+	nb_of_cmd = ft_count_cmds(tokens);
+	ft_malloc_struct_foreach_cmd(&struct_for_cmds, nb_of_cmd);
+//	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
+	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
+	
+}
+	/*
 	t_token		*token;
 	const char	*cmd;
-
 	token = tokens;
 	while (token)
 	{
@@ -44,4 +89,4 @@ void	ft_execution(t_token *tokens)
 			//ft_execve_cmd(token);
 		token = token->next;
 	}
-}
+}*/

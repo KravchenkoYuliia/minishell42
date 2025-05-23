@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/22 14:43:39 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:00:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,17 @@ enum e_type
 	APPEND,
 };
 
-void	ft_redirect_input(char *infile);
+typedef struct s_cmd_struct{
+
+	char	**args;
+	char	*input;
+	char	*output;
+	int	pipe;
+	int	append;
+
+
+} t_cmd_struct;
+
 
 //lexer
 /////////////////
@@ -90,6 +100,7 @@ void	ft_exit_msg(char *msg);
 //free_handler
 ////////////////
 void free_token_list(t_token *head);
+void    ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
 ////////////////
 
 #endif
