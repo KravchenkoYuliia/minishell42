@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 16:34:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:17:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -121,9 +121,13 @@ void	ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb)
 	}
 }
 
-int	ft_child_process(t_cmd_struct *cmd_str, int pipe[2])
+int	ft_child_process(t_cmd_struct *cmd_str, int pipe[2])//, int save_stdin, int save_stdout)
 {
-	dup2(pipe[1], STDOUT_FILENO);
+/*	close(save_stdin);
+	close(save_stdout);
+*/	dup2(pipe[1], STDOUT_FILENO);
+	close(pipe[0]);
+	close(pipe[1]);
 	if ((execve(cmd_str->args[0], cmd_str->args, NULL)) == -1)
 	{
 		perror("babyshell");
@@ -132,9 +136,14 @@ int	ft_child_process(t_cmd_struct *cmd_str, int pipe[2])
 	return (SUCCESS);
 }
 
-int	ft_child_for_last_cmd(t_cmd_struct *cmd_str, int pipe[2])
-{
-	(void)pipe;
+int	ft_child_for_last_cmd(t_cmd_struct *cmd_str, int pipe[2])//, int save_stdin, int save_stdout)
+{/*
+	close(save_stdin);
+	close(save_stdout);
+*/	
+	
+	close(pipe[1]);
+	close(pipe[0]);
 	if ((execve(cmd_str->args[0], cmd_str->args, NULL)) == -1)
 	{
 		perror("babyshell");
@@ -169,8 +178,8 @@ void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 		if (pid == 0)
 		{
 			if (i == nb - 1)
-				ft_child_for_last_cmd(cmd_str[nb - 1], pipe_init);
-			else if (ft_child_process(cmd_str[i], pipe_init) == ERROR)
+				ft_child_for_last_cmd(cmd_str[nb - 1], pipe_init);//, save_stdin, save_stdout);
+			else if (ft_child_process(cmd_str[i], pipe_init))//, save_stdin, save_stdout == ERROR))
 			{
 				ft_free_struct_foreach_cmd(cmd_str, nb);
 				free_token_list(tokens);
@@ -186,6 +195,8 @@ void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 		continue ;
 	dup2(save_stdin, STDIN_FILENO);
 	dup2(save_stdout, STDOUT_FILENO);
+	close(save_stdin);
+	close(save_stdout);
 }
 
 void	ft_execution(t_token *tokens)
