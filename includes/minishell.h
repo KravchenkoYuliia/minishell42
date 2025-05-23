@@ -6,12 +6,15 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 12:26:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:50:58 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ERROR 1
+#define SUCCESS 0
 
 # include "../libft42/includes/ft_printf.h"
 # include "../libft42/includes/get_next_line.h"
@@ -35,6 +38,7 @@
 typedef struct s_token
 {
 	char	*value;
+	//enum e_type	type;	
 	int		type;
 	int		incr;
 	void	*next;
@@ -96,6 +100,7 @@ void	parser_err_handler(int err_code);
 /////////////////
 void	ft_execution(t_token *tokens);
 void	ft_exit_msg(char *msg);
+void    ft_child_error_msg(char *msg);
 /////////////////
 
 //free_handler

@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 12:26:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:37:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -121,18 +121,41 @@ void	ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb)
 	}
 }
 
+int	ft_child_process(t_cmd_struct **cmd_str, int pipe[2])
+{
+	close(pipe[0]);
+	close(pipe[1]);
+	if ((execve(cmd_str[0]->args[0], cmd_str[0]->args, NULL)) == -1)
+	{
+		perror("babyshell");
+		return (ERROR);
+	}
+	return (SUCCESS);
+}
 
-void	ft_execute_simple_cmd(t_cmd_struct **cmd_str)
+void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 {
 	pid_t	pid;
-
+	int	pipe_init[2];
+	int	status;
+	
+	status = 0;
+	pipe(pipe_init);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(cmd_str[0]->args[0], cmd_str[0]->args, NULL);
+		if (ft_child_process(cmd_str, pipe_init) == ERROR)
+		{
+			ft_free_struct_foreach_cmd(cmd_str, nb);
+			free_token_list(tokens);
+			exit(EXIT_FAILURE);
+		}
 	}
-	waitpid(pid, NULL, 0);
-	printf("child has finished\n");
+	waitpid(pid, &status, 0);
+	close(pipe_init[0]);
+	close(pipe_init[1]);
+	//if (status != 0)
+	//	exit(EXIT_FAILURE);
 }
 
 void	ft_execution(t_token *tokens)
@@ -144,8 +167,14 @@ void	ft_execution(t_token *tokens)
 	ft_malloc_struct_foreach_cmd(&struct_for_cmds, nb_of_cmd);
 	ft_initialize_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
 	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
-	ft_execute_simple_cmd(struct_for_cmds);
-/*	
+	ft_parent_process(tokens, struct_for_cmds, nb_of_cmd);
+	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
+}
+
+
+
+/*	PRINT THE CONTENT OF CMD STRUCTURES
+
 	int i = 0;
 	while (i < nb_of_cmd)
 	{
@@ -153,20 +182,3 @@ void	ft_execution(t_token *tokens)
 		printf("{input file: %s | output file: %s | append: %d | heredoc: %d | pipe: %d\n", struct_for_cmds[i]->input, struct_for_cmds[i]->output, struct_for_cmds[i]->append, struct_for_cmds[i]->heredoc, struct_for_cmds[i]->pipe);
 		i++;
 	}*/
-	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
-}
-	/*
-	t_token		*token;
-	const char	*cmd;
-	token = tokens;
-	while (token)
-	{
-		cmd = ft_check_if_build_in_cmd(token);
-		if (cmd)
-			printf("Execute build in cmd %s\n", cmd);
-		else //cmd classic avec 'execve'
-			printf("Execute cmd %s... \n", token->value);
-			//ft_execve_cmd(token);
-		token = token->next;
-	}
-}*/

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/23 12:15:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:25:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int main(int ac, char **av)
 				printf("value: %s, type: %d\n", token_lst->value, token_lst->type);
 				token_lst = token_lst->next;
 			}*/
-			ft_execution(token_lst);
-			free_token_list(token_lst);
 		}
 		if (input[0] == 'C')
 		{
 			free(input);
 			exit(EXIT_SUCCESS);
 		}
+		ft_execution(token_lst);
+		free_token_list(token_lst);
 		free(input);
 	}
 	return (0);
