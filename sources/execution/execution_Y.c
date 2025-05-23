@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 11:56:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:26:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -122,6 +122,18 @@ void	ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb)
 }
 
 
+void	ft_execute_simple_cmd(t_cmd_struct **cmd_str)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(cmd_str[0]->args[0], cmd_str[0]->args, NULL);
+	}
+	waitpid(pid, NULL, 0);
+	printf("child has finished\n");
+}
 
 void	ft_execution(t_token *tokens)
 {
@@ -132,17 +144,17 @@ void	ft_execution(t_token *tokens)
 	ft_malloc_struct_foreach_cmd(&struct_for_cmds, nb_of_cmd);
 	ft_initialize_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
 	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
-
-	
+	ft_execute_simple_cmd(struct_for_cmds);
+/*	
 	int i = 0;
 	while (i < nb_of_cmd)
 	{
 		ft_printf_content(struct_for_cmds[i]->args);
 		printf("{input file: %s | output file: %s | append: %d | heredoc: %d | pipe: %d\n", struct_for_cmds[i]->input, struct_for_cmds[i]->output, struct_for_cmds[i]->append, struct_for_cmds[i]->heredoc, struct_for_cmds[i]->pipe);
 		i++;
-	}
+	}*/
 	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
-}	
+}
 	/*
 	t_token		*token;
 	const char	*cmd;
