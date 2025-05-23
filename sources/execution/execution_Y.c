@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 15:37:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:34:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -121,11 +121,10 @@ void	ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb)
 	}
 }
 
-int	ft_child_process(t_cmd_struct **cmd_str, int pipe[2])
+int	ft_child_process(t_cmd_struct *cmd_str, int pipe[2])
 {
-	close(pipe[0]);
-	close(pipe[1]);
-	if ((execve(cmd_str[0]->args[0], cmd_str[0]->args, NULL)) == -1)
+	dup2(pipe[1], STDOUT_FILENO);
+	if ((execve(cmd_str->args[0], cmd_str->args, NULL)) == -1)
 	{
 		perror("babyshell");
 		return (ERROR);
@@ -133,29 +132,60 @@ int	ft_child_process(t_cmd_struct **cmd_str, int pipe[2])
 	return (SUCCESS);
 }
 
+int	ft_child_for_last_cmd(t_cmd_struct *cmd_str, int pipe[2])
+{
+	(void)pipe;
+	if ((execve(cmd_str->args[0], cmd_str->args, NULL)) == -1)
+	{
+		perror("babyshell");
+		return (ERROR);
+	}
+	return (SUCCESS);
+
+}
+
+//void	ft_making_child_process_loop(t_cmd_struct **cmd_str)
+
 void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 {
+	int	status;
+	int	save_stdin;
+	int	save_stdout;
+
+	int	i;
 	pid_t	pid;
 	int	pipe_init[2];
-	int	status;
-	
+		
+
+
 	status = 0;
-	pipe(pipe_init);
-	pid = fork();
-	if (pid == 0)
+	save_stdin = dup(STDIN_FILENO); 
+	save_stdout = dup(STDOUT_FILENO); 
+	i = 0;
+	while (i < nb)
 	{
-		if (ft_child_process(cmd_str, pipe_init) == ERROR)
+		pipe(pipe_init);
+		pid = fork();
+		if (pid == 0)
 		{
-			ft_free_struct_foreach_cmd(cmd_str, nb);
-			free_token_list(tokens);
-			exit(EXIT_FAILURE);
+			if (i == nb - 1)
+				ft_child_for_last_cmd(cmd_str[nb - 1], pipe_init);
+			else if (ft_child_process(cmd_str[i], pipe_init) == ERROR)
+			{
+				ft_free_struct_foreach_cmd(cmd_str, nb);
+				free_token_list(tokens);
+				exit(EXIT_FAILURE);
+			}
 		}
+		dup2(pipe_init[0], STDIN_FILENO);
+		close(pipe_init[0]);
+		close(pipe_init[1]);
+		i++;
 	}
-	waitpid(pid, &status, 0);
-	close(pipe_init[0]);
-	close(pipe_init[1]);
-	//if (status != 0)
-	//	exit(EXIT_FAILURE);
+	while (waitpid(-1, &status, 0) != -1)
+		continue ;
+	dup2(save_stdin, STDIN_FILENO);
+	dup2(save_stdout, STDOUT_FILENO);
 }
 
 void	ft_execution(t_token *tokens)
