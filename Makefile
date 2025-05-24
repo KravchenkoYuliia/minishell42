@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3
+CFLAGS = -Wall -Werror -Wextra -Wno-error -I $(INC_DIR) -g3
 LIBFT = libft42/libft.a
 
 all: $(LIBFT) $(NAME)
@@ -44,7 +44,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	cc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(O_DIRS) $(OBJ)
-	cc $(CFLAGS) -lreadline -lhistory $(OBJ) $(LIBFT) -o $(NAME)
+	cc $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -lhistory -o $(NAME)
 
 $(O_DIRS):
 	mkdir -p $@

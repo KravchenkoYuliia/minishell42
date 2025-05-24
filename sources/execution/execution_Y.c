@@ -11,22 +11,6 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-const char	*ft_check_if_build_in_cmd(t_token *token)
-{
-	int			i;
-	const char	*build_in_names[] = {"echo", "cd", "pwd",
-		"export", "unset", "env", "exit"};
-
-	i = 0;
-	while (i < 7)
-	{
-		if (ft_strncmp(token->value, build_in_names[i],
-				ft_strlen(token->value)) == 0)
-			return (build_in_names[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 int	ft_count_cmds(t_token *tokens)
 {
@@ -147,12 +131,53 @@ int	ft_child_for_last_cmd(t_cmd_struct *cmd_str, int pipe[2])//, int save_stdin,
 	if ((execve(cmd_str->args[0], cmd_str->args, NULL)) == -1)
 	{
 		perror("babyshell");
-		return (ERROR);
+		exit(EXIT_FAILURE);
+		//return (ERROR);
 	}
 	return (SUCCESS);
 
 }
 
+void	ft_exec_built_in(t_cmd_struct *cmd_str, int pipe[2])
+{
+	(void)pipe;
+	if ((ft_strncmp(cmd_str->args[0], "exit", 5) == 0))
+	{
+		exit(EXIT_SUCCESS);
+	}
+}
+
+
+void	ft_check_if_build_in_cmd(t_cmd_struct *cmd, int pipe[2])
+{
+	int			i;
+	char	*built_in_names[] = {"echo", "cd", "pwd",
+		"export", "unset", "env", "exit"};
+	void	(*built_in_functions[])(t_cmd_struct*, int*) = {
+		NULL, NULL, NULL, NULL, NULL, NULL,
+		&ft_exec_built_in
+	};
+
+	i = 0;
+	while (i < 7)
+	{
+		if (ft_strncmp(cmd->args[0], built_in_names[i],
+				ft_strlen(built_in_names[i]) + 1) == 0)
+		{
+			if (built_in_functions[i] != NULL)
+				built_in_functions[i](cmd, pipe);
+			else {
+				char	msg[30] = {0};
+				ft_strcpy(msg, built_in_names[i]);
+				ft_strcpy(msg + ft_strlen(msg),
+					" is not implemented\n");
+				write(2, msg, ft_strlen(msg));
+			}
+			break ;
+		}
+		i++;
+	}
+}
 //void	ft_making_child_process_loop(t_cmd_struct **cmd_str)
 
 void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
@@ -164,9 +189,8 @@ void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 	int	i;
 	pid_t	pid;
 	int	pipe_init[2];
-		
 
-
+	
 	status = 0;
 	save_stdin = dup(STDIN_FILENO); 
 	save_stdout = dup(STDOUT_FILENO); 
@@ -174,6 +198,7 @@ void	ft_parent_process(t_token *tokens, t_cmd_struct **cmd_str, int nb)
 	while (i < nb)
 	{
 		pipe(pipe_init);
+		ft_check_if_build_in_cmd(cmd_str[i], pipe_init);
 		pid = fork();
 		if (pid == 0)
 		{
