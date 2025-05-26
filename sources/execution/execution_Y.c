@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 17:17:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:51:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -138,12 +138,23 @@ int	ft_child_for_last_cmd(t_cmd_struct *cmd_str, int pipe[2])//, int save_stdin,
 
 }
 
-void	ft_exec_built_in(t_cmd_struct *cmd_str, int pipe[2])
+void	ft_exit(t_cmd_struct *cmd_str, int pipe[2])
 {
-	(void)pipe;
+	(void) pipe;
+	int	i;
+	unsigned char exit_status;
+
+	i = 0;
+	exit_status = 0;
 	if ((ft_strncmp(cmd_str->args[0], "exit", 5) == 0))
 	{
-		exit(EXIT_SUCCESS);
+		if (cmd_str->args[1])
+		{
+			i = atoi(cmd_str->args[1]);
+			exit_status = (unsigned char) i;
+		}
+		printf("exit\n");
+		exit(exit_status);
 	}
 }
 
@@ -155,7 +166,7 @@ void	ft_check_if_build_in_cmd(t_cmd_struct *cmd, int pipe[2])
 		"export", "unset", "env", "exit"};
 	void	(*built_in_functions[])(t_cmd_struct*, int*) = {
 		NULL, NULL, NULL, NULL, NULL, NULL,
-		&ft_exec_built_in
+		&ft_exit
 	};
 
 	i = 0;
@@ -233,6 +244,7 @@ void	ft_execution(t_token *tokens)
 	ft_malloc_struct_foreach_cmd(&struct_for_cmds, nb_of_cmd);
 	ft_initialize_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
 	ft_fill_struct_foreach_cmd(tokens, struct_for_cmds, nb_of_cmd);
+	free_token_list(tokens);
 	ft_parent_process(tokens, struct_for_cmds, nb_of_cmd);
 	ft_free_struct_foreach_cmd(struct_for_cmds, nb_of_cmd);
 }
