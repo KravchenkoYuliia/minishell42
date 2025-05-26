@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/23 14:25:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:18:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int main(int ac, char **av)
 		return(0);
 	}
 	//printf("%s\n", getenv("PATH"));
+	t_token *cursor;
 	while (1)
 	{
 		input = readline("babyshell: ");
@@ -32,18 +33,14 @@ int main(int ac, char **av)
 			token_lst = ft_parser(input);
 			if (!token_lst)
 				printf("OUPS");
-			/*while(token_lst)
+			ft_execution(token_lst);
+		}
+		cursor = token_lst;
+			while(cursor)
 			{
-				printf("value: %s, type: %d\n", token_lst->value, token_lst->type);
-				token_lst = token_lst->next;
-			}*/
-		}
-		if (input[0] == 'C')
-		{
-			free(input);
-			exit(EXIT_SUCCESS);
-		}
-		ft_execution(token_lst);
+				printf("value: %s, type: %d\n", cursor->value, cursor->type);
+				cursor = cursor->next;
+			}
 		free_token_list(token_lst);
 		free(input);
 	}

@@ -6,11 +6,18 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:39:37 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/22 10:48:11 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:57:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	ft_redirs_lim(char c)
+{
+	if (c == 39 || c == 34 || c == 32 || c == 124 || c == 60 || c == 62)
+		return (false);
+	return (true);
+}
 
 t_token	*ft_lstlast_tok(t_token *lst)
 {
@@ -39,15 +46,12 @@ t_token	*new_token_nd(char *value, int type, int incr)
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		return (free(value), NULL);
 	token->value = ft_strdup(value);
 	if (!token->value)
-	{
-		free(token);
-		return (NULL);
-	}
+		return (free(value), free(token), NULL);
 	token->type = type;
 	token->incr = incr;
 	token->next = NULL;
-	return(token);
+	return(free(value), token);
 }

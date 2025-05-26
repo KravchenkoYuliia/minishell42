@@ -6,12 +6,12 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/22 13:28:17 by lfournie         ###   ########.fr        #
+#    Updated: 2025/05/26 14:03:55 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Werror -Wextra -Wno-error -I $(INC_DIR) -g3
+CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3
 LIBFT = libft42/libft.a
 
 all: $(LIBFT) $(NAME)
@@ -32,7 +32,7 @@ INC_DIR = includes
 
 FILES = 	main.c free_handler.c \
 			lexer/lexing_a.c lexer/lexing_b.c lexer/lexer_err_handler.c \
-			parser/parsing_a.c parser/parsing_b.c parser/parsing_utils.c parser/parser_err_handler.c \
+			parser/parsing_main.c parser/parsing_a.c parser/parsing_b.c parser/parsing_utils.c parser/parser_err_handler.c \
 			execution/execution_Y.c execution/exit_msg.c \
 		 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))

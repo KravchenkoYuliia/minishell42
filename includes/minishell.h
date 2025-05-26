@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/23 14:50:58 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:03:25 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,9 @@ void	lexer_err_handler(int err_code);
 /////////////////
 
 //parser
-////////////////
+/////////////////
 t_token *ft_parser(char *input);
-t_token	*ft_if_simple_quotes(char *input, int start);
-t_token	*ft_if_double_quotes(char *input, int start);
+t_token	*ft_if_quotes(char *input, int start);
 t_token	*ft_if_command(char *input, int start);
 t_token	*ft_if_pipe(char *input, int start);
 t_token	*ft_if_heredoc(char *input, int start);
@@ -94,7 +93,9 @@ t_token	*new_token_nd(char *value, int type, int incr);
 t_token	*ft_lstlast_tok(t_token *lst);
 void	ft_lstadd_back_tok(t_token **lst, t_token *new);
 void	parser_err_handler(int err_code);
-////////////////
+void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start);
+bool	ft_redirs_lim(char c);
+/////////////////
 
 //execution
 /////////////////
@@ -104,9 +105,9 @@ void    ft_child_error_msg(char *msg);
 /////////////////
 
 //free_handler
-////////////////
+/////////////////
 void free_token_list(t_token *head);
 void    ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
-////////////////
+/////////////////
 
 #endif

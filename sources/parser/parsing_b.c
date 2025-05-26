@@ -6,49 +6,50 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/22 14:56:58 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:33:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*ft_if_pipe(char *input, int start)
+void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 {
-	t_token	*token;
-	char	*value_buf;
+	bool	in_quote;
 	
-	(void)input;
-	(void)start;
-	value_buf = malloc(100);
-	if (!value_buf)
-		exit(EXIT_FAILURE);
-	value_buf[0] = 124;
-	value_buf[1] = '\0';
-	token = new_token_nd(value_buf, PIPE, 1);
-	free(value_buf);
-	return(token);
+	in_quote = false;
+	while (input[start] == 32 && input[start])
+		value_buf[buf_start++] = input[start++];
+	if ((input[start] == 34 || input[start] == 39) && in_quote == false)
+		{
+			in_quote = true;
+			value_buf[buf_start++] = input[start++];
+		}
+	while (ft_redirs_lim(input[start]) && input[start])
+		{
+			value_buf[buf_start++] = input[start++];
+			if ((input[start] == 34 || input[start] == 39) && in_quote == true)
+			{
+				value_buf[buf_start++] = input[start++];
+				in_quote = false;
+			}
+			if ((!ft_redirs_lim(input[start])) && in_quote == true)
+				value_buf[buf_start++] = input[start++];
+		}
+	value_buf[buf_start] = '\0';
 }
+
 t_token	*ft_if_heredoc(char *input, int start)
 {
 	t_token	*token;
 	char	*value_buf;
-	int		j;
 	
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
 	value_buf[0] = 60;
 	value_buf[1] = 60;
-	start += 2;
-	j = 2;
-	while ((input[start] == 32 || ft_isalnum(input[start])) && input[start])
-	{
-		value_buf[j] = input[start];
-		start++;
-		j++;
-	}
-	value_buf[j] = '\0';
-	token = new_token_nd(value_buf, HEREDOC, j);
+	set_buf_redirs(input, start, value_buf, 2);
+	token = new_token_nd(value_buf, HEREDOC, ft_strlen(value_buf));
 	free(value_buf);
 	return(token);
 }
@@ -56,22 +57,13 @@ t_token	*ft_if_heredoc(char *input, int start)
 {
 	t_token	*token;
 	char	*value_buf;
-	int		j;
 	
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
 	value_buf[0] = 60;
-	start++;
-	j = 1;
-	while ((input[start] == 32 || ft_isalnum(input[start])) && input[start])
-	{
-		value_buf[j] = input[start];
-		start++;
-		j++;
-	}
-	value_buf[j] = '\0';
-	token = new_token_nd(value_buf, INPUT, j);
+	set_buf_redirs(input, start, value_buf, 1);
+	token = new_token_nd(value_buf, INPUT, ft_strlen(value_buf));
 	free(value_buf);
 	return (token);
 }
@@ -79,23 +71,14 @@ t_token	*ft_if_append(char *input, int start)
 {
 	t_token	*token;
 	char	*value_buf;
-	int		j;
 	
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
 	value_buf[0] = 62;
 	value_buf[1] = 62;
-	start += 2;
-	j = 2;
-	while ((input[start] == 32 || ft_isalnum(input[start])) && input[start])
-	{
-		value_buf[j] = input[start];
-		start++;
-		j++;
-	}
-	value_buf[j] = '\0';
-	token = new_token_nd(value_buf, APPEND, j);
+	set_buf_redirs(input, start, value_buf, 2);
+	token = new_token_nd(value_buf, APPEND, ft_strlen(value_buf));
 	free(value_buf);
 	return(token);
 }
@@ -103,22 +86,13 @@ t_token	*ft_if_output(char *input, int start)
 {
 	t_token	*token;
 	char	*value_buf;
-	int		j;
 	
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
 	value_buf[0] = 62;
-	start++;
-	j = 1;
-	while ((input[start] == 32 || ft_isalnum(input[start])) && input[start])
-	{
-		value_buf[j] = input[start];
-		start++;
-		j++;
-	}
-	value_buf[j] = '\0';
-	token = new_token_nd(value_buf, INPUT, j);
+	set_buf_redirs(input, start, value_buf, 1);
+	token = new_token_nd(value_buf, OUTPUT, ft_strlen(value_buf));
 	free(value_buf);
 	return (token);
 }
