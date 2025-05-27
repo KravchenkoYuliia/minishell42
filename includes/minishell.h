@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/26 14:03:25 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/27 08:53:18 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	lexer_err_handler(int err_code);
 //parser
 /////////////////
 t_token *ft_parser(char *input);
+t_token	*ft_parsing_a(char *input, int i);
+t_token	*ft_parsing_b(char *input, int i);
 t_token	*ft_if_quotes(char *input, int start);
 t_token	*ft_if_command(char *input, int start);
 t_token	*ft_if_pipe(char *input, int start);

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/23 11:10:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:47:08 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void free_token_list(t_token *head)
 {
 	t_token *tmp;
 
+	if (!head)
+		return ;
 	while (head)
 	{
 		tmp = head;
