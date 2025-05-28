@@ -6,45 +6,47 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/27 11:52:23 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:32:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* void	ft_if_db_quotes(char *input, int start, char *value_buf, int buf_start)
+void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start)
 {
+	int		sp;
+	int		db;
+	bool	in_quote;
 	
+	sp = 0;
+	db = 0;
+	in_quote = false;
+	while (input[start] && (((input[start] != 124
+			&& input[start] != 60 && input[start] != 62) && !in_quote) || in_quote))
+	{	
+		if (input[start] == 39 && db % 2 == 0)
+			sp++;
+		else if (input[start] == 34 && sp % 2 == 0)
+			db++;
+		value_buf[buf_start++] = input[start++];
+		if ((sp % 2 != 0 || db % 2 != 0))
+			in_quote = true;
+		else
+			in_quote = false;
+	}
+	value_buf[buf_start] = '\0';
 }
 
-void	ft_if_sp_quotes(char *input, int start, char *value_buf, int buf_start)
-{
-	
-} */
 
-t_token	*ft_if_quotes(char *input, int start)
+t_token	*ft_if_quotes_a(char *input, int start)
 {
 	t_token	*token;
 	char	*value_buf;
-	int		j;
 	
 	value_buf = malloc(100);
-		if (!value_buf)
-			exit(EXIT_FAILURE);
-	value_buf[0] = input[start];
-	j = 1;
-	start++;
-	while ((input[start] != 39 && input[start] != 34) && input[start])
-	{	
-		if (input[start + 2] == 39 || input[start + 2] == 34)
-		{
-			value_buf[j++] = input[start++];
-			value_buf[j++] = input[start++];
-		}
-		value_buf[j++] = input[start++];
-	}
-	value_buf[j] = input[start];
-	value_buf[j + 1] = '\0';
+	if (!value_buf)
+		exit(EXIT_FAILURE);
+	ft_if_quotes_b(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, CMD, ft_strlen(value_buf));
 	return (token);
 }
@@ -63,8 +65,11 @@ t_token	*ft_if_command(char *input, int start)
 			&& input[start] != 60 && input[start] != 62)
 			&& input[start])
 		value_buf[j++] = input[start++];
-	value_buf[j] = '\0';
-	token = new_token_nd(value_buf, CMD, j);
+	if (input[start] == 39 || input[start] == 34)
+		ft_if_quotes_b(input, start, value_buf, j);
+	else
+		value_buf[j] = '\0';
+	token = new_token_nd(value_buf, CMD, ft_strlen(value_buf));
 	return (token);
 }
 

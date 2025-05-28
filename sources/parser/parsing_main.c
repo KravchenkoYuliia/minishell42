@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/27 09:21:52 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:15:31 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*ft_parsing_a(char *input, int i)
 	
 	token = NULL;
 	if (input[i] == 39 || input[i] == 34)
-		token = ft_if_quotes(input, i);
+		token = ft_if_quotes_a(input, i);
 	else if (input[i] == 124)
 		token = ft_if_pipe(input, i);
 	else
