@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:18:58 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 10:17:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:14:22 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int     ft_child_process(t_exec *exec, int i)//, int save_stdin, int save_stdout
         close(exec->pipe[1]);
         if ((execve(exec->cmd[i]->args[0], exec->cmd[i]->args, NULL)) == -1)
         {
-                perror("babyshell");
+                perror("toupetishell🤏​");
                 return (ERROR);
         }
         return (SUCCESS);
@@ -38,7 +38,7 @@ int     ft_child_for_last_cmd(t_exec *exec, int i)//, int save_stdin, int save_s
         close(exec->pipe[0]);
         if ((execve(exec->cmd[i]->args[0], exec->cmd[i]->args, NULL)) == -1)
         {
-                perror("babyshell");
+                perror("toupetishell🤏​");
                 exit(EXIT_FAILURE);
                 //return (ERROR);
         }

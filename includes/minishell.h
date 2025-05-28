@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 12:38:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:13:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	lexer_err_handler(int err_code);
 t_token *ft_parser(char *input);
 t_token	*ft_parsing_a(char *input, int i);
 t_token	*ft_parsing_b(char *input, int i);
-t_token	*ft_if_quotes(char *input, int start);
+t_token	*ft_if_quotes_a(char *input, int start);
 t_token	*ft_if_command(char *input, int start);
 t_token	*ft_if_pipe(char *input, int start);
 t_token	*ft_if_heredoc(char *input, int start);
@@ -104,6 +104,7 @@ t_token	*ft_lstlast_tok(t_token *lst);
 void	ft_lstadd_back_tok(t_token **lst, t_token *new);
 void	parser_err_handler(int err_code);
 void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start);
+void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start);
 bool	ft_redirs_lim(char c);
 /////////////////
 
@@ -122,6 +123,7 @@ int     ft_child_process(t_exec *exec, int i);
 int     ft_child_for_last_cmd(t_exec *exec, int i);
 void    ft_save_STD_FILENO(t_exec *exec);
 void    ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd);
+int		ft_isdigit_str(char *str);
 /////////////////
 
 //free_handler

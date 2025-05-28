@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:11:41 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 10:58:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:11:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void    ft_exit(t_exec *exec, int str_index)
         {
                 if (exec->cmd[str_index]->args[1])
                 {
-			if (!ft_isdigit(exec->cmd[str_index]->args[1]))
+			if (!ft_isdigit_str(exec->cmd[str_index]->args[1]))
 			{
         	        	printf("exit\n");
 				printf("toupetishell🤏​: exit: %s: numeric argument required\n", exec->cmd[str_index]->args[1]);
