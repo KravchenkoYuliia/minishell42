@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:49:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/04/25 16:30:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:42:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_print_list_int(t_list *list);
 void	ft_print_list_char(t_list *list);
 int		ft_isalpha(int c);
-int		ft_isdigit(int c);
+int		ft_isdigit(char *str);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
