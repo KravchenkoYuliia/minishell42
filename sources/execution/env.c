@@ -1,15 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "test.h"
 
-
-typedef struct s_env t_env;
-
-typedef struct s_env{
-
-	char*	content;
-	t_env*	next;
-
-} t_env ;
 
 int	ft_strlen(char *str)
 {
@@ -126,6 +118,7 @@ void	ft_fill_env_list(char** env, t_env** env_list)
 	t_env*	new;
 	char*	content = NULL;
 	
+
 	while (env[i])
 	{
 		content = ft_strdup (env[i]);
@@ -134,18 +127,35 @@ void	ft_fill_env_list(char** env, t_env** env_list)
 		i++;
 	}
 	ft_change_last_line(env_list);
+}
 
+void	ft_free_list(t_env** list)
+{
+	t_env *temp = *list;
+	t_env* save;
+
+	while (temp)
+	{
+		if (temp->next)
+			save = temp->next;
+		else
+			save = NULL;
+		free(temp->content);
+		free(temp);
+		temp = save;
+	}
 }
 
 int	ft_env(char** env)
 {
 	t_env*	env_list = NULL;
-	
+
 	ft_fill_env_list(env, &env_list);
 	ft_print_list_char(env_list);
+//	ft_free_list(&env_list);
 	return 0;
 }
-
+/*
 int main(int ac, char** av, char** env)
 {
 	if (ac < 2)
@@ -154,4 +164,4 @@ int main(int ac, char** av, char** env)
 	if (ft_strncmp(av[1], "env", 4) == 0)
 		ft_env(env);
 
-}
+}*/
