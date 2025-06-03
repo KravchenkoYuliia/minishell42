@@ -61,6 +61,16 @@ void	ft_check_av(char* arg)
 		return ;
 }
 
+int	ft_isalpha(char c)
+{
+	if (c >= 'a' && c <='z')
+		return 1;
+	else if (c >='A' && c <= 'Z')
+		return 1;
+	return 0;
+
+}
+
 void	ft_export_value(int ac, char **av, t_env **head)
 {
 	int i = 2;
@@ -70,7 +80,9 @@ void	ft_export_value(int ac, char **av, t_env **head)
 
 	while (i < ac)
 	{
-		if (ft_charset(av[i], '=') == 1)
+		if (!ft_isalpha(av[i][0]))
+			printf("blablaShell: export: `%s': not a valid identifier\n", av[i]);
+		else if (ft_charset(av[i], '=') == 1)
 		{
 			export_content = ft_strdup(av[i]);
 			new = ft_lstnew(export_content);
@@ -113,5 +125,9 @@ int	main(int ac, char** av, char** env)
 	if (ac < 2)
 		return 0;
 	if (ft_strncmp(av[1], "export", 7) == 0)
+	{
 		ft_export(ac, av, env);
+
+		ft_export(ac, av, env);
+	}
 }
