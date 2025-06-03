@@ -6,14 +6,14 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:38:19 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 09:31:10 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:04:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd)
+void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, char **env)
 {
 	*exec = malloc(sizeof(t_exec));
 	if (!*exec)
@@ -23,6 +23,7 @@ void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd)
 	}
 	(*exec)->nb_of_cmd = nb_of_cmd;
 	(*exec)->cmd = struct_for_cmd;
+	(*exec)->env = env;
 }
 
 void    ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd)

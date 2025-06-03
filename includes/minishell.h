@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 13:13:10 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:17:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_exec{
 	int	pipe[2];
 	int	save_stdin;
 	int	save_stdout;
+	char	**env;
 } t_exec;
 
 //lexer
@@ -110,20 +111,21 @@ bool	ft_redirs_lim(char c);
 
 //execution
 /////////////////
-void	ft_execution(t_token *tokens);
+int	ft_execution(t_token *tokens, char** env);
 void	ft_exit_msg(char *msg);
 void    ft_child_error_msg(char *msg);
 int     ft_count_cmds(t_token *tokens);
 void    ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd);
 void    ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb);
 void    ft_fill_struct_foreach_cmd(t_token *tokens, t_cmd_struct **cmds, int nb);
-void    ft_check_if_build_in_cmd(t_exec *exec, int i);
-void    ft_exit(t_exec *exec, int str_index);
+int	ft_check_if_build_in_cmd(t_exec *exec, int i);
+int	ft_exit(t_exec *exec, int str_index);
 int     ft_child_process(t_exec *exec, int i);
 int     ft_child_for_last_cmd(t_exec *exec, int i);
 void    ft_save_STD_FILENO(t_exec *exec);
-void    ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd);
+void    ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, char **env);
 int		ft_isdigit_str(char *str);
+int	ft_cd(t_exec* exec, int str_index);
 /////////////////
 
 //free_handler

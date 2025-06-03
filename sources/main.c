@@ -6,13 +6,13 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/28 13:21:39 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:14:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
 	t_token	*token_lst;
 	char	*input;
@@ -40,7 +40,8 @@ int main(int ac, char **av)
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}
-			ft_execution(token_lst);
+			if (ft_execution(token_lst, env) != SUCCESS)
+				return (ERROR);
 			//free_token_list(token_lst);
 		}
 		free(input);

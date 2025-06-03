@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:11:41 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 13:11:10 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:18:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #include "minishell.h"
 
-void    ft_check_if_build_in_cmd(t_exec *exec, int str_index)
+int	ft_check_if_build_in_cmd(t_exec *exec, int str_index)
 {
         int                     i;
         char    *built_in_names[] = {"echo", "cd", "pwd",
                 "export", "unset", "env", "exit"};
-        void    (*built_in_functions[])(t_exec *, int) = {
-                NULL, NULL, NULL, NULL, NULL, NULL,
+        int    (*built_in_functions[])(t_exec *, int) = {
+                NULL, &ft_cd, NULL, NULL, NULL, NULL,
                 &ft_exit
         };
 
@@ -31,7 +31,10 @@ void    ft_check_if_build_in_cmd(t_exec *exec, int str_index)
                                 ft_strlen(built_in_names[i]) + 1) == 0)
                 {
                         if (built_in_functions[i] != NULL)
-                                built_in_functions[i](exec, str_index);
+			{
+				if (built_in_functions[i](exec, str_index) != SUCCESS)
+					return (ERROR);
+			}
                         else {
                                 char    msg[30] = {0};
                                 ft_strcpy(msg, built_in_names[i]);
@@ -43,9 +46,49 @@ void    ft_check_if_build_in_cmd(t_exec *exec, int str_index)
                 }
                 i++;
         }
+	return SUCCESS;
 }
 
-void    ft_exit(t_exec *exec, int str_index)
+char*   ft_get_home_path(char** env)
+{
+        int     i = 0;
+
+        while (env[i])
+        {
+                if (ft_strncmp(env[i], "HOME=", 5) == 0)
+                        return (env[i] + 5);
+                i++;
+        }
+        return (NULL);
+}
+
+
+int     ft_cd(t_exec* exec, int str_index)
+{
+	/*
+	args[0] == cd
+	args[1] == directory OR rien
+	args[2] == NULL OR error message*/
+	int	i;
+	char	*directory = exec->cmd[str_index]->args[1];
+	char	*next_arg = exec->cmd[str_index]->args[2];
+
+	i = 0;
+	if (next_arg != NULL)
+	{
+		printf("toupetishell🤏<200b>: cd: too many arguments");
+		return (ERROR);
+	}
+	if (directory == NULL)
+	{
+		directory = ft_get_home_path(exec->env);
+	}
+	if (chdir(directory) != SUCCESS)
+		return (ERROR);
+        return (0);
+}
+
+int    ft_exit(t_exec *exec, int str_index)
 {
         int     i;
         unsigned char exit_status;
@@ -80,4 +123,5 @@ void    ft_exit(t_exec *exec, int str_index)
                 printf("exit\n");
                 exit(exit_status);
         }
+	return (SUCCESS);
 }

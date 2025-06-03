@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 10:24:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:21:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 #include "minishell.h"
 
-void	ft_create_child_loop(t_exec *exec)
+int	ft_create_child_loop(t_exec *exec)
 {
 	int	i;
 	pid_t	pid;
 	int	pipe_init[2];
-
+	int	status_built_in;
 
 	i = 0;
 	while (i < exec->nb_of_cmd)
@@ -27,7 +27,11 @@ void	ft_create_child_loop(t_exec *exec)
 		pipe(pipe_init);
 		exec->pipe[0] = pipe_init[0];
 		exec->pipe[1] = pipe_init[1];
-		ft_check_if_build_in_cmd(exec, i);
+		status_built_in = ft_check_if_build_in_cmd(exec, i);
+		if (status_built_in == SUCCESS)
+			i++;
+		else
+			return (ERROR);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -41,23 +45,27 @@ void	ft_create_child_loop(t_exec *exec)
 		close(pipe_init[1]);
 		i++;
 	}
-
+	return (SUCCESS);
 }
 
-void	ft_parent_process(t_exec *exec)
+
+
+int	ft_parent_process(t_exec *exec)
 {
 	int	status;
 	
 	status = 0;
 	exec->save_stdin = dup(STDIN_FILENO); 
 	exec->save_stdout = dup(STDOUT_FILENO);
-	ft_create_child_loop(exec);
+	if (ft_create_child_loop(exec) != SUCCESS)
+		return (ERROR);
 	while (waitpid(-1, &status, 0) != -1)
 		continue ;
 	ft_save_STD_FILENO(exec);
+	return (SUCCESS);
 }
 
-void	ft_execution(t_token *tokens)
+int	ft_execution(t_token *tokens, char **env)
 {
 	int		nb_of_cmd; //in line
 	t_exec		*exec;
@@ -69,10 +77,12 @@ void	ft_execution(t_token *tokens)
 	ft_initialize_struct_foreach_cmd(struct_for_cmd, nb_of_cmd);
 	ft_fill_struct_foreach_cmd(tokens, struct_for_cmd, nb_of_cmd);
 	free_token_list(tokens);
-	ft_init_exec(&exec, struct_for_cmd, nb_of_cmd);
-	ft_parent_process(exec);
+	ft_init_exec(&exec, struct_for_cmd, nb_of_cmd, env);
+	if (ft_parent_process(exec) != SUCCESS)
+		return (ERROR);
 	ft_free_struct_foreach_cmd(struct_for_cmd, nb_of_cmd);
 	free(exec);
+	return SUCCESS;
 }
 
 
