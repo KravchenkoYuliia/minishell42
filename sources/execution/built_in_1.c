@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:11:41 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/03 15:18:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:29:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ int	ft_check_if_build_in_cmd(t_exec *exec, int str_index)
         }
 	return SUCCESS;
 }
+/*
+int	ft_pwd(t_exec *exec, int str_index)
+{
+		
+}*/
+
 
 char*   ft_get_home_path(char** env)
 {
@@ -76,7 +82,7 @@ int     ft_cd(t_exec* exec, int str_index)
 	i = 0;
 	if (next_arg != NULL)
 	{
-		printf("toupetishell🤏<200b>: cd: too many arguments");
+		printf("toupetishell🤏: cd: too many arguments\n");
 		return (ERROR);
 	}
 	if (directory == NULL)

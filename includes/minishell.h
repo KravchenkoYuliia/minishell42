@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/03 15:17:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:17:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void    ft_save_STD_FILENO(t_exec *exec);
 void    ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, char **env);
 int		ft_isdigit_str(char *str);
 int	ft_cd(t_exec* exec, int str_index);
+int	ft_pwd(t_exec* exec, int str_index);
 /////////////////
 
 //free_handler
