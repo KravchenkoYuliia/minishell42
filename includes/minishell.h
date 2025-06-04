@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/03 16:17:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:28:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define MINISHELL_H
 
 # define ERROR 1
-#define SUCCESS 0
+# define SUCCESS 0
+# define SHELL_NAME "toupetishell🤏: "
 
 # include "../libft42/includes/ft_printf.h"
 # include "../libft42/includes/get_next_line.h"

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/03 16:28:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:32:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int ac, char **av, char **env)
 	t_token *cursor;
 	while (1)
 	{
-		input = readline("toupetishell🤏​: ");
+		input = readline(SHELL_NAME);
 		if (input && *input)
 			add_history(input);
 		if (ft_lexer(input))
