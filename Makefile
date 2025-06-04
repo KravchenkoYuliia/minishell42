@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/04 16:14:42 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/04 18:11:14 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC_DIR = sources
 OBJ_DIR = objects
 INC_DIR = includes
 
-FILES = 	main.c free_handler.c \
+FILES = 	main.c	env/copy_env.c \
+			free_handler.c \
 			lexer/lexing_a.c lexer/lexing_b.c lexer/lexer_err_handler.c \
 			parser/parsing_main.c parser/parsing_a.c parser/parsing_b.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \

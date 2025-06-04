@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:47:36 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/03 15:21:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/04 18:33:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 int	ft_create_child_loop(t_exec *exec)
 {
 	int	i;
-	pid_t	pid;
-	int	pipe_init[2];
-	int	status_built_in;
+	//pid_t	pid;
+	//int	pipe_init[2];
+	//int	status_built_in;
 
 	i = 0;
-	while (i < exec->nb_of_cmd)
+	(void) exec;
+	ft_check_if_build_in_cmd(exec, i);
+
+	/*while (i < exec->nb_of_cmd)
 	{
 		pipe(pipe_init);
 		exec->pipe[0] = pipe_init[0];
@@ -44,7 +47,7 @@ int	ft_create_child_loop(t_exec *exec)
 		close(pipe_init[0]);
 		close(pipe_init[1]);
 		i++;
-	}
+	}*/
 	return (SUCCESS);
 }
 
@@ -65,23 +68,42 @@ int	ft_parent_process(t_exec *exec)
 	return (SUCCESS);
 }
 
-int	ft_execution(t_token *tokens, char **env)
+int	ft_env(t_minishell *all)
 {
+	t_env	*temp;
+
+	temp = all->env;
+        while (temp)
+        {
+                printf("%s", ((char *)(temp->line)));
+                printf("\n");
+                temp = temp->next;
+        }
+	return (SUCCESS);
+}
+
+
+int	ft_execution(t_minishell *all, t_token *tokens)
+{
+	(void) tokens;
+	ft_env(all);
+
+	/*
 	int		nb_of_cmd; //in line
 	t_exec		*exec;
 	t_cmd_struct	**struct_for_cmd;
 
 	exec = NULL;
-	nb_of_cmd = ft_count_cmds(tokens);
+//	nb_of_cmd = ft_count_cmds(tokens);
 	ft_malloc_struct_foreach_cmd(&struct_for_cmd, nb_of_cmd);
 	ft_initialize_struct_foreach_cmd(struct_for_cmd, nb_of_cmd);
 	ft_fill_struct_foreach_cmd(tokens, struct_for_cmd, nb_of_cmd);
 	free_token_list(tokens);
-	ft_init_exec(&exec, struct_for_cmd, nb_of_cmd, env);
+	ft_init_exec(&exec, struct_for_cmd, nb_of_cmd, all);
 	if (ft_parent_process(exec) != SUCCESS)
 		return (ERROR);
 	ft_free_struct_foreach_cmd(struct_for_cmd, nb_of_cmd);
-	free(exec);
+	free(exec);*/
 	return SUCCESS;
 }
 

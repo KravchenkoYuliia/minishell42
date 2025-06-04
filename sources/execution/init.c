@@ -6,14 +6,14 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:38:19 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/03 14:04:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/04 18:34:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, char **env)
+void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, t_minishell *all)
 {
 	*exec = malloc(sizeof(t_exec));
 	if (!*exec)
@@ -23,7 +23,7 @@ void	ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, c
 	}
 	(*exec)->nb_of_cmd = nb_of_cmd;
 	(*exec)->cmd = struct_for_cmd;
-	(*exec)->env = env;
+	(*exec)->env = all->env;
 }
 
 void    ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd)
@@ -67,8 +67,8 @@ void	ft_choose_type(t_token *temp, t_cmd_struct **cmds, int i)
 		cmds[i]->heredoc = 1;
 	if (temp->type == INPUT)
 		cmds[i]->input = temp->value;
-	if (temp->type == CMD)
-		cmds[i]->args = ft_split(temp->value, ' ');
+	//if (temp->type == CMD)
+	//	cmds[i]->args = ft_split(temp->value, ' ');
 	if (temp->type == APPEND || temp->type == OUTPUT)
 	{
 		cmds[i]->output = temp->value;
