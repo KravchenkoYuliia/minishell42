@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/04 11:28:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:30:06 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_token
 
 enum e_type
 {
-	CMD,
+	WORD,
 	PIPE,
 	HEREDOC,
 	INPUT,
@@ -86,7 +86,7 @@ bool 	ft_check_redir_heredoc(char *input);
 bool 	ft_check_redir_append(char *input);
 bool 	ft_check_redir_input(char *input);
 bool 	ft_check_redir_output(char *input);
-void	lexer_err_handler(int err_code);
+void	lexer_err_handler(int err_code, char c);
 /////////////////
 
 //parser
