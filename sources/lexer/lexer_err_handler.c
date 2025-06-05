@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:26:49 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/04 09:49:53 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:52:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,6 @@ void	lexer_err_handler(int err_code, char c)
 		printf("unclosed quotes\n");
 	if (err_code == 2)
 		printf("syntax error near unexpected token '%c'\n", c);
+	if (err_code == 3)
+		printf("syntax error near unexpected token 'new_line'\n");
 }
