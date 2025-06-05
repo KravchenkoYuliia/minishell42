@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/05 17:10:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:37:28 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **env)
 			shell->token_lst = ft_parser(shell->input);
 			if (!shell->token_lst)
 				printf("input empty\n");
-			free(shell->input);
+			//free(shell->input);
 			cursor = shell->token_lst;
 			while(cursor)
 			{

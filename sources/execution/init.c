@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 17:53:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:08:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,72 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell, t_cmd_struct ***cmd, int n
 	}
 }
 
+void	ft_start_value(t_minishell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->nb_of_cmd)
+	{
+		shell->cmd[i]->args = NULL;
+		ft_get_nb_of_words(shell);
+		shell->cmd[i]->args = (char **)malloc(sizeof(char *) * (shell->cmd[i]->nb_of_words + 1));
+		shell->cmd[i]->input = NULL;
+		shell->cmd[i]->output = NULL;
+		shell->cmd[i]->append = 0;
+		shell->cmd[i]->heredoc = 0;
+		shell->cmd[i]->pipe = 0;
+		i++;
+	}
+}
+
+void	ft_fill_cmd_struct(t_minishell *shell)
+{
+	int	i_struct;
+	int	i_args;
+	t_token	*temp;
+
+	i_struct = 0;
+	i_args = 0;
+	temp = shell->token_lst;
+	while (temp)
+	{
+		if (temp->type == WORD)
+		{
+			shell->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
+			printf("struct[%d] has args[%d]= %s\n", i_struct, i_args, shell->cmd[i_struct]->args[i_args]);
+			i_args++;
+			if (i_args == shell->cmd[i_struct]->nb_of_words)
+			{
+				shell->cmd[i_struct]->args[i_args] = NULL;
+				printf("struct[%d] has args[%d]= %s\n", i_struct,  i_args, shell->cmd[i_struct]->args[i_args]);
+			}
+		}
+		else if (temp->type == INPUT)
+			shell->cmd[i_struct]->input = ft_strcpy(shell->cmd[i_struct]->input,
+					temp->value);
+		else if (temp->type == OUTPUT)
+			shell->cmd[i_struct]->output = ft_strcpy(shell->cmd[i_struct]->output,
+					temp->value);
+		else if (temp->type == APPEND)
+			shell->cmd[i_struct]->append = 1;
+		else if (temp->type == HEREDOC)
+			shell->cmd[i_struct]->heredoc = 1;
+		else if (temp->type == PIPE)
+		{
+			shell->cmd[i_struct]->pipe = 1;
+			i_args = 0;
+			i_struct++;
+		}
+		temp = temp->next;
+	}
+}
 
 void	ft_init_struct_foreach_cmd(t_minishell *shell)
 {
 	shell->cmd = NULL;
 	ft_get_nb_of_cmd(shell);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
+	ft_start_value(shell);
+	ft_fill_cmd_struct(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 17:53:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:30:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ enum e_type
 
 typedef struct s_cmd_struct{
 
+	int	nb_of_words;
 	char	**args;
 	char	*input;
 	char	*output;
@@ -86,6 +87,7 @@ typedef struct s_minishell{
 	t_env	*env;
 	t_cmd_struct	**cmd;
 	int		nb_of_cmd;
+	int		nb_of_words;
 	int	pipe[2];
 	int	save_stdin;
 	int	save_stdout;
@@ -132,6 +134,7 @@ int	ft_execution(t_minishell *shell);
 void    ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
 void    ft_exit_free(char *msg, t_minishell *shell, int stop);
+void    ft_get_nb_of_words(t_minishell *shell);
 
 /*
 void	ft_exit_msg(char *msg);
