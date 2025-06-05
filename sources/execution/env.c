@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 15:41:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 20:27:22 by yukravch         ###   ########.fr       */
+/*   Created: 2025/06/05 20:20:09 by yukravch          #+#    #+#             */
+/*   Updated: 2025/06/05 20:24:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_execution(t_minishell *shell)
+void    ft_print_env(t_env *list)
 {
-	
-	ft_init_struct_foreach_cmd(shell);
-	if (ft_strncmp("env", shell->cmd[0]->args[0], 4) == 0)
-		ft_print_env(shell->env);
-
-	return (SUCCESS);
+        while (list)
+        {
+                printf("%s", ((char *)(list->line)));
+        	printf("\n");
+                list = list->next;
+        }
 }

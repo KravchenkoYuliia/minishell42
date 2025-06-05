@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 19:30:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:24:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void    ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
 void    ft_exit_free(char *msg, t_minishell *shell, int stop);
 void    ft_get_nb_of_words(t_minishell *shell);
+void    ft_print_env(t_env *list);
 
 /*
 void	ft_exit_msg(char *msg);
