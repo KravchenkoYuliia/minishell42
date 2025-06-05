@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 16:18:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:59:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ typedef struct s_cmd_struct{
 
 } t_cmd_struct;
 
-typedef struct s_exec{
-
-	t_env	*env;
-} t_exec;
 
 typedef	struct	s_env{
 
@@ -135,6 +131,7 @@ void	ft_fill_env(t_env **env_list, char **env);
 int	ft_execution(t_minishell *shell);
 void    ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
+void    ft_exit(char *msg, t_minishell *shell);
 
 /*
 void	ft_exit_msg(char *msg);
@@ -153,8 +150,9 @@ int	ft_pwd(t_exec* exec, int str_index);*/
 
 //free_handler
 /////////////////
-void free_token_list(t_token *head);
-void    ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
+void	free_token_list(t_token *head);
+void	ft_free_env(t_env *head);
+void	ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
 /////////////////
 
 #endif

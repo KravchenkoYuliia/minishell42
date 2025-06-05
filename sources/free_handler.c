@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/27 11:47:08 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:56:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@ void free_token_list(t_token *head)
 		head = head->next;
 		free(tmp->value);
 		free(tmp);
+	}
+}
+
+void ft_free_env(t_env *head)
+{
+	t_env *temp;
+
+	if (!head)
+		return ;
+	while (head)
+	{
+		temp = head;
+		head = head->next;
+		free(temp->line);
+		free(temp);
 	}
 }
 

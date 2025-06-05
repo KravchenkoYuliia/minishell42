@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/05 16:19:09 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/05 16:58:15 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ FILES = 	main.c	env/copy_env.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \
 			execution/execution.c \
 			execution/utils.c execution/init.c \
+			execution/exit.c
 			#execution/exit_msg.c \
 			execution/built_in_1.c \
 			execution/child_process.c \

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 16:59:07 by yukravch         ###   ########.fr       */
+/*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
+/*   Updated: 2025/06/05 17:04:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_malloc_struct_foreach_cmd(t_minishell *shell, t_cmd_struct **cmd, int nb)
+void	ft_exit(char *msg, t_minishell *shell)
 {
-
-	cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct) * nb);
-	if (!cmd)
-		ft_exit("Malloc failed in malloc_struct_foreach_cmd", shell);
-}
-
-void	ft_init_struct_foreach_cmd(t_minishell *shell)
-{
-	ft_get_nb_of_cmd(shell);
-	ft_malloc_struct_foreach_cmd(shell, shell->cmd, shell->nb_of_cmd);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	if (shell->token_lst)
+		free_token_list(shell->token_lst);
+	if (shell->env)
+		ft_free_env(shell->env);
+	if (shell->cmd)
+		ft_free_struct_foreach_cmd(shell->cmd, shell->nb_of_cmd);
+	exit(shell->exit_status);
 }
