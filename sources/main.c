@@ -6,31 +6,29 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/04 18:16:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:45:33 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_init_minishell(t_minishell **all, char **env)
+void	ft_init_minishell(t_minishell **shell, char **env)
 {
-	*all = (t_minishell *)malloc(sizeof(t_minishell));
-	if (!*all)
+	*shell = (t_minishell *)malloc(sizeof(t_minishell));
+	if (!*shell)
 		exit(EXIT_FAILURE);
-	(*all)->exit_status = 0;
-	ft_fill_env(&(*all)->env, env);
-	//ft_print_list_env((*all)->env);
+	(*shell)->exit_status = 0;
+	ft_fill_env(&(*shell)->env, env);
+	//ft_print_list_env((*shell)->env);
 }
 
 int main(int ac, char **av, char **env)
 {
-	t_minishell	*all;
-	t_token	*token_lst;
-	char	*input;
+	t_minishell	*shell;
 	(void)av;
 	
-	all = NULL;
-	ft_init_minishell(&all, env);
+	shell = NULL;
+	ft_init_minishell(&shell, env);
 	if (ac != 1)
 	{	
 		return(0);
@@ -39,24 +37,24 @@ int main(int ac, char **av, char **env)
 	t_token *cursor;
 	while (1)
 	{
-		input = readline(SHELL_NAME);
-		if (input && *input)
-			add_history(input);
-		if (ft_lexer(input))
+		shell->input = readline(SHELL_NAME);
+		if (shell->input)
+			add_history(shell->input);
+		if (ft_lexer(shell->input))
 		{
-			token_lst = ft_parser(input);
-			if (!token_lst)
+			shell->token_lst = ft_parser(shell->input);
+			if (!shell->token_lst)
 				printf("input empty\n");
-			cursor = token_lst;
+			cursor = shell->token_lst;
 			while(cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}
-			ft_execution(all, token_lst);	
-			//free_token_list(token_lst);
+			ft_execution(shell, shell->token_lst);	
+			//free_token_list(shell->token_lst);
 		}
-		free(input);
+		free(shell->input);
 	}
 	return (0);
 }

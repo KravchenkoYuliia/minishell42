@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/04 09:31:05 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:23:59 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start)
 		if ((sp % 2 != 0 || db % 2 != 0))
 			in_quote = true;
 		else
-			in_quote = false;
+			break;
 	}
 	value_buf[buf_start] = '\0';
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:14:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 13:09:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:18:45 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int     ft_count_cmds(t_token *tokens)
         temp = tokens;
         while (temp)
         {
-                if (temp->type == CMD)
+                if (temp->type == WORD)
                         i++;
                 temp = temp->next;
         }

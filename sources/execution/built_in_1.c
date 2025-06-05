@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:11:41 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/04 09:21:20 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:44:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char*   ft_get_home_path(char** env)
 }
 
 
-int     ft_cd(t_exec* exec, int str_index)
+int     ft_cd(t_exec *exec, int str_index)
 {
 	/*
 	args[0] == cd

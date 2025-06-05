@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/04 18:20:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:43:31 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@
 # include <fcntl.h>
 
 typedef struct s_env t_env;
-
-typedef struct s_minishell{
-
-	t_env	*env;
-	int	exit_status;
-
-} t_minishell;
-
 
 typedef	struct	s_env{
 
@@ -93,6 +85,15 @@ typedef struct s_exec{
 	int	save_stdout;
 	t_env	*env;
 } t_exec;
+
+typedef struct s_minishell{
+
+	char	*input;
+	t_token	*token_lst;
+	t_env	*env;
+	int	exit_status;
+
+} t_minishell;
 
 //lexer
 /////////////////
