@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/05 16:48:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:10:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	if (!*shell)
 		exit(EXIT_FAILURE);
 	(*shell)->exit_status = 0;
+	(*shell)->env = NULL;
 	ft_fill_env(&(*shell)->env, env);
 	//ft_print_list_env((*shell)->env);
 }
