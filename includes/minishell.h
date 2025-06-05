@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 12:29:49 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:18:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,8 @@ typedef struct s_cmd_struct{
 
 typedef struct s_exec{
 
-	t_cmd_struct	**cmd;
-	int		nb_of_cmd;
-	int	pipe[2];
-	int	save_stdin;
-	int	save_stdout;
 	t_env	*env;
 } t_exec;
-
-typedef struct s_minishell{
-
-	char	*input;
-	t_token	*token_lst;
-	t_env	*env;
-	int	exit_status;
-
-} t_minishell;
 
 typedef	struct	s_env{
 
@@ -94,6 +80,24 @@ typedef	struct	s_env{
 	t_env	*next;
 
 } t_env;
+
+typedef struct s_minishell{
+
+	char	*input;
+	t_token	*token_lst;
+	int	exit_status;
+	
+	t_env	*env;
+	t_cmd_struct	**cmd;
+	int		nb_of_cmd;
+	int	pipe[2];
+	int	save_stdin;
+	int	save_stdout;
+
+} t_minishell;
+
+
+
 
 //lexer
 /////////////////
@@ -127,23 +131,24 @@ bool	ft_redirs_lim(char c);
 
 //execution
 /////////////////
-void    ft_fill_env(t_env **env_list, char **env);
-int	ft_execution(t_minishell *all, t_token *tokens);
+void	ft_fill_env(t_env **env_list, char **env);
+int	ft_execution(t_minishell *shell);
+void    ft_init_struct_foreach_cmd(t_minishell *shell);
+void	ft_get_nb_of_cmd(t_minishell *shell);
+
+/*
 void	ft_exit_msg(char *msg);
 void    ft_child_error_msg(char *msg);
-int     ft_count_cmds(t_token *tokens);
 void    ft_malloc_struct_foreach_cmd(t_cmd_struct ***struct_for_cmds, int nb_of_cmd);
-void    ft_initialize_struct_foreach_cmd(t_cmd_struct **cmds, int nb);
 void    ft_fill_struct_foreach_cmd(t_token *tokens, t_cmd_struct **cmds, int nb);
 int	ft_check_if_build_in_cmd(t_exec *exec, int i);
 int	ft_exit(t_exec *exec, int str_index);
 int     ft_child_process(t_exec *exec, int i);
 int     ft_child_for_last_cmd(t_exec *exec, int i);
 void    ft_save_STD_FILENO(t_exec *exec);
-void    ft_init_exec(t_exec **exec, t_cmd_struct **struct_for_cmd, int nb_of_cmd, t_minishell *all);
 int		ft_isdigit_str(char *str);
 int	ft_cd(t_exec* exec, int str_index);
-int	ft_pwd(t_exec* exec, int str_index);
+int	ft_pwd(t_exec* exec, int str_index);*/
 /////////////////
 
 //free_handler
