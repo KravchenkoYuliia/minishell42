@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 08:43:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:29:49 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@
 # include <fcntl.h>
 
 typedef struct s_env t_env;
-
-typedef	struct	s_env{
-
-	char	*line;
-	t_env	*next;
-
-} t_env;
 
 typedef struct s_token
 {
@@ -95,15 +88,19 @@ typedef struct s_minishell{
 
 } t_minishell;
 
+typedef	struct	s_env{
+
+	char	*line;
+	t_env	*next;
+
+} t_env;
+
 //lexer
 /////////////////
 bool	ft_lexer(char *input);
 bool	ft_check_unclosed_quotes(char *input);
 bool 	ft_check_pipes(char *input);
-bool 	ft_check_redir_heredoc(char *input);
-bool 	ft_check_redir_append(char *input);
-bool 	ft_check_redir_input(char *input);
-bool 	ft_check_redir_output(char *input);
+int 	ft_check_redirs(char *input);
 void	lexer_err_handler(int err_code, char c);
 /////////////////
 
