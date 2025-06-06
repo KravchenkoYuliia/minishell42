@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/06 15:56:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:33:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int main(int ac, char **av, char **env)
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}
-			ft_execution(shell);
+			if (shell->token_lst)
+				ft_execution(shell);
 			//free_token_list(shell->token_lst);
 		}
 	}
