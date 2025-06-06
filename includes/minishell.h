@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 15:54:39 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:05:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,12 @@ void	ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_exit_free(char *msg, t_minishell *shell, int stop);
 void	ft_error_msg(char *msg);
 void	ft_get_nb_of_words(t_minishell *shell);
-int	ft_env(t_minishell *shell, int stop);
 void	ft_parent_process(t_minishell *shell);
 void	ft_save_STD_FILENO(t_minishell *shell);
+
+int	ft_env(t_minishell *shell, int stop);
+int	ft_echo(t_minishell *shell, int stop);
+
 /*
 void	ft_exit_msg(char *msg);
 void    ft_child_error_msg(char *msg);

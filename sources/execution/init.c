@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 15:50:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:42:23 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->args = NULL;
 		ft_get_nb_of_words(shell);
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *) * (shell->cmd[i]->nb_of_words + 1));
+		shell->cmd[i]->args[0] = NULL;
 		ft_bzero(shell->cmd[i]->input, PATH_MAX);
 		ft_bzero(shell->cmd[i]->output, PATH_MAX);
 		shell->cmd[i]->append = 0;

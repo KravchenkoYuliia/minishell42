@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 15:46:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:39:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd)
 		"export", "unset", "env", "exit"};
 
 	int	(*ft_built_in_functions[])(t_minishell *, int) = {
-		NULL, NULL, NULL, NULL, NULL, &ft_env,
+		&ft_echo, NULL, NULL, NULL, NULL, &ft_env,
 		NULL
 	};
 
@@ -38,7 +38,7 @@ void	ft_parent_process(t_minishell *shell)
 	
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
-	if (shell->cmd[0]->pipe == 0)
+	if (shell->cmd[0]->pipe == 0 && shell->cmd[0]->args[0])
 		ft_execute_one_cmd(shell, shell->cmd[0]->args[0]);
 	/*else
 	{
