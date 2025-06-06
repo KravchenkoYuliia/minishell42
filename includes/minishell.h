@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 16:05:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:17:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,16 @@ int	ft_execution(t_minishell *shell);
 void	ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_exit_free(char *msg, t_minishell *shell, int stop);
-void	ft_error_msg(char *msg);
+void	ft_error_msg(char *shell_name, char *msg);
 void	ft_get_nb_of_words(t_minishell *shell);
 void	ft_parent_process(t_minishell *shell);
 void	ft_save_STD_FILENO(t_minishell *shell);
 
-int	ft_env(t_minishell *shell, int stop);
-int	ft_echo(t_minishell *shell, int stop);
+int	ft_env(t_minishell *shell, int index);
+int	ft_echo(t_minishell *shell, int index);
+int	ft_cd(t_minishell *shell, int index);
+char	*ft_get_home_path(t_env *env);
+
 
 /*
 void	ft_exit_msg(char *msg);

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 16:19:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:23:54 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,38 @@ int	ft_echo(t_minishell *shell, int index)
 	return (0);
 }
 
+int	ft_cd(t_minishell *shell, int index)
+{
+	char	directory[PATH_MAX];
+	//char	*temp;
+
+
+	if (!shell->cmd[index]->args[1])
+		ft_strcpy(directory, ft_get_home_path(shell->env));
+	else if (shell->cmd[index]->args[1])
+	{
+		ft_strcpy(directory, shell->cmd[index]->args[1]);
+		if (shell->cmd[index]->args[2])
+		{
+			ft_error_msg(SHELL_NAME, "cd: too many arguments");
+			return (1);
+		}
+	}
+	if (chdir(directory) != 0)
+	{
+		perror(SHELL_NAME);
+		return (1);
+	}
+	return (0);
+}
+
 int     ft_env(t_minishell *shell, int index)
 {
         t_env   *list;
 
         if (shell->cmd[index]->args[1])
         {
-                ft_error_msg("env with no options or arguments :)");
+                ft_error_msg(NULL, "env with no options or arguments :)");
                 return (1);
         }
         list = shell->env;

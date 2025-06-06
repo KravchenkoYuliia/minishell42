@@ -6,14 +6,16 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 15:56:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:25:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_error_msg(char *msg)
+void	ft_error_msg(char *shell_name, char *msg)
 {
+	if (shell_name)
+		write(2, shell_name, ft_strlen(shell_name));
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 }
