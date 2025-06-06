@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 14:21:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:50:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,9 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 		if (temp->type == WORD)
 		{
 			shell->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
-			printf("struct[%d] has args[%d]= %s\n", i_struct, i_args, shell->cmd[i_struct]->args[i_args]);
 			i_args++;
 			if (i_args == shell->cmd[i_struct]->nb_of_words)
-			{
 				shell->cmd[i_struct]->args[i_args] = NULL;
-				printf("struct[%d] has args[%d]= %s\n", i_struct,  i_args, shell->cmd[i_struct]->args[i_args]);
-			}
 		}
 		else if (temp->type == INPUT)
 			ft_strcpy(shell->cmd[i_struct]->input,
@@ -103,4 +99,6 @@ void	ft_init_struct_foreach_cmd(t_minishell *shell)
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_start_value(shell);
 	ft_fill_cmd_struct(shell);
+	free_token_list(shell->token_lst);
+	shell->token_lst = NULL;
 }

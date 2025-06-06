@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 14:17:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:51:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_get_nb_of_cmd(t_minishell *shell)
 		temp = temp->next;
 	}
 	shell->nb_of_cmd = i;
-	printf("nb of cmd = %d\n", i);
 }
 
 
@@ -74,4 +73,12 @@ void	ft_get_nb_of_words(t_minishell *shell)
 		if (temp)
 			temp = temp->next;
 	}
+}
+
+void    ft_save_STD_FILENO(t_minishell *shell)
+{
+	dup2(shell->save_stdin, STDIN_FILENO);
+	dup2(shell->save_stdout, STDOUT_FILENO);
+	close(shell->save_stdin);
+	close(shell->save_stdout);
 }

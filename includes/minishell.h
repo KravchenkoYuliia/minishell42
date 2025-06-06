@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 14:03:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:54:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,14 @@ bool	ft_redirs_lim(char c);
 /////////////////
 void	ft_fill_env(t_env **env_list, char **env);
 int	ft_execution(t_minishell *shell);
-void    ft_init_struct_foreach_cmd(t_minishell *shell);
+void	ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
-void    ft_exit_free(char *msg, t_minishell *shell, int stop);
-void    ft_get_nb_of_words(t_minishell *shell);
-void    ft_print_env(t_env *list);
-
+void	ft_exit_free(char *msg, t_minishell *shell, int stop);
+void	ft_error_msg(char *msg);
+void	ft_get_nb_of_words(t_minishell *shell);
+int	ft_env(t_minishell *shell, int stop);
+void	ft_parent_process(t_minishell *shell);
+void	ft_save_STD_FILENO(t_minishell *shell);
 /*
 void	ft_exit_msg(char *msg);
 void    ft_child_error_msg(char *msg);

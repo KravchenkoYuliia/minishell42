@@ -6,11 +6,17 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 17:53:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:56:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_error_msg(char *msg)
+{
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+}
 
 void	ft_exit_free(char *msg, t_minishell *shell, int stop)
 {
