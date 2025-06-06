@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 19:46:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:17:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,33 @@
 void	ft_get_nb_of_cmd(t_minishell *shell)
 {
 	int	i;
-	bool	cmd_is_on;
 	t_token	*temp;
 
 	i = 0;
-	cmd_is_on = false;
 	temp = shell->token_lst;
+	if (temp)
+		i = 1;
 	while (temp)
 	{
 		if (temp->type == PIPE)
-			cmd_is_on = false;
-		if (temp->type == WORD && cmd_is_on == false)
-		{
-			i++;
-			cmd_is_on = true;
-		}
+			i++;;
 		temp = temp->next;
 	}
 	shell->nb_of_cmd = i;
 	printf("nb of cmd = %d\n", i);
+}
+
+
+void	ft_init_nb_of_words(t_minishell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->nb_of_cmd && shell->cmd[i])
+	{
+		shell->cmd[i]->nb_of_words = 0;
+		i++;
+	}
 }
 
 void	ft_get_nb_of_words(t_minishell *shell)
@@ -47,6 +55,7 @@ void	ft_get_nb_of_words(t_minishell *shell)
 	i_struct = 0;
 	word_is_on = false;
 	temp = shell->token_lst;
+	ft_init_nb_of_words(shell);
 	while (temp)
 	{
 		while (temp && temp->type == WORD)
@@ -65,5 +74,4 @@ void	ft_get_nb_of_words(t_minishell *shell)
 		if (temp)
 			temp = temp->next;
 	}
-
 }

@@ -6,12 +6,12 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/05 20:23:37 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/06 12:26:10 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3
+CFLAGS = -Wall -Werror -Wextra $(INC_DIR) -g3
 LIBFT = libft42/libft.a
 
 all: $(LIBFT) $(NAME)
@@ -28,7 +28,7 @@ all: $(LIBFT) $(NAME)
 
 SRC_DIR = sources
 OBJ_DIR = objects
-INC_DIR = includes
+INC_DIR = -I includes -I libft42/includes
 
 FILES = 	main.c	env/copy_env.c \
 			free_handler.c \

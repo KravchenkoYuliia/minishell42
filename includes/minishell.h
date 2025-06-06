@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 20:24:15 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:03:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # define SUCCESS 0
 # define SHELL_NAME "toupetishell🤏: "
 
-# include "../libft42/includes/ft_printf.h"
-# include "../libft42/includes/get_next_line.h"
-# include "../libft42/includes/libft.h"
+# include "ft_printf.h"
+# include "get_next_line.h"
+# include "libft.h"
 
 # include <errno.h>
 # include <unistd.h>
@@ -35,6 +35,8 @@
 # include <stdbool.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <limits.h>
+
 
 typedef struct s_env t_env;
 
@@ -61,8 +63,8 @@ typedef struct s_cmd_struct{
 
 	int	nb_of_words;
 	char	**args;
-	char	*input;
-	char	*output;
+	char	input[PATH_MAX];
+	char	output[PATH_MAX];
 	int	append;
 	int	heredoc;
 	int	pipe;
@@ -87,7 +89,6 @@ typedef struct s_minishell{
 	t_env	*env;
 	t_cmd_struct	**cmd;
 	int		nb_of_cmd;
-	int		nb_of_words;
 	int	pipe[2];
 	int	save_stdin;
 	int	save_stdout;

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/05 20:08:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:21:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell, t_cmd_struct ***cmd, int n
 	int	i;
 
 	i = 0;
+	
+
 	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * nb);
 	if (!*cmd)
 		ft_exit_free("Malloc failed in malloc_struct_foreach_cmd", shell, nb);
@@ -43,8 +45,8 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->args = NULL;
 		ft_get_nb_of_words(shell);
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *) * (shell->cmd[i]->nb_of_words + 1));
-		shell->cmd[i]->input = NULL;
-		shell->cmd[i]->output = NULL;
+		ft_bzero(shell->cmd[i]->input, PATH_MAX);
+		ft_bzero(shell->cmd[i]->output, PATH_MAX);
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
 		shell->cmd[i]->pipe = 0;
@@ -75,10 +77,10 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 			}
 		}
 		else if (temp->type == INPUT)
-			shell->cmd[i_struct]->input = ft_strcpy(shell->cmd[i_struct]->input,
+			ft_strcpy(shell->cmd[i_struct]->input,
 					temp->value);
 		else if (temp->type == OUTPUT)
-			shell->cmd[i_struct]->output = ft_strcpy(shell->cmd[i_struct]->output,
+			ft_strcpy(shell->cmd[i_struct]->output,
 					temp->value);
 		else if (temp->type == APPEND)
 			shell->cmd[i_struct]->append = 1;
