@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 17:23:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:30:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ int	ft_echo(t_minishell *shell, int index)
 	return (0);
 }
 
+void	ft_printf_env(t_env *env)
+{
+	t_env* list = env;
+	while (list)
+        {
+                printf("%s", ((char *)(list->line)));
+                printf("\n");
+                list = list->next;
+        }
+}
+
+
 int	ft_cd(t_minishell *shell, int index)
 {
 	char	directory[PATH_MAX];
@@ -79,6 +91,20 @@ int	ft_cd(t_minishell *shell, int index)
 		perror(SHELL_NAME);
 		return (1);
 	}
+	ft_change_pwd(shell->env, directory);
+	ft_printf_env(shell->env);
+	return (0);
+}
+
+int	ft_pwd(t_minishell *shell, int	index)
+{
+	(void) shell;
+	(void) index;
+	char	buffer[PATH_MAX];
+	
+	if (getcwd(buffer, PATH_MAX) == NULL)
+		return (1);
+	printf("%s\n", buffer);
 	return (0);
 }
 

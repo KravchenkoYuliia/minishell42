@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 17:17:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:00:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
 int	ft_cd(t_minishell *shell, int index);
 char	*ft_get_home_path(t_env *env);
+int	ft_pwd(t_minishell *shell, int index);
+void    ft_change_pwd(t_env *env, char *directory);
 
 
 /*
