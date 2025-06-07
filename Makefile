@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/06 16:51:14 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/07 17:17:50 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ FILES = 	main.c	env/copy_env.c \
 			execution/execution.c \
 			execution/utils.c execution/init.c \
 			execution/exit.c execution/parent_process.c \
-			execution/built_in.c execution/built_in_utils.c
+			execution/built_in.c execution/built_in_utils.c \
+			execution/built_in_1.c execution/built_in_utils_1.c
 		 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

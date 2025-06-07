@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/07 16:14:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 18:10:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 
 
 typedef struct s_env t_env;
+typedef struct s_export t_export;
 
 typedef struct s_token
 {
@@ -131,6 +132,15 @@ bool	ft_redirs_lim(char c);
 //execution
 /////////////////
 void	ft_fill_env(t_env **env_list, char **env);
+t_env	*ft_lstlast_env(t_env *lst);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
+t_env	*ft_lstnew_env(void *content);
+void	ft_print_env(t_env *env);
+
+
+
+
+
 int	ft_execution(t_minishell *shell);
 void	ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
@@ -139,13 +149,20 @@ void	ft_error_msg(char *shell_name, char *msg);
 void	ft_get_nb_of_words(t_minishell *shell);
 void	ft_parent_process(t_minishell *shell);
 void	ft_save_STD_FILENO(t_minishell *shell);
+void    ft_change_pwd(t_env *env, char *directory);
+bool	ft_is_option(char *args);
+char	*ft_get_home_path(t_env *env);
+int	ft_just_export(t_env *env);
+int	ft_export_value(t_minishell *shell, int index);
+
 
 int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
 int	ft_cd(t_minishell *shell, int index);
-char	*ft_get_home_path(t_env *env);
 int	ft_pwd(t_minishell *shell, int index);
-void    ft_change_pwd(t_env *env, char *directory);
+int	ft_export(t_minishell *shell, int index);
+int	ft_unset(t_minishell *shell, int index);
+int	ft_exit(t_minishell *shell, int index);
 
 
 /*

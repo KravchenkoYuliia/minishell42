@@ -6,11 +6,27 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:50:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/07 17:01:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:14:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool    ft_is_option(char *args)
+{
+	int     i;
+
+	i = 1;
+	if (args[0] != '-')
+		return (false);
+	while (args[i])
+	{
+		if (args[i] != 'n')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 char*   ft_get_home_path(t_env *env)
 {

@@ -6,27 +6,11 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/07 16:55:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:15:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	ft_is_option(char *args)
-{
-	int	i;
-
-	i = 1;
-	if (args[0] != '-')
-		return (false);
-	while (args[i])
-	{
-		if (args[i] != 'n')
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 int	ft_echo(t_minishell *shell, int index)
 {
@@ -56,18 +40,6 @@ int	ft_echo(t_minishell *shell, int index)
 		printf("\n");
 	return (0);
 }
-
-void	ft_printf_env(t_env *env)
-{
-	t_env* list = env;
-	while (list)
-        {
-                printf("%s", ((char *)(list->line)));
-                printf("\n");
-                list = list->next;
-        }
-}
-
 
 int	ft_cd(t_minishell *shell, int index)
 {
