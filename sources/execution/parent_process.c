@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/07 15:28:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:18:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd)
 		if ((ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))
 		{
 			ft_built_in_functions[i](shell, 0);
-			return ;
+				return ;
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:50:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 17:59:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:01:57 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,23 @@ char*   ft_get_home_path(t_env *env)
 
 void	ft_change_pwd(t_env *env, char *directory)
 {
+	bool	flag;
 	t_env	*temp;
 	char	oldpwd[PATH_MAX];
+	char	newpwd[PATH_MAX];
 
+	flag = false;
 	temp = env;
 	ft_bzero(oldpwd, PATH_MAX);
 	while (temp)
 	{
-		if (ft_strncmp(temp->line, "PWD=", 5) == 0)
-			ft_strcpy(oldpwd, temp->line);
-		if (oldpwd[0] != '\0' && ft_strncmp(temp->line, "OLDPWD=", 8) == 0)
+		if (ft_strncmp(temp->line, "PWD=", 4) == 0 && flag == false)
+		{
+			flag = true;
+			ft_strcpy(oldpwd, "OLDPWD=");
+			ft_strcpy(oldpwd + 7, temp->line + 4);
+		}
+		if (oldpwd[0] != '\0' && ft_strncmp(temp->line, "OLDPWD=", 7) == 0)
 		{
 			free(temp->line);
 			temp->line = ft_strdup(oldpwd);
@@ -47,10 +54,12 @@ void	ft_change_pwd(t_env *env, char *directory)
 	temp = env;
 	while (temp)
 	{
-		if (ft_strncmp(temp->line, "PWD=", 5) == 0)
+		if (ft_strncmp(temp->line, "PWD=", 4) == 0)
 		{
+			ft_strcpy(newpwd, "PWD=");
+			ft_strcpy(newpwd + 4, directory);
 			free(temp->line);
-			temp->line = ft_strdup(directory);
+			temp->line = ft_strdup(newpwd);
 		}
 		temp = temp->next;
 	}

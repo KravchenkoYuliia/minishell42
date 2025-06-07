@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 17:25:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:16:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ void	ft_exit_free(char *msg, t_minishell *shell, int stop)
 	int	status;
 
 	status = shell->exit_status;
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, "\n", 1);
+	}
 	if (shell->token_lst)
 		free_token_list(shell->token_lst);
 	if (shell->env)
