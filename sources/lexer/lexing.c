@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/09 14:59:41 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:13:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ bool ft_check_pipes(char *input)
 	return (true);
 }
 
-/* bool	ft_check_redirs(char *input)
+int	ft_check_redirs(char *input)
 {
 	int		i;
+	bool	is_empty;
 
 	i = 0;
+	is_empty = false;
 	while (input[i])
 	{
 		if (input[i] == '>' || input[i] == '<')
@@ -69,26 +71,41 @@ bool ft_check_pipes(char *input)
 				i++;
 			while (input[i] && input[i] == ' ')
 				i++;
-			if (input[i] == '|')
-				return (false);
+			if (input[i] == '|' || input[i] == '\0' || (input[i] == 34 && input[i + 1] == 34) || (input[i] == 39 && input[i + 1] == 39) ||
+			input[i] == '>' || input[i] == '<')
+			{
+				is_empty = true;
+				break;
+			}
+			i++;
 		}
 		i++;
 	}
-	if (input[i] == '\0')
-		return (false);
-	else
-		return (true);
-} */
+	if (is_empty)
+		return (i);
+	return (-1);
+}
 
 bool	ft_lexer(char *input)
 {
+	int	redir_check;
+	
+	redir_check = ft_check_redirs(input);
 	if (!input)
 		return (false);
 	if (!ft_check_unclosed_quotes(input))
-		return (lexer_err_handler(1), false);
+		return (lexer_err_handler(1, 'c'), false);
 	if (!ft_check_pipes(input))
-		return (lexer_err_handler(2), false);
-	/* if (!ft_check_redirs(input))
-			return (lexer_err_handler(3), false); */
+		return (lexer_err_handler(2, 'c'), false);
+	if (redir_check != -1)
+	{
+		if (input[redir_check] == '\0' || input[redir_check] == 34 || input[redir_check] == 39)
+		{
+			printf("toupetishell🤏​: syntax error near unexpected token 'new_line'\n");
+			return (false);
+		}	
+		else
+			return (lexer_err_handler(3, input[ft_check_redirs(input)]), false);
+	}
 	return (true);
 }

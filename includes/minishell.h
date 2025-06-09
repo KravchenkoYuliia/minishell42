@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/09 14:05:57 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:37:53 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ typedef struct s_minishell{
 bool	ft_lexer(char *input);
 bool	ft_check_unclosed_quotes(char *input);
 bool 	ft_check_pipes(char *input);
-bool	ft_check_redirs(char *input);
-void	lexer_err_handler(int err_code);
+int		ft_check_redirs(char *input);
+void	lexer_err_handler(int err_code, char c);
 /////////////////
 
 //parser
