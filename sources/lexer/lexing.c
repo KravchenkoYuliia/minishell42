@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing_a.c                                         :+:      :+:    :+:   */
+/*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/05 14:57:08 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:59:41 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,42 @@ bool ft_check_pipes(char *input)
 	}
 	return (true);
 }
-	
+
+/* bool	ft_check_redirs(char *input)
+{
+	int		i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '>' || input[i] == '<')
+		{
+			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
+				i += 2;
+			else
+				i++;
+			while (input[i] && input[i] == ' ')
+				i++;
+			if (input[i] == '|')
+				return (false);
+		}
+		i++;
+	}
+	if (input[i] == '\0')
+		return (false);
+	else
+		return (true);
+} */
+
 bool	ft_lexer(char *input)
 {
 	if (!input)
 		return (false);
 	if (!ft_check_unclosed_quotes(input))
-		return (lexer_err_handler(1, 'c'), false);
+		return (lexer_err_handler(1), false);
 	if (!ft_check_pipes(input))
-		return (lexer_err_handler(2, '|'), false);
-	if (ft_check_redirs(input) != -1)
-			return (lexer_err_handler(2, input[ft_check_redirs(input)]), false);
+		return (lexer_err_handler(2), false);
+	/* if (!ft_check_redirs(input))
+			return (lexer_err_handler(3), false); */
 	return (true);
 }

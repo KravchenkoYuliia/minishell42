@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/07 18:10:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:05:57 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define SUCCESS 0
 # define SHELL_NAME "toupetishell🤏: "
 # define SHELL_NAME_ERROR "toupetishell🤏"
+
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "libft.h"
@@ -40,6 +41,7 @@
 
 typedef struct s_env t_env;
 typedef struct s_export t_export;
+typedef struct s_token t_token;
 
 typedef struct s_token
 {
@@ -47,7 +49,7 @@ typedef struct s_token
 	//enum e_type	type;	
 	int		type;
 	int		incr;
-	void	*next;
+	t_token	*next;
 }			t_token;
 
 enum e_type
@@ -104,8 +106,8 @@ typedef struct s_minishell{
 bool	ft_lexer(char *input);
 bool	ft_check_unclosed_quotes(char *input);
 bool 	ft_check_pipes(char *input);
-int 	ft_check_redirs(char *input);
-void	lexer_err_handler(int err_code, char c);
+bool	ft_check_redirs(char *input);
+void	lexer_err_handler(int err_code);
 /////////////////
 
 //parser

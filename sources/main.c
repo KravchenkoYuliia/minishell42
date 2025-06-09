@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/07 18:18:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:18:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		shell->input = readline(SHELL_NAME);
-		if (shell->input)
+		if (shell->input && *shell->input)
 			add_history(shell->input);
 		if (ft_lexer(shell->input))
 		{
