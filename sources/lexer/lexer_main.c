@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   lexer_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/09 16:13:50 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:13:56 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,9 @@ bool ft_check_pipes(char *input)
 
 int	ft_check_redirs(char *input)
 {
-	int		i;
-	bool	is_empty;
+	size_t	i;
 
 	i = 0;
-	is_empty = false;
 	while (input[i])
 	{
 		if (input[i] == '>' || input[i] == '<')
@@ -73,16 +71,11 @@ int	ft_check_redirs(char *input)
 				i++;
 			if (input[i] == '|' || input[i] == '\0' || (input[i] == 34 && input[i + 1] == 34) || (input[i] == 39 && input[i + 1] == 39) ||
 			input[i] == '>' || input[i] == '<')
-			{
-				is_empty = true;
-				break;
-			}
+				return (i);
 			i++;
 		}
 		i++;
 	}
-	if (is_empty)
-		return (i);
 	return (-1);
 }
 

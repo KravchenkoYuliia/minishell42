@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/05 10:10:00 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/10 08:30:23 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start)
 		else if (input[start] == 34 && sp % 2 == 0)
 			db++;
 		value_buf[buf_start++] = input[start++];
-		if ((sp % 2 != 0 || db % 2 != 0) || (input[start] == 39 || input[start] == 34))
+		if ((sp % 2 != 0 || db % 2 != 0) || (input[start] == 39 || input[start] == 34) || ft_isalnum(input[start]))
 				in_quote = true;
 		else
 			break;
@@ -65,7 +65,10 @@ t_token	*ft_if_command(char *input, int start)
 			&& input[start] != 60 && input[start] != 62 && input[start] != 32)
 			&& input[start])
 		value_buf[j++] = input[start++];
-	value_buf[j] = '\0';
+	if (input[start] == 39 || input[start] == 34)
+		ft_if_quotes_b(input, start, value_buf, j);
+	else
+		value_buf[j] = '\0';
 	token = new_token_nd(value_buf, WORD, ft_strlen(value_buf));
 	return (token);
 }

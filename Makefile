@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/09 14:36:36 by lfournie         ###   ########.fr        #
+#    Updated: 2025/06/10 10:15:27 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ INC_DIR = -I includes -I libft42/includes
 
 FILES = 	main.c	env/copy_env.c \
 			free_handler.c \
-			lexer/lexing.c lexer/lexer_err_handler.c \
-			parser/parsing_main.c parser/parsing_a.c parser/parsing_b.c \
+			lexer/lexer_main.c lexer/lexer_err_handler.c \
+			parser/parser_main.c parser/parsing_a.c parser/parsing_b.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \
 			execution/execution.c \
 			execution/utils.c execution/init.c \
