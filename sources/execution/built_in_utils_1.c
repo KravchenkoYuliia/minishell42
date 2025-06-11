@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:17:14 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/11 11:26:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:40:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,62 @@ char	*ft_copy_name_inenv(char *line)
 
 }
 
+bool	ft_name_exists_already(t_env *env, char	*name, char *line)
+{
+	int	i;
+	int	j;
+	t_env	*temp;
+
+	j = ft_strlen(name);
+	temp = env;
+	while (temp)
+	{
+		i = 0;
+		while (temp->line[i] && temp->line[i] != '=')
+			i++;
+		if (i >= j)
+		{	
+			if (ft_strncmp(temp->line, name, i) == 0)
+			{
+				free(temp->line);
+				temp->line = line;
+				return (true);
+			}
+		}
+		else
+		{
+			if (ft_strncmp(temp->line, name, j) == 0)
+			{
+				free(temp->line);
+				temp->line = line;
+				return (true);
+			}
+		}
+		temp = temp->next;
+	}
+	return (false);
+}
+/*
+void	ft_change_valueof_name(t_env *env, char *line)
+{
+	int	i;
+	t_env	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		i = 0;
+		while (temp->line[i] && temp->line[i] != '=')
+			i++;
+		if (ft_strncmp(temp->line, line, i) == 0)
+		{
+			free(temp->line);
+			temp->line = line;
+		}
+		temp = temp->next;
+	}
+}
+*/
 char	*ft_strjoin_export(char *str1, char *str2)
 {
 	int	i;
@@ -100,7 +156,6 @@ char	*ft_strjoin_export(char *str1, char *str2)
 	line[i] = '\"';
 	i++;
 	line[i] ='\0';
-	free(str2);
 	return (line);
 }
 

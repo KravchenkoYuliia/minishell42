@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:11:22 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/11 11:11:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:39:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int     ft_export_value(t_minishell *shell, int index)
         int     i;
         char    *line;
         t_env*  new;
+	char	*buffer;
 
         i = 1;
         while (shell->cmd[index]->args[i])
@@ -47,9 +48,19 @@ int     ft_export_value(t_minishell *shell, int index)
                 if (ft_charset(shell->cmd[index]->args[i], '=') == SUCCESS)
                 {
                         line = ft_strdup(shell->cmd[index]->args[i]);
-                        //if line "name=" == temp->line -> unset temp->line
-                        new = ft_lstnew_env(line);
-                        ft_lstadd_back_env(&shell->env, new);
+			buffer = ft_copy_name_inenv(line);
+			if (ft_name_exists_already(shell->env, buffer, line) == true)
+			{
+				free(buffer);
+				break ;
+			}
+				//ft_change_valueof_name(shell->env, line);
+			else
+			{
+				new = ft_lstnew_env(line);
+				ft_lstadd_back_env(&shell->env, new);
+			}
+			free(buffer);
                 }
                 i++;
         }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/11 11:21:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:40:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,9 @@ int	ft_export_value(t_minishell *shell, int index);
 bool	ft_unset_or_not_unset(char *env_line, char **args);
 char	*ft_strjoin_export(char *str1, char *str2);
 int	ft_charset(char *str, char c);
-
-
+char	*ft_copy_name_inenv(char *line);
+bool	ft_name_exists_already(t_env *env, char *name, char *line);
+void	ft_change_valueof_name(t_env *env, char *line);
 
 int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
