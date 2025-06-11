@@ -19,6 +19,8 @@ bool    ft_is_option(char *args)
 	i = 1;
 	if (args[0] != '-')
 		return (false);
+	if (!args[i])
+		return (false);
 	while (args[i])
 	{
 		if (args[i] != 'n')
