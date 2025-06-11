@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:11:22 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/11 13:39:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:01:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ int     ft_export_value(t_minishell *shell, int index)
         i = 1;
         while (shell->cmd[index]->args[i])
         {
-                if (!ft_isalpha(shell->cmd[index]->args[i][0]))
+		if (shell->cmd[index]->args[i][0] == '-')
+		{
+			printf("%s: export: %s: invalid option\n", SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
+			shell->exit_status = 2;
+			return (ERROR);
+		}
+                if (!ft_isalpha(shell->cmd[index]->args[i][0]) && shell->cmd[index]->args[i][0] != '_')
                         printf("%s: export: `%s': not a valid identifier\n", SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
                 if (ft_charset(shell->cmd[index]->args[i], '=') == SUCCESS)
                 {
