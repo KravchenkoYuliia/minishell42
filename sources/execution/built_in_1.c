@@ -55,13 +55,7 @@ int     ft_export_value(t_minishell *shell, int index)
                 {
                         line = ft_strdup(shell->cmd[index]->args[i]);
 			buffer = ft_copy_name_inenv(line);
-			if (ft_name_exists_already(shell->env, buffer, line) == true)
-			{
-				free(buffer);
-				break ;
-			}
-				//ft_change_valueof_name(shell->env, line);
-			else
+			if (ft_name_exists_already(shell->env, buffer, line) == false)
 			{
 				new = ft_lstnew_env(line);
 				ft_lstadd_back_env(&shell->env, new);
@@ -91,15 +85,11 @@ int	ft_export(t_minishell *shell, int index)
 
 int	ft_unset(t_minishell *shell, int index)
 {
-	int	i;
 	t_env	*head;
 	t_env	*current;
 	t_env	*ex;
 	t_env	*previous;
 
-
-
-	i = 1;
 	head = shell->env;
 	if (shell->cmd[index]->args[0] && !shell->cmd[index]->args[1])
 		return (SUCCESS); //no arguments

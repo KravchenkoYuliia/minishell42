@@ -28,9 +28,6 @@ bool	ft_only_numeric(char *str)
 
 int	ft_exit(t_minishell *shell, int index)
 {
-	int	i;
-	
-	i = 0;
 	if (shell->cmd[index]->args[1])
 	{
 		printf("exit\n");
