@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/10 10:15:27 by lfournie         ###   ########.fr        #
+#    Updated: 2025/06/11 15:22:24 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ FILES = 	main.c	env/copy_env.c \
 			execution/execution.c \
 			execution/utils.c execution/init.c \
 			execution/exit.c execution/parent_process.c \
+			execution/cmd_exit.c \
 			execution/built_in.c execution/built_in_utils.c \
 			execution/built_in_1.c execution/built_in_utils_1.c
 		 
