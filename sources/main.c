@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/11 15:22:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/12 08:22:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	*shell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!*shell)
 		exit(EXIT_FAILURE);
+	(*shell)->token_lst = NULL;
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
 	ft_fill_env(&(*shell)->env, env);
@@ -44,6 +45,11 @@ int main(int ac, char **av, char **env)
 		if (ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
+			if (!shell->token_lst)
+			{
+				printf("%s Token list creation has failed\n", SHELL_NAME_ERROR);
+				//je sais pas quel code d'erreur mettre dans ce cas	
+			}
 			cursor = shell->token_lst;
 			while(cursor)
 			{
@@ -53,6 +59,8 @@ int main(int ac, char **av, char **env)
 			if (shell->token_lst)
 				ft_execution(shell);
 		}
+		else
+			shell->exit_status = 2;
 		free(shell->input);
 	}
 	return (0);

@@ -6,8 +6,9 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/10 10:16:57 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:16:46 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
