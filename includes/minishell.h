@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 15:04:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:51:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ int	ft_charset(char *str, char c);
 char	*ft_copy_name_inenv(char *line);
 bool	ft_name_exists_already(t_env *env, char *name, char *line);
 void	ft_change_valueof_name(t_env *env, char *line);
+void	ft_simple_cmd(t_minishell *shell, int index);
+char	*ft_find_absolute_path(t_minishell *shell, int index);
 
 int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
@@ -186,6 +188,7 @@ int	ft_export_forempty_env(t_minishell *shell);
 void	free_token_list(t_token *head);
 void	ft_free_env(t_env *head);
 void	ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
+void	ft_free_args(char **array);
 /////////////////
 
 #endif
