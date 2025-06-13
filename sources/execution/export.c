@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:58:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:31:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:54:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ int     ft_just_export(t_env *env)
         export = NULL;
         while (temp)
         {
-                line = ft_strjoin_export("declare -x ", temp->line);
-                new = ft_lstnew_env(line);
-                ft_lstadd_back_env(&export, new);
-                temp = temp->next;
+		if (ft_strncmp(temp->line, "_=/usr/bin/env", ft_strlen("_=/usr/bin/env")) == 0)
+			temp = temp->next;
+		if (temp)
+		{
+			line = ft_strjoin_export("declare -x ", temp->line);
+	                new = ft_lstnew_env(line);
+        	        ft_lstadd_back_env(&export, new);
+                	temp = temp->next;
+		}
         }
         ft_print_env(export);
         ft_free_env(export);
@@ -43,6 +48,12 @@ int     ft_export_value(t_minishell *shell, int index)
         i = 1;
         while (shell->cmd[index]->args[i])
         {
+		if (shell->cmd[index]->args[i][0] == '_' && shell->cmd[index]->args[i][1] == '=')
+		{
+			if (!shell->cmd[index]->args[i+1])
+				break ;
+			i++;
+		}
 		if (shell->cmd[index]->args[i][0] == '-')
 		{
 			printf("%s: export: %s: invalid option\n", SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
