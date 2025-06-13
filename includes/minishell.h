@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 17:51:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:01:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	ft_execution(t_minishell *shell);
 void	ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_exit_free(char *msg, t_minishell *shell, int stop);
-void	ft_error_msg(char *shell_name, char *msg);
+void	ft_error_msg(char *shell_name, char *cmd, char *msg);
 void	ft_get_nb_of_words(t_minishell *shell);
 void	ft_parent_process(t_minishell *shell);
 void	ft_save_STD_FILENO(t_minishell *shell);
@@ -171,6 +171,9 @@ bool	ft_name_exists_already(t_env *env, char *name, char *line);
 void	ft_change_valueof_name(t_env *env, char *line);
 void	ft_simple_cmd(t_minishell *shell, int index);
 char	*ft_find_absolute_path(t_minishell *shell, int index);
+int	ft_redirections_simple_cmd(t_minishell *shell, int index);
+int	ft_check_infile(t_minishell *shell, int index);
+
 
 int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
