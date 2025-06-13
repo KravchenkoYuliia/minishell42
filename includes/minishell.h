@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/11 12:40:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:22:54 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,13 @@ void	parser_err_handler(int err_code);
 void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start);
 void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start);
 bool	ft_redirs_lim(char c);
+/////////////////
+
+//expander
+/////////////////
+void	ft_expander(t_minishell *shell);
+void	ft_expand_var(t_minishell **shell);
+bool	ft_is_expandable(char *value, int i);
 /////////////////
 
 //execution

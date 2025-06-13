@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/12 08:22:39 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/13 13:48:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ int main(int ac, char **av, char **env)
 				printf("%s Token list creation has failed\n", SHELL_NAME_ERROR);
 				//je sais pas quel code d'erreur mettre dans ce cas	
 			}
+			//ft_expander(shell);
 			cursor = shell->token_lst;
 			while(cursor)
 			{
-				//printf("value: %s, type: %d\n", cursor->value, cursor->type);
+				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}
 			if (shell->token_lst)

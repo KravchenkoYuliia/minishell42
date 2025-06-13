@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/11 15:22:24 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/12 14:58:24 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ FILES = 	main.c	env/copy_env.c \
 			lexer/lexer_main.c lexer/lexer_err_handler.c \
 			parser/parser_main.c parser/parsing_a.c parser/parsing_b.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \
+			expander/expander_main.c \
 			execution/execution.c \
 			execution/utils.c execution/init.c \
 			execution/exit.c execution/parent_process.c \
