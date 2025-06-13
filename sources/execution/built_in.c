@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/09 15:55:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:48:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,20 @@ int	ft_echo(t_minishell *shell, int index)
 int	ft_cd(t_minishell *shell, int index)
 {
 	char	directory[PATH_MAX];
-	//char	*temp;
+	char	*home_path;
 
 
 	if (!shell->cmd[index]->args[1])
-		ft_strcpy(directory, ft_get_home_path(shell->env));
+	{
+		home_path = ft_get_home_path(shell->env);
+		if (!home_path)
+		{	
+			ft_error_msg(SHELL_NAME_ERROR, ": cd: HOME not set");
+			shell->exit_status = 1;
+			return (ERROR);
+		}
+		ft_strcpy(directory, home_path);
+	}
 	else if (shell->cmd[index]->args[1])
 	{
 		ft_strcpy(directory, shell->cmd[index]->args[1]);
@@ -92,6 +101,9 @@ int     ft_env(t_minishell *shell, int index)
                 ft_error_msg(NULL, "env with no options or arguments :)");
                 return (1);
         }
+        list = shell->env;
+	if (!list)
+		ft_export_forempty_env(shell);
         list = shell->env;
         while (list)
         {
