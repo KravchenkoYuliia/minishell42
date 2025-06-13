@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/13 13:48:13 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:05:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->token_lst = NULL;
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
-	ft_fill_env(&(*shell)->env, env);
-	//ft_print_list_env((*shell)->env);
+	ft_fill_env(*shell, &(*shell)->env, env);
 }
 
 int main(int ac, char **av, char **env)
@@ -35,7 +34,6 @@ int main(int ac, char **av, char **env)
 	{	
 		return(0);
 	}
-	//printf("%s\n", getenv("PATH"));
 	t_token *cursor;
 	while (1)
 	{

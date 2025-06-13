@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:26:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:04:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ bool	ft_is_expandable(char *value, int i);
 
 //execution
 /////////////////
-void	ft_fill_env(t_env **env_list, char **env);
+void	ft_fill_env(t_minishell *shell, t_env **env_list, char **env);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(void *content);

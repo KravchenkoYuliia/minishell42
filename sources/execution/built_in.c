@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 14:48:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:02:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,6 @@ int     ft_env(t_minishell *shell, int index)
                 ft_error_msg(NULL, "env with no options or arguments :)");
                 return (1);
         }
-        list = shell->env;
-	if (!list)
-		ft_export_forempty_env(shell);
         list = shell->env;
         while (list)
         {
