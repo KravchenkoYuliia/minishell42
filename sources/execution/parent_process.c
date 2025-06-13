@@ -6,13 +6,13 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 17:03:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:12:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute_one_cmd(t_minishell *shell, char *cmd)
+void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index) 
 {
 	int	i;
 	char	*built_in_names[] = {"echo", "cd", "pwd",
@@ -28,27 +28,41 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd)
 	{
 		if ((ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))
 		{
-			ft_built_in_functions[i](shell, 0);
+			ft_built_in_functions[i](shell, index);
 				return ;
 		}
 		i++;
 	}
-	ft_simple_cmd(shell, 0);
+	ft_simple_cmd(shell, index);
 }
 
 void	ft_parent_process(t_minishell *shell)
 {
-	//int	status;
-	
+	int	status;
+	int	index;
+	int     pipe_init[2];
+	pid_t   pid;
+
+	index = 0;
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe == 0 && shell->cmd[0]->args[0])
-		ft_execute_one_cmd(shell, shell->cmd[0]->args[0]);
-	/*else
+		ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
+	else
 	{
-		ft_child_loop(shell);
+		while (index < shell->nb_of_cmd)
+		{
+			pipe(pipe_init);
+			pid = fork();
+			if (pid == 0)	
+			{
+				ft_child_loop(shell, index, pipe_init);
+				dup2(pipe_init[0], STDIN_FILENO);
+				index++;
+			}
+		}
 		while (waitpid(-1, &status, 0) != -1)
-			continue ;
-	}*/
+				continue ;
+	}
 	ft_save_STD_FILENO(shell);
 }

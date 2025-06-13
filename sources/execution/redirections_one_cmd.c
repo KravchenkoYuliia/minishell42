@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redirections_one_cmd.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 19:23:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:01:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ int	ft_output_redir_simple_cmd(t_minishell *shell, int index)
 	}
 	dup2(fd, STDOUT_FILENO);
 	return (SUCCESS);
+}
+
+void	ft_redir_in_pipe(int pipe[2])
+{
+	close(pipe[0]);
+	dup2(pipe[1], STDOUT_FILENO);
 }
 
 int	ft_redirections_simple_cmd(t_minishell *shell, int index)

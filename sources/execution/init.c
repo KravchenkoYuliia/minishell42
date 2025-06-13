@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 16:42:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:48:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 		}
 		temp = temp->next;
 	}
+	printf("outfile = %s\n", shell->cmd[0]->output);
 }
 
 void	ft_init_struct_foreach_cmd(t_minishell *shell)
