@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 21:12:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:01:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	ft_parent_process(t_minishell *shell)
 			pid = fork();
 			if (pid == 0)	
 			{
+				sleep(25);
 				ft_child_loop(shell, index, pipe_init);
-				dup2(pipe_init[0], STDIN_FILENO);
-				index++;
 			}
+			dup2(pipe_init[0], STDIN_FILENO);
+			close(pipe_init[1]);
+			index++;
 		}
 		while (waitpid(-1, &status, 0) != -1)
 				continue ;

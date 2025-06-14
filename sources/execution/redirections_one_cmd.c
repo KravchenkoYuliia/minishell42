@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 21:01:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:51:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_output_redir_simple_cmd(t_minishell *shell, int index)
 void	ft_redir_in_pipe(int pipe[2])
 {
 	close(pipe[0]);
-	dup2(pipe[1], STDOUT_FILENO);
+	dup2(pipe[1], STDIN_FILENO);
 }
 
 int	ft_redirections_simple_cmd(t_minishell *shell, int index)

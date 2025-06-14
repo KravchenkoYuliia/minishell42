@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 21:10:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:38:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ int	ft_input_redir_simple_cmd(t_minishell *shell, int index);
 int	ft_output_redir_simple_cmd(t_minishell *shell, int index);
 void	ft_redir_in_pipe(int pipe[2]);
 void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
+void	ft_execute_cmd_withpipe(t_minishell *shell, char *cmd, int index);
+void	ft_simple_cmd_withpipe(t_minishell *shell, int index);
 
 
 int	ft_env(t_minishell *shell, int index);
