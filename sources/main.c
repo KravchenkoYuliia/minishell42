@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/13 19:25:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:27:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main(int ac, char **av, char **env)
 				//je sais pas quel code d'erreur mettre dans ce cas	
 			}
 			//ft_expander(shell);
-			cursor = shell->token_lst;
+			//cursor = shell->token_lst;
 			/*while(cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
