@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/14 19:05:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:32:57 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	char	*cmd;
 
 	cmd = shell->cmd[index]->args[0];
-	printf("%s have pid=%d\n", cmd, getpid());
+
 	                if (ft_strchr(shell->cmd[index]->args[0], '/') && (access(shell->cmd[index]->args[0], X_OK) == -1))
                 {
                         ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0], ": No such file or directory");
@@ -73,13 +73,12 @@ void	ft_child_loop(t_minishell *shell, int index, int pipe[2])
 	int	i;
 
 	i = 0;
-	(void) shell;
 		if (shell->cmd[index]->input[0] != '\0')
 			ft_input_redir_simple_cmd(shell, index);
 		if (shell->cmd[index]->pipe == 1)
 			ft_redir_in_pipe(pipe);
 		if (shell->cmd[index]->output[0] != '\0')
 			ft_output_redir_simple_cmd(shell, index);
-
+		
 		ft_execute_cmd_withpipe(shell, shell->cmd[index]->args[0], index);
 }
