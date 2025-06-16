@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 14:24:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:28:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 	};
 
 	i = 0;
+	ft_redirections_simple_cmd(shell, index, 0);
 	while (i < 7)
 	{
 		if ((ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))

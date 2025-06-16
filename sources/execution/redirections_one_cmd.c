@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 15:57:58 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:29:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_check_infile(t_minishell *shell, int index)
 	return (fd);
 }
 
-int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe[2])
+int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2])
 {
 	int	fd;
 
@@ -38,9 +38,9 @@ int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe[2])
 		return (SUCCESS);
 	if (shell->cmd[index]->heredoc == 1)
 	{
-		close(pipe[1]);
-		dup2(pipe[0], STDIN_FILENO);
-		close(pipe[0]);
+		close(pipe_heredoc[1]);
+		dup2(pipe_heredoc[0], STDIN_FILENO);
+		close(pipe_heredoc[0]);
 		ft_bzero(shell->cmd[index]->input, PATH_MAX);
 	}
 	else
@@ -74,9 +74,9 @@ void	ft_redir_in_pipe(int pipe[2])
 	dup2(pipe[1], STDOUT_FILENO);
 }
 
-int	ft_redirections_simple_cmd(t_minishell *shell, int index, int pipe[2])
+int	ft_redirections_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2])
 {
-	if (ft_input_redir_simple_cmd(shell, index, pipe) == ERROR)
+	if (ft_input_redir_simple_cmd(shell, index, pipe_heredoc) == ERROR)
 		return (ERROR);
 	if (shell->cmd[index]->output[0] != '\0')
 		if (ft_output_redir_simple_cmd(shell, index) == ERROR)
