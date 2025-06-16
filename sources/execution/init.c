@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/14 18:07:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:32:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,17 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 			ft_strcpy(shell->cmd[i_struct]->output,
 					temp->value);
 		else if (temp->type == APPEND)
+		{
+			ft_strcpy(shell->cmd[i_struct]->output,
+					temp->value);
 			shell->cmd[i_struct]->append = 1;
+		}
 		else if (temp->type == HEREDOC)
+		{
+			ft_strcpy(shell->cmd[i_struct]->input,
+					temp->value);
 			shell->cmd[i_struct]->heredoc = 1;
+		}
 		else if (temp->type == PIPE)
 		{
 			shell->cmd[i_struct]->pipe = 1;

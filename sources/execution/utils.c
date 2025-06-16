@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/06 15:51:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:29:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,16 @@ void	ft_get_nb_of_words(t_minishell *shell)
 	ft_init_nb_of_words(shell);
 	while (temp)
 	{
-		while (temp && temp->type == WORD)
+		while (temp && (temp->type == WORD || temp->type == HEREDOC)) 
 		{
-			word_is_on = true;
-			i_word++;
-			temp = temp->next;
+			if (temp && temp->type == HEREDOC)
+				temp = temp->next;
+			if (temp && temp->type == WORD)
+			{
+				word_is_on = true;
+				i_word++;
+				temp = temp->next;
+			}
 		}
 		if (word_is_on)
 		{
