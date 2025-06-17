@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 18:11:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:21:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	ft_handle_heredoc(t_minishell *shell, int index)
 	pipe(pipe_init);
 	shell->heredoc_history = ft_strjoin_heredoc(shell->heredoc_history, shell->input);
 	shell->heredoc_history = ft_strjoin_heredoc(shell->heredoc_history, "\n");
-
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
