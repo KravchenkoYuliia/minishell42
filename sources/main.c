@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/17 18:22:15 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:24:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int main(int ac, char **av, char **env)
 			shell->token_lst = ft_parser(shell->input);
 			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
 				add_history(shell->input);
-			free(shell->input);
 			//ft_expander(shell);
 			/*cursor = shell->token_lst;
 			while(cursor)
