@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/10 12:01:43 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:57:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 	
 	in_quote = false;
 	while (input[start] == 32 && input[start])
-		value_buf[buf_start++] = input[start++];
+		start++;
 	if ((input[start] == 34 || input[start] == 39) && !in_quote)
 		{
 			in_quote = true;
@@ -48,7 +48,7 @@ t_token	*ft_if_heredoc(char *input, int start)
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
-	set_buf_redirs(input, start + 1, value_buf, 0);
+	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, HEREDOC, ft_strlen(value_buf) + 3);
 	return(token);
 }
@@ -60,7 +60,7 @@ t_token	*ft_if_heredoc(char *input, int start)
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
-	set_buf_redirs(input, start + 1, value_buf, 0);
+	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, INPUT, ft_strlen(value_buf) + 2);
 	return (token);
 }
@@ -72,7 +72,7 @@ t_token	*ft_if_append(char *input, int start)
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
-	set_buf_redirs(input, start + 1, value_buf, 0);
+	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, APPEND, ft_strlen(value_buf) + 3);
 	return(token);
 }
@@ -84,7 +84,7 @@ t_token	*ft_if_output(char *input, int start)
 	value_buf = malloc(100);
 	if (!value_buf)
 		exit(EXIT_FAILURE);
-	set_buf_redirs(input, start + 1, value_buf, 0);
+	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, OUTPUT, ft_strlen(value_buf) + 2);
 	return (token);
 }
