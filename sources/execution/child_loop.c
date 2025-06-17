@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 13:47:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:45:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	ft_child_loop(t_minishell *shell, int index, int pipe[2])
 	int	i;
 
 	i = 0;
+		if (shell->cmd[index]->heredoc == 1)
+			ft_handle_heredoc(shell, index);
 		if (shell->cmd[index]->input[0] != '\0')
 			ft_input_redir_simple_cmd(shell, index, 0);
 		if (shell->cmd[index]->pipe == 1)

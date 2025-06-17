@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/16 16:34:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:14:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
 	ft_fill_env(*shell, &(*shell)->env, env);
+}
+
+bool	ft_find_heredoc(t_token *token_lst)
+{
+	t_token	*temp;
+	
+	temp = token_lst;
+	while (temp)
+	{
+		if (temp->type == HEREDOC)
+			return (true);
+		temp = temp->next;
+	}
+	return (false);
 }
 
 int main(int ac, char **av, char **env)
@@ -38,11 +52,11 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		shell->input = readline(SHELL_NAME);
-		if (shell->input && *shell->input)
-			add_history(shell->input);
 		if (ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
+			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
+				add_history(shell->input);
 			free(shell->input);
 			//ft_expander(shell);
 			/*cursor = shell->token_lst;
