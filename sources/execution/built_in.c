@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 13:48:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:20:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	ft_cd(t_minishell *shell, int index)
 	}
 	ft_bzero(directory, PATH_MAX);
 	getcwd(directory, PATH_MAX);
-	printf("PWD after cd = %s\n", directory);
 	ft_change_pwd(shell->env, directory);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 18:29:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:35:23 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,16 @@ int	ft_output_redir_simple_cmd(t_minishell *shell, int index)
 {
 	int	fd;
 
-	fd = open(shell->cmd[index]->output, O_RDWR | O_CREAT | O_TRUNC,
+	if (shell->cmd[index]->append == 1)
+	{
+		fd = open(shell->cmd[index]->output, O_RDWR | O_CREAT | O_APPEND,
                         S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	else
+	{
+		fd = open(shell->cmd[index]->output, O_RDWR | O_CREAT | O_TRUNC,
+                        S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
 	if (fd == -1)
 	{
 		perror(SHELL_NAME_ERROR);
