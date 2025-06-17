@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 15:02:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:48:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_cd(t_minishell *shell, int index)
 		home_path = ft_get_home_path(shell->env);
 		if (!home_path)
 		{	
-			ft_error_msg(SHELL_NAME_ERROR, ": cd: HOME not set");
+			ft_error_msg(SHELL_NAME_ERROR, NULL, ": cd: HOME not set");
 			shell->exit_status = 1;
 			return (ERROR);
 		}
@@ -63,7 +63,7 @@ int	ft_cd(t_minishell *shell, int index)
 		ft_strcpy(directory, shell->cmd[index]->args[1]);
 		if (shell->cmd[index]->args[2])
 		{
-			ft_error_msg(SHELL_NAME, "cd: too many arguments");
+			ft_error_msg(SHELL_NAME, NULL, "cd: too many arguments");
 			return (1);
 		}
 	}
@@ -98,7 +98,7 @@ int     ft_env(t_minishell *shell, int index)
 
         if (shell->cmd[index]->args[1])
         {
-                ft_error_msg(NULL, "env with no options or arguments :)");
+                ft_error_msg(NULL, NULL, "env with no options or arguments :)");
                 return (1);
         }
         list = shell->env;
