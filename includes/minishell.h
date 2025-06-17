@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 15:50:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:58:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_minishell{
 	int	pipe[2];
 	int	save_stdin;
 	int	save_stdout;
+	char	*heredoc_history;
 
 } t_minishell;
 
@@ -181,6 +182,7 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 void	ft_execute_cmd_withpipe(t_minishell *shell, char *cmd, int index);
 void	ft_simple_cmd_withpipe(t_minishell *shell, int index);
 void	ft_handle_heredoc(t_minishell *shell, int index);
+int	ft_export_forempty_env(t_minishell *shell);	
 
 int	ft_env(t_minishell *shell, int index);
 int	ft_echo(t_minishell *shell, int index);
@@ -189,7 +191,6 @@ int	ft_pwd(t_minishell *shell, int index);
 int	ft_export(t_minishell *shell, int index);
 int	ft_unset(t_minishell *shell, int index);
 int	ft_exit(t_minishell *shell, int index);
-int	ft_export_forempty_env(t_minishell *shell);	
 
 /////////////////
 
