@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 12:05:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:00:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 	};
 
 	i = 0;
-	ft_redirections_simple_cmd(shell, index, 0);
 	while (i < 7)
 	{
 		if ((ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))
@@ -51,6 +50,10 @@ void	ft_parent_process(t_minishell *shell)
 	{
 		if (shell->cmd[0]->heredoc == 1)
 			ft_handle_heredoc(shell, index);
+		if (shell->cmd[0]->heredoc == 0)
+		{	if (ft_redirections_simple_cmd(shell, index, 0) == ERROR)
+				return ;
+		}
 		if (shell->cmd[0]->args[0])
 			ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
 	}

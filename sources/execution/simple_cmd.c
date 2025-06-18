@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 15:49:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:58:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		ft_error_msg(SHELL_NAME, NULL, "fork failed in simple cmd");
 	if (pid == 0)
 	{
-		if (ft_redirections_simple_cmd(shell, index, 0) == ERROR)
-			return ;
 		if (ft_strchr(shell->cmd[index]->args[0], '/') && (access(shell->cmd[index]->args[0], X_OK) == -1))
 		{
 			ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0], ": No such file or directory");

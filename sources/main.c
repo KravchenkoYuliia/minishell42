@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/18 14:29:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:13:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int main(int ac, char **av, char **env)
 	{	
 		return(0);
 	}
-	//t_token *cursor;
+//	t_token *cursor;
 	while (1)
 	{
 		shell->input = readline(SHELL_NAME);
@@ -79,8 +79,8 @@ int main(int ac, char **av, char **env)
 			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
 				add_history(shell->input);
 			//ft_expander(shell);
-			/*cursor = shell->token_lst;
-			while(cursor)
+			//cursor = shell->token_lst;
+			/*while(cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
