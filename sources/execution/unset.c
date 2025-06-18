@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 15:01:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:47:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_unset(t_minishell *shell, int index)
 			shell->env = head->next;
 			head = head->next;
 		}
-		printf("New head = %s\n", head->line);
 		free(ex);
 	}
 	previous = shell->env;
@@ -39,14 +38,12 @@ int	ft_unset(t_minishell *shell, int index)
 	{
 		if (ft_unset_or_not_unset(current->line, shell->cmd[index]->args) == true)
 		{
-			printf("Need to be deleted %s, previous = %s\n", current->line, previous->line);
 			ex = current;
 			if (current->next)
 			{
 				previous->next = current->next;
 				current = current->next;
 
-				printf("Now previous %s points to %s, current = %s\n", previous->line, previous->next->line, current->line);
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 15:00:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:03:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,15 @@ void	ft_parent_process(t_minishell *shell)
 			close(pipe_init[1]);
 			index++;
 		}
-		while (waitpid(-1, &status, 0) != -1)
-				continue ;
+		while (waitpid(pid, &status, 0) != -1)
+		{
+			if (WIFEXITED(status))
+			{
+				status = WEXITSTATUS(status);
+				shell->exit_status = status;
+			}
+			continue ;
+		}
 	}
 	ft_save_STD_FILENO(shell);
 }

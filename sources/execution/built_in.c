@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 15:20:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:44:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_cd(t_minishell *shell, int index)
 	}
 	if (chdir(directory) != 0)
 	{
-		perror(SHELL_NAME_ERROR);
+		ft_error_msg("toupetishell🤏: cd", directory, ": No such file or directory");
 		return (1);
 	}
 	ft_bzero(directory, PATH_MAX);

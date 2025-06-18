@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 14:58:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:57:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 
 void	ft_simple_cmd(t_minishell *shell, int index)
 {
+	int	status;
 	char	*cmd;
 	pid_t	pid;
 	
+	status = 0;
 	cmd = shell->cmd[index]->args[0];
 	pid = fork();
 	if (pid == -1)
@@ -35,12 +37,16 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		if (cmd == NULL)
 		{
 			ft_error_msg(shell->cmd[index]->args[0], NULL, ": command not found");
-			return ;
+			shell->exit_status = 127;
+			exit(127);
 		}
 		if (execve(cmd, shell->cmd[index]->args, NULL) != 0)
 		{
 			perror(SHELL_NAME_ERROR);
 		}
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	shell->exit_status = status;
 }
