@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/18 13:51:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:29:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ bool	ft_find_heredoc(t_token *token_lst)
 	return (false);
 }
 
+char	*ft_cut_input(char *cut_me)
+{
+	int	i;
+	char	*new_input;
+	char	**lines;
+
+	i = 0;
+	lines = ft_split(cut_me, '\n');
+	while(lines[i])
+		i++;
+	new_input = (char *)malloc(sizeof(char) * i + 1);
+	if (i <= 1)
+		return (cut_me);
+	ft_strcpy(new_input, lines[i - 1]);
+	if (i > 1 && ft_strstr(lines[0], new_input))
+		return (NULL);
+	ft_free_args(lines);
+	return (new_input); 
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_minishell	*shell;
@@ -52,7 +72,8 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		shell->input = readline(SHELL_NAME);
-		if (ft_lexer(shell->input))
+		shell->input = ft_cut_input(shell->input);
+		if (shell->input && ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
 			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
@@ -64,7 +85,7 @@ int main(int ac, char **av, char **env)
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}*/
-			if (shell->token_lst && !ft_strchr(shell->input, '\n'))
+			if (shell->token_lst)
 				ft_execution(shell);
 			free(shell->input);
 		}
