@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 16:58:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:39:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_minishell{
 	int	save_stdout;
 	char	*heredoc_history;
 
+
 } t_minishell;
 
 
@@ -154,7 +155,7 @@ void	ft_print_env(t_env *env);
 int	ft_execution(t_minishell *shell);
 void	ft_init_struct_foreach_cmd(t_minishell *shell);
 void	ft_get_nb_of_cmd(t_minishell *shell);
-void	ft_exit_free(char *msg, t_minishell *shell, int stop);
+void	ft_total_exit(char *msg, t_minishell *shell, int stop);
 void	ft_error_msg(char *shell_name, char *cmd, char *msg);
 void	ft_get_nb_of_words(t_minishell *shell);
 void	ft_parent_process(t_minishell *shell);

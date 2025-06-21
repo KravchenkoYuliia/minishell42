@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 18:17:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:08:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ void	ft_error_msg(char *shell_name, char *cmd, char *msg)
 	write(2, "\n", 1);
 }
 
-void	ft_exit_free(char *msg, t_minishell *shell, int stop)
+void	ft_total_exit(char *msg, t_minishell *shell, int stop)
 {
 	int	status;
 
+	ft_save_STD_FILENO(shell);
 	status = shell->exit_status;
 	if (msg)
 	{

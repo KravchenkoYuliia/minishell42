@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 15:44:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:37:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int	ft_exit(t_minishell *shell, int index)
 			return (ERROR);
 		}
 	}
+	ft_save_STD_FILENO(shell);
 	exit((unsigned char)shell->exit_status);
 }

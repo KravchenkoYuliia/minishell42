@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/17 15:35:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:31:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2]
 		if (fd < 3)
 			return (ERROR);
 		dup2(fd, STDIN_FILENO);
+		close(fd);
+		ft_bzero(shell->cmd[index]->input, PATH_MAX);
 	}
 	return (SUCCESS);
 }
@@ -73,6 +75,8 @@ int	ft_output_redir_simple_cmd(t_minishell *shell, int index)
 		return (ERROR);
 	}
 	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	ft_bzero(shell->cmd[index]->output, PATH_MAX);
 	return (SUCCESS);
 }
 
@@ -80,6 +84,7 @@ void	ft_redir_in_pipe(int pipe[2])
 {
 	close(pipe[0]);
 	dup2(pipe[1], STDOUT_FILENO);
+	close(pipe[1]);
 }
 
 int	ft_redirections_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2])
