@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 14:41:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:44:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void	ft_parent_process(t_minishell *shell)
 			pipe(pipe_init);
 			pid = fork();
 			if (pid == 0)	
+			{
+				printf("nb_of_words in bloc[%d] = %d\n", index, shell->cmd[index]->nb_of_words);
 				ft_child_loop(shell, index, pipe_init);
+			}
 			close(pipe_init[1]);
 			dup2(pipe_init[0], STDIN_FILENO);
 			close(pipe_init[0]);

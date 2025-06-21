@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/16 16:29:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:28:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,41 +43,44 @@ void	ft_init_nb_of_words(t_minishell *shell)
 	}
 }
 
+void	ft_get_nb_of_words_NO_pipe(t_minishell *shell)
+{
+	int	i;
+	t_token	*temp;
+
+	i = 0;
+	temp = shell->token_lst;
+	while (temp)
+	{
+		if (temp->type == WORD) 
+			i++;
+		temp = temp->next;
+	}
+	shell->cmd[0]->nb_of_words = i;
+}
+
 void	ft_get_nb_of_words(t_minishell *shell)
 {
 	int	i_word;
-	int	i_struct;
-	bool	word_is_on;
+	int	i_bloc_cmd;
 	t_token	*temp;
 
 	i_word = 0;
-	i_struct = 0;
-	word_is_on = false;
+	i_bloc_cmd = 0;
 	temp = shell->token_lst;
-	ft_init_nb_of_words(shell);
 	while (temp)
 	{
-		while (temp && (temp->type == WORD || temp->type == HEREDOC)) 
+		if (temp->type == WORD)
+			i_word++;
+		if (temp->type == PIPE)
 		{
-			if (temp && temp->type == HEREDOC)
-				temp = temp->next;
-			if (temp && temp->type == WORD)
-			{
-				word_is_on = true;
-				i_word++;
-				temp = temp->next;
-			}
-		}
-		if (word_is_on)
-		{
-			shell->cmd[i_struct]->nb_of_words = i_word;
-			word_is_on = false;
+			shell->cmd[i_bloc_cmd]->nb_of_words = i_word;
+			i_bloc_cmd++;
 			i_word = 0;
-			i_struct++;
 		}
-		if (temp)
-			temp = temp->next;
+		temp = temp->next;
 	}
+	shell->cmd[i_bloc_cmd]->nb_of_words = i_word;
 }
 
 void    ft_save_STD_FILENO(t_minishell *shell)

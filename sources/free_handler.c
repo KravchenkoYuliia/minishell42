@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/05 17:45:28 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:18:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop)
 	i = 0;
 	while (i < stop && structs[i])
 	{
-		ft_free_args(structs[i]->args);
+		if (structs[i]->args)
+			ft_free_args(structs[i]->args);
 		free(structs[i]);
 		i++;
 	}

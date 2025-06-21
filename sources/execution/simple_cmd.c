@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 15:57:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/21 14:52:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 			shell->exit_status = 127;
 			exit(127);
 		}
+		close(shell->save_stdin);
+		close(shell->save_stdout);
 		if (execve(cmd, shell->cmd[index]->args, NULL) != 0)
 		{
 			perror(SHELL_NAME_ERROR);
