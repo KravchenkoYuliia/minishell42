@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 14:39:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:02:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,48 +47,39 @@ char	*ft_strjoin_heredoc(char *s1, char *s2)
 }
 
 
-void	ft_handle_heredoc(t_minishell *shell, int index)
+void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 {
-	int	stop;
 	char	*line;
-	int	pipe_init[2];
 
 	line = NULL;
-	stop = false;
-	pipe(pipe_init);
-	shell->heredoc_history = ft_strjoin_heredoc(shell->heredoc_history, shell->input);
-	shell->heredoc_history = ft_strjoin_heredoc(shell->heredoc_history, "\n");
+	pipe(shell->cmd[index]->heredoc_pipe);
 	while (1)
 	{
 		write(1, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
+		line = readline(STDIN_FILENO);
 		if (line)
-			shell->heredoc_history = ft_strjoin_heredoc(shell->heredoc_history, line);
-		if (ft_strlen(line) >= ft_strlen(shell->cmd[index]->input))
+			shell->history = ft_strjoin_heredoc(shell->history, line);
+		if (ft_strlen(line) >= ft_strlen(limiter))
 		{	
-			if (ft_strncmp(line, shell->cmd[index]->input, ft_strlen(line)) != '\n' &&
-				ft_strncmp(line, shell->cmd[index]->input, ft_strlen(line)) != 0)
-					write(pipe_init[1], line, ft_strlen(line));
+			if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n' &&
+				ft_strncmp(line, limiter, ft_strlen(line)) != 0)
+					write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
 			else
 			{
 				free(line);
-				stop = true;
 				break ;
 			}
 		}
 		else
 		{
-			if (ft_strncmp(shell->cmd[index]->input, line, ft_strlen(shell->cmd[index]->input)) != '\n' &&
-				ft_strncmp(shell->cmd[index]->input, line, ft_strlen(shell->cmd[index]->input)) != 0)
-					write(pipe_init[1], line, ft_strlen(line));
+			if (ft_strncmp(limiter, line, ft_strlen(limiter)) != '\n' &&
+				ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
+					write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
 			else
 			{
 				free(line);
-				stop = true;
 				break ;
 			}
 		}
 	}
-	ft_input_redir_simple_cmd(shell, index, pipe_init);
-	add_history(shell->heredoc_history);
 }

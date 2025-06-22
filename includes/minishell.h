@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 18:27:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:52:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 typedef struct s_env t_env;
 typedef struct s_export t_export;
 typedef struct s_token t_token;
+typedef struct  s_redirect t_redirect;
+
 
 typedef struct s_token
 {
@@ -66,8 +68,11 @@ typedef struct s_cmd_struct{
 
 	int	nb_of_words;
 	char	**args;
-	char	input[PATH_MAX];
-	char	output[PATH_MAX];
+	t_redirect	*input_list;
+	t_redirect	*output_list;
+	char	*input;
+	char	*output;
+	int	heredoc_pipe[2];
 	int	append;
 	int	heredoc;
 	int	pipe;
@@ -75,6 +80,14 @@ typedef struct s_cmd_struct{
 
 } t_cmd_struct;
 
+typedef struct	s_redirect{
+
+	char		*file_name;
+	int		heredoc_pipe[2];
+	int		type;
+	t_redirect	*next;
+
+} t_redirect;
 
 typedef	struct	s_env{
 
@@ -95,7 +108,8 @@ typedef struct s_minishell{
 	int	pipe[2];
 	int	save_stdin;
 	int	save_stdout;
-	char	*heredoc_history;
+	char	*history;
+	bool	heredoc_in_input;
 
 
 } t_minishell;
@@ -150,6 +164,12 @@ void	ft_print_env(t_env *env);
 
 
 
+void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
+char	*ft_strjoin_heredoc(char *s1, char *s2);
+t_redirect	*ft_lstnew_redirect(void *content, int type);
+t_redirect	*ft_lstlast_redirect(t_redirect *lst);
+void	ft_lstadd_back_redirect(t_redirect **lst, t_redirect *new);
+
 
 
 int	ft_execution(t_minishell *shell);
@@ -173,16 +193,15 @@ bool	ft_name_exists_already(t_env *env, char *name, char *line);
 void	ft_change_valueof_name(t_env *env, char *line);
 void	ft_simple_cmd(t_minishell *shell, int index);
 char	*ft_find_absolute_path(t_minishell *shell, int index);
-int	ft_redirections_simple_cmd(t_minishell *shell, int index, int pipe[2]);
+int	ft_redirections_simple_cmd(t_minishell *shell, int index);
 int	ft_check_infile(t_minishell *shell, int index);
 void	ft_child_loop(t_minishell *shell, int index, int pipe[2]);
-int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe[0]);
+int	ft_input_redir_simple_cmd(t_minishell *shell, int index);
 int	ft_output_redir_simple_cmd(t_minishell *shell, int index);
 void	ft_redir_in_pipe(int pipe[2]);
 void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 void	ft_execute_cmd_withpipe(t_minishell *shell, char *cmd, int index);
 void	ft_simple_cmd_withpipe(t_minishell *shell, int index);
-void	ft_handle_heredoc(t_minishell *shell, int index);
 int	ft_export_forempty_env(t_minishell *shell);	
 
 int	ft_env(t_minishell *shell, int index);

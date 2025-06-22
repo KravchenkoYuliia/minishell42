@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 15:27:33 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 11:54:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,18 @@ int	ft_check_infile(t_minishell *shell, int index)
 	return (fd);
 }
 
-int	ft_input_redir_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2])
+int	ft_input_redir_simple_cmd(t_minishell *shell, int index)
 {
 	int	fd;
 
 	if (shell->cmd[index]->input[0] == '\0')
 		return (SUCCESS);
-	if (shell->cmd[index]->heredoc == 1)
-	{
-		close(pipe_heredoc[1]);
-		dup2(pipe_heredoc[0], STDIN_FILENO);
-		close(pipe_heredoc[0]);
-		ft_bzero(shell->cmd[index]->input, PATH_MAX);
-	}
-	else
-	{
-		fd = ft_check_infile(shell, index);
-		if (fd < 3)
-			return (ERROR);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		ft_bzero(shell->cmd[index]->input, PATH_MAX);
-	}
+	fd = ft_check_infile(shell, index);
+	if (fd < 3)
+		return (ERROR);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	ft_bzero(shell->cmd[index]->input, PATH_MAX);
 	return (SUCCESS);
 }
 
@@ -87,9 +77,9 @@ void	ft_redir_in_pipe(int pipe[2])
 	close(pipe[1]);
 }
 
-int	ft_redirections_simple_cmd(t_minishell *shell, int index, int pipe_heredoc[2])
+int	ft_redirections_simple_cmd(t_minishell *shell, int index)
 {
-	if (ft_input_redir_simple_cmd(shell, index, pipe_heredoc) == ERROR)
+	if (ft_input_redir_simple_cmd(shell, index) == ERROR)
 		return (ERROR);
 	if (shell->cmd[index]->output[0] != '\0')
 		if (ft_output_redir_simple_cmd(shell, index) == ERROR)

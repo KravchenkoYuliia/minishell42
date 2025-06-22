@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 18:27:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:55:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,30 @@ void	ft_start_value(t_minishell *shell)
 	while (i < shell->nb_of_cmd)
 	{
 		shell->cmd[i]->args = NULL;
-		//ft_get_nb_of_words(shell);
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *) * (shell->cmd[i]->nb_of_words + 1));
 		shell->cmd[i]->args[0] = NULL;
-		ft_bzero(shell->cmd[i]->input, PATH_MAX);
-		ft_bzero(shell->cmd[i]->output, PATH_MAX);
+		shell->cmd[i]->input = NULL;
+		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
 		shell->cmd[i]->pipe = 0;
+		shell->cmd[i]->input_list = NULL;
+		shell->cmd[i]->output_list = NULL;
 		i++;
 	}
 }
 
 void	ft_fill_cmd_struct(t_minishell *shell)
 {
-	int	i_struct;
-	int	i_args;
-	t_token	*temp;
+	int		i_struct;
+	int		i_args;
+	bool		flag;
+	t_token		*temp;
+	t_redirect	*new;
 
 	i_struct = 0;
 	i_args = 0;
+	flag = false;
 	temp = shell->token_lst;
 	while (temp)
 	{
@@ -74,22 +78,35 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 				shell->cmd[i_struct]->args[i_args] = NULL;
 		}
 		else if (temp->type == INPUT)
-			ft_strcpy(shell->cmd[i_struct]->input,
-					temp->value);
+		{
+			shell->cmd[i_struct]->input = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shell->cmd[i_struct]->input, INPUT);
+			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
+		}
 		else if (temp->type == OUTPUT)
-			ft_strcpy(shell->cmd[i_struct]->output,
-					temp->value);
+		{
+			shell->cmd[i_struct]->output = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, OUTPUT);
+			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
+		}
 		else if (temp->type == APPEND)
 		{
-			ft_strcpy(shell->cmd[i_struct]->output,
-					temp->value);
-			shell->cmd[i_struct]->append = 1;
+			shell->cmd[i_struct]->output = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, APPEND);
+			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
 		}
 		else if (temp->type == HEREDOC)
 		{
-			ft_strcpy(shell->cmd[i_struct]->input,
-					temp->value);
-			shell->cmd[i_struct]->heredoc = 1;
+			if (flag == false)
+			{
+				shell->history = ft_strjoin_heredoc(shell->history, shell->input);
+				shell->history = ft_strjoin_heredoc(shell->history, "\n");
+				flag = true;
+			}
+			ft_handle_heredoc(shell, temp->value, i_struct);
+			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
+			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
+
 		}
 		else if (temp->type == PIPE)
 		{
@@ -103,7 +120,6 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 
 void	ft_init_struct_foreach_cmd(t_minishell *shell)
 {
-	shell->cmd = NULL;
 	ft_get_nb_of_cmd(shell);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);

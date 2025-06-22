@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/18 15:13:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:14:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	if (!*shell)
 		exit(EXIT_FAILURE);
 	(*shell)->token_lst = NULL;
+	(*shell)->input = NULL;
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
 	ft_fill_env(*shell, &(*shell)->env, env);
+	(*shell)->cmd = NULL;
+	(*shell)->history = NULL;
+	(*shell)->nb_of_cmd = 0;
+	(*shell)->heredoc_in_input = true;
 }
 
 bool	ft_find_heredoc(t_token *token_lst)
@@ -53,6 +58,7 @@ char	*ft_cut_input(char *cut_me)
 	ft_strcpy(new_input, lines[i - 1]);
 	if (i > 1 && ft_strstr(lines[0], new_input))
 		return (NULL);
+	free(cut_me);
 	ft_free_args(lines);
 	return (new_input); 
 }
@@ -68,26 +74,28 @@ int main(int ac, char **av, char **env)
 	{	
 		return(0);
 	}
-//	t_token *cursor;
+	//t_token *cursor;
 	while (1)
 	{
 		shell->input = readline(SHELL_NAME);
-		shell->input = ft_cut_input(shell->input);
+		shell->history = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
-			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
-				add_history(shell->input);
+			if (shell->history && *shell->history && !ft_find_heredoc(shell->token_lst))
+			{
+				add_history(shell->history);
+				shell->heredoc_in_input = false;
+			}
 			//ft_expander(shell);
-			//cursor = shell->token_lst;
-			/*while(cursor)
+			/*cursor = shell->token_lst;
+			while(cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
 			}*/
 			if (shell->token_lst)
 				ft_execution(shell);
-			free(shell->input);
 		}
 		else
 			shell->exit_status = 2;

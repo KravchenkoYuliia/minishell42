@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 15:04:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 10:30:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void    ft_lstadd_back_env(t_env **lst, t_env *new)
         else
                 s_temp->next = new;
 }
+
 t_env   *ft_lstnew_env(void *content)
 {
         t_env   *lst;

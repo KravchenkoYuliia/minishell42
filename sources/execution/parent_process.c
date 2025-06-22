@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 16:44:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:10:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	ft_parent_process(t_minishell *shell)
 	pid_t   pid;
 
 	index = 0;
+	printf("bool = %d\n", shell->heredoc_in_input);
+	if (shell->heredoc_in_input == true)
+	{
+		add_history(shell->history);
+		printf("history =%s\n\n", shell->history);
+	}
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe == 0)
 	{
-		if (shell->cmd[0]->heredoc == 1)
-			ft_handle_heredoc(shell, index);
-		if (shell->cmd[0]->heredoc == 0)
-		{	if (ft_redirections_simple_cmd(shell, index, 0) == ERROR)
-				return ;
-		}
 		if (shell->cmd[0]->args[0])
 			ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
 	}
