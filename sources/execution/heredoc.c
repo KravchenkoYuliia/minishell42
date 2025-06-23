@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 11:39:59 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:34:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 			{
 					write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
 					write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
+					free(line);
 			}
 			else
 			{
 				free(line);
-				break ;
+				return ;
 			}
 		}
 		else
@@ -82,11 +83,12 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 			{
 				write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
 				write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
+				free(line);
 			}
 			else
 			{
 				free(line);
-				break ;
+				return  ;
 			}
 		}
 	}

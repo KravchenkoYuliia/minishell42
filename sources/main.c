@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/23 14:41:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:34:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ char	*ft_cut_input(char *cut_me)
 	char	**lines;
 
 	i = 0;
+	new_input = NULL;
 	lines = ft_split(cut_me, '\n');
 	while(lines[i])
 		i++;
-	new_input = (char *)malloc(sizeof(char) * i + 1);
 	if (i <= 1)
 		return (cut_me);
-	ft_strcpy(new_input, lines[i - 1]);
+	new_input = ft_strdup(lines[i - 1]);
 	if (i > 1 && ft_strstr(lines[0], new_input))
 		return (NULL);
 	free(cut_me);
 	ft_free_args(lines);
-	return (new_input); 
+	return (new_input);
 }
 
 int main(int ac, char **av, char **env)
@@ -77,16 +77,15 @@ int main(int ac, char **av, char **env)
 	//t_token *cursor;
 	while (1)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
+		shell->history = NULL;
 		shell->input = readline(SHELL_NAME);
-		shell->history = ft_cut_input(shell->input);
+		shell->input = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
-			if (shell->history && *shell->history && !ft_find_heredoc(shell->token_lst))
+			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
 			{
-				add_history(shell->history);
+				add_history(shell->input);
 				shell->heredoc_in_input = false;
 			}
 			//ft_expander(shell);
