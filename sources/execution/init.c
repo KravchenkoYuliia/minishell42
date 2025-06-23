@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/22 13:55:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:56:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
-		shell->cmd[i]->pipe = 0;
+		shell->cmd[i]->pipe_flag = 0;
 		shell->cmd[i]->input_list = NULL;
 		shell->cmd[i]->output_list = NULL;
 		i++;
@@ -110,7 +110,7 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 		}
 		else if (temp->type == PIPE)
 		{
-			shell->cmd[i_struct]->pipe = 1;
+			shell->cmd[i_struct]->pipe_flag = 1;
 			i_args = 0;
 			i_struct++;
 		}

@@ -6,7 +6,7 @@
 #    By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/22 11:33:21 by yukravch         ###   ########.fr        #
+#    Updated: 2025/06/23 11:33:30 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,10 @@ FILES = 	main.c	env/copy_env.c \
 			execution/cmd_exit.c execution/export.c\
 			execution/unset.c \
 			execution/simple_cmd.c execution/get_abs_path.c \
-			execution/redirections_one_cmd.c \
-			execution/child_loop.c \
+			execution/redirections.c \
 			execution/built_in.c execution/built_in_utils.c \
 			execution/built_in_1.c execution/built_in_utils_1.c
+			#execution/child_loop.c \
 		 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

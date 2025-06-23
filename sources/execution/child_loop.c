@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/22 11:53:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:11:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,13 @@ void    ft_execute_cmd_withpipe(t_minishell *shell, char *cmd, int index)
 
 
 
-void	ft_child_loop(t_minishell *shell, int index, int pipe[2])
+void	ft_child_loop(t_minishell *shell, int index)
 {
 	int	i;
 
 	i = 0;
 	if (shell->cmd[index]->input[0] != '\0')
 		ft_input_redir_simple_cmd(shell, index);
-	if (shell->cmd[index]->args[0] && shell->cmd[index]->pipe == 1)
-		ft_redir_in_pipe(pipe);
 	if (shell->cmd[index]->output[0] != '\0')
 		ft_output_redir_simple_cmd(shell, index);
 	close(pipe[0]);

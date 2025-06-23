@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/22 14:02:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:39:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,20 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 	pipe(shell->cmd[index]->heredoc_pipe);
 	while (1)
 	{
-		write(1, "> ", 2);
-		line = readline(STDIN_FILENO);
+		line = readline("> ");
 		if (line)
+		{
 			shell->history = ft_strjoin_heredoc(shell->history, line);
+			shell->history = ft_strjoin_heredoc(shell->history, "\n");
+		}
 		if (ft_strlen(line) >= ft_strlen(limiter))
 		{	
 			if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n' &&
 				ft_strncmp(line, limiter, ft_strlen(line)) != 0)
+			{
 					write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
+					write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
+			}
 			else
 			{
 				free(line);
@@ -74,7 +79,10 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		{
 			if (ft_strncmp(limiter, line, ft_strlen(limiter)) != '\n' &&
 				ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
-					write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
+			{
+				write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
+				write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
+			}
 			else
 			{
 				free(line);
