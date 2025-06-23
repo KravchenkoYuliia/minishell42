@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 11:32:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:57:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(void *content);
 void	ft_print_env(t_env *env);
+int	ft_export_forempty_env(t_minishell *shell);	
 
 
 
@@ -192,15 +193,15 @@ int	ft_charset(char *str, char c);
 char	*ft_copy_name_inenv(char *line);
 bool	ft_name_exists_already(t_env *env, char *name, char *line);
 void	ft_change_valueof_name(t_env *env, char *line);
-void	ft_simple_cmd(t_minishell *shell, int index);
 char	*ft_find_absolute_path(t_minishell *shell, int index);
-int	ft_redirections(t_minishell *shell, int index);
-void	ft_child_loop(t_minishell *shell, int index);
-void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
-void	ft_execute_cmd_withpipe(t_minishell *shell, char *cmd, int index);
-void	ft_simple_cmd_withpipe(t_minishell *shell, int index);
-int	ft_export_forempty_env(t_minishell *shell);	
 
+void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
+void	ft_simple_cmd(t_minishell *shell, int index);
+
+void	ft_child_loop(t_minishell *shell, int index);
+void	ft_simple_cmd_withpipe(t_minishell *shell, int index);
+
+int	ft_redirections(t_minishell *shell, int index);
 int	ft_redir_input(t_minishell *shell, int index);
 int	ft_redir_output(t_minishell *shell, int index);
 int	ft_check_infile(char *input);

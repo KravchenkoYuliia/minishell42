@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/22 14:14:14 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:41:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int main(int ac, char **av, char **env)
 	//t_token *cursor;
 	while (1)
 	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
 		shell->input = readline(SHELL_NAME);
 		shell->history = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))

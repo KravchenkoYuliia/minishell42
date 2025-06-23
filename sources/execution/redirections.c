@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 11:34:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:02:52 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,12 @@ int	ft_redir_output(t_minishell *shell, int index)
 int	ft_redirections(t_minishell *shell, int index)
 {
 	if (shell->cmd[index]->input_list)
-	{	if (ft_redir_input(shell, index) == ERROR)
+	{	
+		if (ft_redir_input(shell, index) == ERROR)
 			return (ERROR);
 	}
 	if (shell->cmd[index]->pipe_flag == 1)
-	{
-		close(shell->cmd[index]->pipe[0]);
 		dup2(shell->cmd[index]->pipe[1], STDOUT_FILENO);
-		close(shell->cmd[index]->pipe[1]);
-	}
 	if (shell->cmd[index]->output_list)
 		if (ft_redir_output(shell, index) == ERROR)
 			return (ERROR);
