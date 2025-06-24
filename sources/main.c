@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/24 16:37:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:56:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,19 @@ char	*ft_cut_input(char *cut_me)
 void	ft_minishell(t_minishell *shell)
 {
 	//t_token *cursor;
+
 	while (1)
 	{
-		signal(SIGINT, ft_ctrlC);
 		shell->heredoc_in_input = true;
 		shell->history = NULL;
 		shell->input = readline(SHELL_NAME);
+		if (signal_flag == 1)
+		{
+			signal_flag = 0;
+			if (shell->input)
+				free(shell->input);
+			continue ;
+		}
 		shell->input = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
 		{
@@ -82,12 +89,12 @@ void	ft_minishell(t_minishell *shell)
 				shell->heredoc_in_input = false;
 			}
 			ft_expander(shell);
-			cursor = shell->token_lst;
+			/*cursor = shell->token_lst;
 			while(cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
-			}
+			}*/
 			if (shell->token_lst)
 				ft_execution(shell);
 		}
@@ -100,16 +107,22 @@ void	ft_minishell(t_minishell *shell)
 	}
 }
 
+int	signal_flag = 0;
 
 int main(int ac, char **av, char **env)
 {
-	t_minishell	*shell;
+	t_minishell		*shell;
+	struct	sigaction	sig;
 	(void)av;
 	
 	shell = NULL;
 	ft_init_minishell(&shell, env);
 	if (ac != 1)
 		return(0);
+	sigemptyset(&sig.sa_mask);
+	sig.sa_handler = ft_ctrlC;
+	sig.sa_flags = 0;
+	sigaction(SIGINT, &sig, NULL);
 	ft_minishell(shell);
 	return (0);
 }

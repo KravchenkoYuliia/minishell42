@@ -6,13 +6,14 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/24 16:35:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:45:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+extern int signal_flag;
 # define ERROR 1
 # define SUCCESS 0
 # define SHELL_NAME "toupetishell🤏: "
@@ -37,13 +38,13 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <limits.h>
-
+# include <asm/termbits.h>
+# include <sys/ioctl.h>
 
 typedef struct s_env t_env;
 typedef struct s_export t_export;
 typedef struct s_token t_token;
 typedef struct  s_redirect t_redirect;
-
 
 typedef struct s_token
 {
@@ -114,6 +115,7 @@ typedef struct s_minishell{
 
 
 } t_minishell;
+
 
 void	ft_ctrlC(int signal);
 
