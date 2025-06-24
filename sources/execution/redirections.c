@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 14:02:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:30:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,17 @@ int	ft_redir_output(t_minishell *shell, int index)
 	t_redirect	*temp;
 
 	temp = shell->cmd[index]->output_list;
+	int i = 0;
 	while (temp)
 	{
 		if (temp->type == APPEND)
 		{
-			fd = open(shell->cmd[index]->output, O_RDWR | O_CREAT | O_APPEND,
+			fd = open(temp->file_name, O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		}
 		else if (temp->type == OUTPUT)
 		{
-			fd = open(shell->cmd[index]->output, O_RDWR | O_CREAT | O_TRUNC,
+			fd = open(temp->file_name, O_RDWR | O_CREAT | O_TRUNC,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		}
 		if (fd == -1)
@@ -82,6 +83,7 @@ int	ft_redir_output(t_minishell *shell, int index)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
+		i++;
 		temp = temp->next;
 	}
 	return (SUCCESS);
