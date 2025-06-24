@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/24 15:51:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:35:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ typedef struct s_minishell{
 
 } t_minishell;
 
-
-
+void	ft_ctrlC(int signal);
 
 //lexer
 /////////////////
@@ -126,6 +125,7 @@ bool 	ft_check_pipes(char *input);
 int		ft_check_redirs(char *input);
 void	lexer_err_handler(int err_code, char c);
 /////////////////
+
 
 //parser
 /////////////////

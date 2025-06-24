@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/24 10:29:24 by lfournie         ###   ########.fr        #
+#    Updated: 2025/06/24 16:38:20 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJ_DIR = objects
 INC_DIR = -I includes -I libft42/includes
 
 FILES = 	main.c	env/copy_env.c \
-			free_handler.c \
+			free_handler.c signals.c \
 			lexer/lexer_main.c lexer/lexer_err_handler.c \
 			parser/parser_main.c parser/parsing_a.c parser/parsing_b.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \
@@ -47,6 +47,7 @@ FILES = 	main.c	env/copy_env.c \
 			execution/built_in.c execution/built_in_utils.c \
 			execution/built_in_1.c execution/built_in_utils_1.c \
 			execution/child_loop.c \
+
 		 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))

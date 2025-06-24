@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/24 15:10:18 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:37:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,12 @@ char	*ft_cut_input(char *cut_me)
 	return (new_input);
 }
 
-int main(int ac, char **av, char **env)
+void	ft_minishell(t_minishell *shell)
 {
-	t_minishell	*shell;
-	
-	
-	if (ac != 1)
-	{	
-		return(0);
-	}
-	(void)av;
-	shell = NULL;
-	ft_init_minishell(&shell, env);
-	t_token *cursor;
+	//t_token *cursor;
 	while (1)
 	{
+		signal(SIGINT, ft_ctrlC);
 		shell->heredoc_in_input = true;
 		shell->history = NULL;
 		shell->input = readline(SHELL_NAME);
@@ -107,5 +98,18 @@ int main(int ac, char **av, char **env)
 			shell->exit_status = 2;
 		}
 	}
+}
+
+
+int main(int ac, char **av, char **env)
+{
+	t_minishell	*shell;
+	(void)av;
+	
+	shell = NULL;
+	ft_init_minishell(&shell, env);
+	if (ac != 1)
+		return(0);
+	ft_minishell(shell);
 	return (0);
 }
