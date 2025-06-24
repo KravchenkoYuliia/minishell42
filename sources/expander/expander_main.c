@@ -6,135 +6,138 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/13 13:33:37 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:11:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* void	ft_unquote(char *value)
-{
-	
-} */
-
-bool	ft_is_expandable(char *value, int i)
+char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 {
 	bool	sp_quote;
 	bool	db_quote;
-
+	
+	ft_bzero(value, 100000);
 	sp_quote = false;
 	db_quote = false;
-	while (value[i])
+	while ((*shl)->token_lst->value[i])
 	{
-		if (value[i] == 39 && !db_quote)
-			sp_quote = true;
-		else if (value[i] == 34 && !sp_quote)
-			db_quote = true;
-		if (value[i] == '$' && !(value[i + 1] == 39 
-			|| value[i + 1] == 34 || value[i + 1] == 32) && !sp_quote)
-			return (true);
-		i++;
-		if (value[i] && ((value[i] == 39 && sp_quote) 
-			|| (value[i] == 34 && db_quote)))
-			break;
-	}
-	return (false);
-}
-
-/* char	*ft_update_token(char *value, char *var)
-{
-} */
-
-char	*ft_get_env(char *var, t_env *env)
-{
-	int		i;
-	t_env	*cursor;
-	
-	i = 0;
-	cursor = env;
-	while (cursor)
-	{
-		if (ft_strstr(cursor->line, var) != NULL)
+		if ((*shl)->token_lst->value[i] == '\'' && !db_quote)
 		{
-			while (cursor->line[i] != '=')
-				i++;
-			return(ft_strdup(cursor->line + i + 1));
+			sp_quote = !sp_quote;
+			i++;
 		}
-		cursor = cursor->next;
+		else if ((*shl)->token_lst->value[i] == '\"' && !sp_quote)
+		{	
+			db_quote = !db_quote;
+			i++;
+		}
+		if (((*shl)->token_lst->value[i] == '\'' && !sp_quote) 
+			|| ((*shl)->token_lst->value[i] == '\"' && !db_quote))
+			continue;
+		value[j++] = (*shl)->token_lst->value[i++];
 	}
-	return (NULL);
+	return(value);
 }
 
-void	ft_expand_var(t_minishell **shell)
+char	*ft_update_token(char *value, char *var_value, int var_len, int index)
 {
 	int		i;
 	int		j;
-	char	value_buf[500];
+	int		l;
+	char	*new_value;
 	
-	i = -1;
-	while ((*shell)->token_lst->value[++i])
-	{
-		if ((*shell)->token_lst->value[i] == 34 || (*shell)->token_lst->value[i] == 39)
-		{
-			if (ft_is_expandable((*shell)->token_lst->value, i))
-			{
-				while ((*shell)->token_lst->value[i])
-				{
-					j = 0;
-					if ((*shell)->token_lst->value[i] == '$')
-					{
-						while ((*shell)->token_lst->value[i] != 34 && (*shell)->token_lst->value[i] != 39)
-						{	
-							if ((*shell)->token_lst->value[i] == '$')
-								i++;
-							value_buf[j] = (*shell)->token_lst->value[i];
-							j++;
-							i++;
-						}
-						value_buf[j] = '\0';
-						/* (*shell)->token_lst->value = */ 
-						printf("%s\n", ft_get_env(value_buf, (*shell)->env));
-					}
-					i++;
-				}
-			}
-			else
-				break;
-		}
-		else if ((*shell)->token_lst->value[i] == '$')
-		{
-			j = 0;
-			i++;
-			while ((*shell)->token_lst->value[i] != '$' && (*shell)->token_lst->value[i])
-			{	
-				if ((*shell)->token_lst->value[i] == '$')
-					i++;
-				value_buf[j] = (*shell)->token_lst->value[i];
-				j++;
-				i++;
-			}
-			value_buf[j] = '\0';
-			/* (*shell)->token_lst->value = */ 
-			printf("%s\n", ft_get_env(value_buf, (*shell)->env));
-		}		
-	}
-	
+	if (!var_value)
+		var_value = NULL;
+	new_value = ft_calloc(100000, 1);
+	if (!new_value)
+		return (NULL);
+	i = 0;
+	j = 0;
+	l = 0;
+	while(i < index)
+		new_value[j++] = value[i++];
+	while (var_value && var_value[l])
+		new_value[j++] = var_value[l++];
+	i += var_len + 1;
+	while(value[i])
+		new_value[j++] = value[i++];
+	free(value);
+	return (new_value);
 }
 
-void	ft_expander(t_minishell *shell)
+void	ft_expand_b(t_minishell **shell, char *var, int index)
 {
-	//int		i;
-	t_token 	*head;
+	(*shell)->token_lst->value = ft_strdup(
+	ft_update_token((*shell)->token_lst->value , 
+	ft_get_env(var, (*shell)->env, (*shell)->exit_status), 
+	ft_strlen(var), index));
+}
+
+void	ft_expand_a(t_minishell *shell, char *var, int index)
+{
+	int i;
+	int	j;
 	
-	head = shell->token_lst;
-	while (shell->token_lst)
+	ft_bzero(var, 100000);
+	i = index + 1;
+	while (shell->token_lst->value[i])
 	{
-		if (ft_strchr(shell->token_lst->value, '$') != 0)
+		if (ft_isdigit(shell->token_lst->value[i]) 
+		|| shell->token_lst->value[i] == '?')
 		{
-			ft_expand_var(&shell);
-			//ft_unquote(shell->token_lst->value);
+			var[0] = shell->token_lst->value[i];
+			break;
 		}
-		shell->token_lst = shell->token_lst->next;
+		else
+		{
+			j = 0;
+			while (ft_redirs_lim(shell->token_lst->value[i]) 
+			&& shell->token_lst->value[i] != '$')
+			var[j++] = shell->token_lst->value[i++];
+			break;
+		}
 	}
-	shell->token_lst = head;
-} 
+	ft_expand_b(&shell, var, index);
+}
+
+void	ft_expander(t_minishell *shl)
+{
+	int		index;
+	t_token *head;
+	char	*vl_bf;
+	
+	vl_bf = ft_calloc(100000, 1);
+	if (!vl_bf)
+		return ;
+	head = shl->token_lst;
+	while (shl->token_lst)
+	{
+		if (ft_strchr(shl->token_lst->value, '$') != 0 
+			&& shl->token_lst->type != 2)
+		{
+			while (ft_is_expandable(shl->token_lst->value) != -2)
+			{	
+				index = ft_is_expandable(shl->token_lst->value);
+				ft_expand_a(shl, vl_bf, index);
+			}
+		}
+		if (ft_is_unquotable(shl->token_lst->type, shl->token_lst->value))
+			shl->token_lst->value = ft_strdup(ft_unquote(&shl, vl_bf, 0, 0));
+		shl->token_lst = shl->token_lst->next;
+	}
+	free(vl_bf);
+	shl->token_lst = head;
+}
+	
+/* i++;
+			j = 0;
+			while (ft_isdigit((*shell)->token_lst->value[i]) 
+				|| (*shell)->token_lst->value[i] == '?')
+					var[j++] = (*shell)->token_lst->value[i++];
+			if (var)
+				ft_expand_b(shell, var, index);
+			while (ft_isalpha((*shell)->token_lst->value[i])
+				|| (*shell)->token_lst->value[i] == '_')
+				var[j++] = (*shell)->token_lst->value[i++];
+			break; */
