@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 15:13:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:37:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	ft_parent_process(t_minishell *shell)
 			pipe(shell->cmd[index]->pipe);
 			pid = fork();
 			if (pid == 0)
+			{
 				ft_child_loop(shell, index);
+			}
 			close(shell->cmd[index]->heredoc_pipe[0]);
 			close(shell->cmd[index]->heredoc_pipe[1]);
 			close(shell->cmd[index]->pipe[1]);

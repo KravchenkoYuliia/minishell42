@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 15:16:13 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:43:29 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 				flag = true;
 			}
 			ft_handle_heredoc(shell, temp->value, i_struct);
+			if (shell->exit_status == 130)
+				return ;
 			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
 			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
 

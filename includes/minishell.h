@@ -6,14 +6,22 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/24 19:45:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:47:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int signal_flag;
+extern int flag;
+
+enum h_type
+{
+	HEREDOC_IS_ON,
+	HEREDOC_IS_OFF,
+	SIGINT_NEW_LINE,	
+};
+
 # define ERROR 1
 # define SUCCESS 0
 # define SHELL_NAME "toupetishell🤏: "
@@ -98,26 +106,32 @@ typedef	struct	s_env{
 
 } t_env;
 
+
 typedef struct s_minishell{
 
-	char	*input;
-	t_token	*token_lst;
-	int	exit_status;
+	char			*input;
+	t_token			*token_lst;
+	int			exit_status;
 	
-	t_env	*env;
-	t_cmd_struct	**cmd;
-	int		nb_of_cmd;
-	int	pipe[2];
-	int	save_stdin;
-	int	save_stdout;
-	char	*history;
-	bool	heredoc_in_input;
-
+	t_env			*env;
+	t_cmd_struct		**cmd;
+	int			nb_of_cmd;
+	int			pipe[2];
+	int			save_stdin;
+	int			save_stdout;
+	char			*history;
+	bool			heredoc_in_input;
+	struct  sigaction	sig;
 
 } t_minishell;
 
+///signals///////////////////
 
 void	ft_ctrlC(int signal);
+void	ft_ctrlC_child(int signal);
+
+////////////////////////////////
+
 
 //lexer
 /////////////////

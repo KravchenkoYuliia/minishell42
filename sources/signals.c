@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/24 19:59:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:17:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,18 @@ void	ft_ctrlC(int sign)
 {
 	if (sign == SIGINT)
 	{
-		signal_flag = 1;
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		if (flag == HEREDOC_IS_OFF)
+		{	
+			printf("\n");
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else if (flag == HEREDOC_IS_ON)
+		{
+			flag = HEREDOC_IS_OFF;
+			printf("\n");
+		}
 	}
 	else
 		perror(SHELL_NAME_ERROR);
