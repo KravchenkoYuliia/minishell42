@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:17:14 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 12:30:29 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:56:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ void	ft_print_env(t_env *env)
 
 char	*ft_copy_name_inenv(char *line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*buffer;
 
 	i = 0;
 	j = 0;
-	
 	while (line[i] && line[i] != '=')
 		i++;
 	buffer = (char *)malloc(sizeof(char) * i + 1);
@@ -59,13 +58,12 @@ char	*ft_copy_name_inenv(char *line)
 	}
 	buffer[j] = '\0';
 	return (buffer);
-
 }
 
 bool	ft_name_exists_already(t_env *env, char	*name, char *line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_env	*temp;
 
 	j = ft_strlen(name);
@@ -118,12 +116,13 @@ void	ft_change_valueof_name(t_env *env, char *line)
 	}
 }
 */
+
 char	*ft_strjoin_export(char *str1, char *str2)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*line;
-	int	len;
+	int		len;
 
 	i = 0;
 	j = 0;
@@ -138,7 +137,7 @@ char	*ft_strjoin_export(char *str1, char *str2)
 	}
 	while (str2[j])
 	{
-		if (j != 0  && str2[j - 1] == '=')
+		if (j != 0 && str2[j - 1] == '=')
 			break ;
 		line[i] = str2[j];
 		i++;
@@ -154,20 +153,21 @@ char	*ft_strjoin_export(char *str1, char *str2)
 	}
 	line[i] = '\"';
 	i++;
-	line[i] ='\0';
+	line[i] = '\0';
 	return (line);
 }
 
 bool	ft_unset_or_not_unset(char *env_line, char **args)
 {
-	int	i;
+	int		i;
 	char	*name;
 
 	i = 1;
 	name = ft_copy_name_inenv(env_line);
 	while (args[i])
 	{
-		if (!ft_strchr(args[i], '=') && ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
+		if (!ft_strchr(args[i], '=')
+			&& ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
 		{
 			free(name);
 			return (true);
@@ -177,4 +177,3 @@ bool	ft_unset_or_not_unset(char *env_line, char **args)
 	free(name);
 	return (false);
 }
-

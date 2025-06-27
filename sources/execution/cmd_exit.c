@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 14:37:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:44:07 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	ft_exit(t_minishell *shell, int index)
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
 		if (!ft_only_numeric(shell->cmd[index]->args[1]))
 		{
-			printf("%s: exit: %s: numeric argument required\n", SHELL_NAME_ERROR, shell->cmd[index]->args[1]);
+			printf("%s: exit: %s: numeric argument required\n",
+				SHELL_NAME_ERROR, shell->cmd[index]->args[1]);
 			shell->exit_status = 2;
 		}
 		else if (shell->cmd[index]->args[2])
@@ -46,6 +47,6 @@ int	ft_exit(t_minishell *shell, int index)
 			return (ERROR);
 		}
 	}
-	ft_save_STD_FILENO(shell);
+	ft_save_std_fileno(shell);
 	exit((unsigned char)shell->exit_status);
 }

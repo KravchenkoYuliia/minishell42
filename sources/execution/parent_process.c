@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parent_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/26 14:37:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:45:25 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index) 
+void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 {
-	int	i;
+	int		i;
 	char	*built_in_names[] = {"echo", "cd", "pwd",
 		"export", "unset", "env", "exit"};
-
-	int	(*ft_built_in_functions[])(t_minishell *, int) = {
+	int		(*ft_built_in_functions[])(t_minishell *, int) = {
 		&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env,
 		&ft_exit
 	};
@@ -30,7 +29,7 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 		if ((ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))
 		{
 			ft_built_in_functions[i](shell, index);
-				return ;
+			return ;
 		}
 		i++;
 	}
@@ -39,9 +38,9 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 
 void	ft_parent_process(t_minishell *shell)
 {
-	int	status;
-	int	index;
-	pid_t   pid;
+	int		status;
+	int		index;
+	pid_t	pid;
 
 	index = 0;
 	if (shell->heredoc_in_input == true)
@@ -80,5 +79,5 @@ void	ft_parent_process(t_minishell *shell)
 			continue ;
 		}
 	}
-	ft_save_STD_FILENO(shell);
+	ft_save_std_fileno(shell);
 }

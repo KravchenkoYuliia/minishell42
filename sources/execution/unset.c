@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 17:47:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:39:21 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	ft_unset(t_minishell *shell, int index)
 	head = shell->env;
 	if (shell->cmd[index]->args[0] && !shell->cmd[index]->args[1])
 		return (SUCCESS); //no arguments
-	while (head && shell->cmd[index]->args && ft_unset_or_not_unset(head->line, shell->cmd[index]->args) == true)  //first arg need to be unset
+	while (head && shell->cmd[index]->args
+		&& ft_unset_or_not_unset(head->line,
+			shell->cmd[index]->args) == true)
+			//first arg need to be unset
 	{
 		ex = head;
 		if (head->next)
@@ -36,14 +39,14 @@ int	ft_unset(t_minishell *shell, int index)
 	current = shell->env->next;
 	while (current)
 	{
-		if (ft_unset_or_not_unset(current->line, shell->cmd[index]->args) == true)
+		if (ft_unset_or_not_unset(current->line,
+				shell->cmd[index]->args) == true)
 		{
 			ex = current;
 			if (current->next)
 			{
 				previous->next = current->next;
 				current = current->next;
-
 			}
 			else
 			{
@@ -57,6 +60,6 @@ int	ft_unset(t_minishell *shell, int index)
 			previous = previous->next;
 			current = current->next;
 		}
-}
-return (SUCCESS);
+	}
+	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 14:08:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:45:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_total_exit(char *msg, t_minishell *shell, int stop)
 {
 	int	status;
 
-	ft_save_STD_FILENO(shell);
+	ft_save_std_fileno(shell);
 	status = shell->exit_status;
 	if (msg)
 	{

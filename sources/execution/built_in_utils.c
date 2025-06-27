@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:50:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/09 17:32:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:57:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool    ft_is_option(char *args)
+bool	ft_is_option(char	*args)
 {
-	int     i;
+	int	i;
 
 	i = 1;
 	if (args[0] != '-')
@@ -30,7 +30,7 @@ bool    ft_is_option(char *args)
 	return (true);
 }
 
-char*   ft_get_home_path(t_env *env)
+char	*ft_get_home_path(t_env *env)
 {
 	t_env	*temp;
 

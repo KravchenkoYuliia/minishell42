@@ -6,20 +6,18 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 12:21:06 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:37:55 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
 void	ft_simple_cmd(t_minishell *shell, int index)
 {
-	int			status;
-	char			*cmd;
-	pid_t			pid;
-	
+	int		status;
+	char	*cmd;
+	pid_t	pid;
+
 	status = 0;
 	cmd = shell->cmd[index]->args[0];
 	pid = fork();
@@ -29,16 +27,19 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		signal(SIGINT, SIG_IGN);
 	if (pid == 0)
 	{
-		if (ft_strchr(shell->cmd[index]->args[0], '/') && (access(shell->cmd[index]->args[0], X_OK) == -1))
+		if (ft_strchr(shell->cmd[index]->args[0], '/')
+			&& (access(shell->cmd[index]->args[0], X_OK) == -1))
 		{
-			ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0], ": No such file or directory");
+			ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0],
+				": No such file or directory");
 			return ;
 		}
 		if (!ft_strchr(shell->cmd[index]->args[0], '/'))
 			cmd = ft_find_absolute_path(shell, index);
 		if (cmd == NULL)
 		{
-			ft_error_msg(shell->cmd[index]->args[0], NULL, ": command not found");
+			ft_error_msg(shell->cmd[index]->args[0],
+				NULL, ": command not found");
 			shell->exit_status = 127;
 			exit(127);
 		}
@@ -49,7 +50,6 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 			perror(SHELL_NAME_ERROR);
 		}
 	}
-
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 	{
@@ -60,9 +60,8 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 	else if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	shell->exit_status = status;
-
 	sigemptyset(&shell->sig.sa_mask);
-        shell->sig.sa_handler = ft_ctrl_c;
-        shell->sig.sa_flags = 0;
-        sigaction(SIGINT, &shell->sig, NULL);
+	shell->sig.sa_handler = ft_ctrl_c;
+	shell->sig.sa_flags = 0;
+	sigaction(SIGINT, &shell->sig, NULL);
 }

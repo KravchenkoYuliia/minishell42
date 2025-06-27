@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   child_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:59:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:10:21 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 {
 	char	*cmd;
 
 	cmd = shell->cmd[index]->args[0];
-
-	if (cmd && ft_strchr(shell->cmd[index]->args[0], '/') && (access(shell->cmd[index]->args[0], X_OK) == -1))
+	if (cmd && ft_strchr(shell->cmd[index]->args[0], '/')
+		&& (access(shell->cmd[index]->args[0], X_OK) == -1))
 	{
-		ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0], ": No such file or directory");
-		exit(127) ;
+		ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0],
+			": No such file or directory");
+		exit(127);
 	}
 	if (cmd && !ft_strchr(shell->cmd[index]->args[0], '/'))
 		cmd = ft_find_absolute_path(shell, index);
 	if (cmd == NULL)
 	{
 		ft_error_msg(shell->cmd[index]->args[0], NULL, ": command not found");
-		exit(127) ;
+		exit(127);
 	}
 	close(shell->save_stdin);
 	close(shell->save_stdout);
@@ -41,22 +41,19 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		else
 			exit(126);
 	}
-
 }
 
-void    ft_child_loop(t_minishell *shell, int index)
+void	ft_child_loop(t_minishell *shell, int index)
 {
-        int     i;
+	int		i;
 	char	*cmd;
-        char    *built_in_names[] = {"echo", "cd", "pwd",
-                "export", "unset", "env", "exit"};
+	char	*built_in_names[] = {"echo", "cd", "pwd",
+		"export", "unset", "env", "exit"};
+	int		(*ft_built_in_functions[])(t_minishell *, int) = {
+		&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env,
+		&ft_exit};
 
-        int     (*ft_built_in_functions[])(t_minishell *, int) = {
-                &ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env,
-                &ft_exit
-        };
-
-        i = 0;
+	i = 0;
 	cmd = NULL;
 	ft_redirections(shell, index);
 	close(shell->cmd[index]->pipe[0]);
@@ -66,10 +63,11 @@ void    ft_child_loop(t_minishell *shell, int index)
 		cmd = shell->cmd[index]->args[0];
 		while (i < 7)
 		{
-			if ((cmd && ft_strncmp(cmd, built_in_names[i], (ft_strlen(cmd) + 1)) == 0))
+			if ((cmd && ft_strncmp(cmd, built_in_names[i],
+						(ft_strlen(cmd) + 1)) == 0))
 			{
 				ft_built_in_functions[i](shell, index);
-				exit(EXIT_SUCCESS) ;
+				exit(EXIT_SUCCESS);
 			}
 			i++;
 		}

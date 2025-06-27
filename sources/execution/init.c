@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/26 17:43:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:30:27 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_malloc_struct_foreach_cmd(t_minishell *shell, t_cmd_struct ***cmd, int nb)
+void	ft_malloc_struct_foreach_cmd(t_minishell *shl, t_cmd_struct ***cmd, int nb)
 {
 	int	i;
 
 	i = 0;
-	
-
 	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * nb);
 	if (!*cmd)
-		ft_total_exit("Malloc failed in malloc_struct_foreach_cmd", shell, nb);
+		ft_total_exit("Malloc failed in malloc_struct_foreach_cmd", shl, nb);
 	while (i < nb)
 	{
 		(*cmd)[i] = NULL;
@@ -29,7 +27,7 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell, t_cmd_struct ***cmd, int n
 		if (!(*cmd)[i])
 		{
 			ft_total_exit("Malloc failed for one of the struct foreach cmd",
-					shell, i);
+				shl, i);
 		}
 		i++;
 	}
@@ -43,7 +41,8 @@ void	ft_start_value(t_minishell *shell)
 	while (i < shell->nb_of_cmd)
 	{
 		shell->cmd[i]->args = NULL;
-		shell->cmd[i]->args = (char **)malloc(sizeof(char *) * (shell->cmd[i]->nb_of_words + 1));
+		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
+				* (shell->cmd[i]->nb_of_words + 1));
 		shell->cmd[i]->args[0] = NULL;
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
@@ -56,10 +55,10 @@ void	ft_start_value(t_minishell *shell)
 	}
 }
 
-void	ft_fill_cmd_struct(t_minishell *shell)
+void	ft_fill_cmd_struct(t_minishell *shl)
 {
-	int		i_struct;
-	int		i_args;
+	int			i_struct;
+	int			i_args;
 	bool		flag;
 	t_token		*temp;
 	t_redirect	*new;
@@ -67,52 +66,51 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 	i_struct = 0;
 	i_args = 0;
 	flag = false;
-	temp = shell->token_lst;
+	temp = shl->token_lst;
 	while (temp)
 	{
 		if (temp->type == WORD)
 		{
-			shell->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
+			shl->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
 			i_args++;
-			if (i_args == shell->cmd[i_struct]->nb_of_words)
-				shell->cmd[i_struct]->args[i_args] = NULL;
+			if (i_args == shl->cmd[i_struct]->nb_of_words)
+				shl->cmd[i_struct]->args[i_args] = NULL;
 		}
 		else if (temp->type == INPUT)
 		{
-			shell->cmd[i_struct]->input = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->input, INPUT);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
+			shl->cmd[i_struct]->input = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shl->cmd[i_struct]->input, INPUT);
+			ft_lstadd_back_redirect(&shl->cmd[i_struct]->input_list, new);
 		}
 		else if (temp->type == OUTPUT)
 		{
-			shell->cmd[i_struct]->output = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, OUTPUT);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
+			shl->cmd[i_struct]->output = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shl->cmd[i_struct]->output, OUTPUT);
+			ft_lstadd_back_redirect(&shl->cmd[i_struct]->output_list, new);
 		}
 		else if (temp->type == APPEND)
 		{
-			shell->cmd[i_struct]->output = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, APPEND);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
+			shl->cmd[i_struct]->output = ft_strdup(temp->value);
+			new = ft_lstnew_redirect(shl->cmd[i_struct]->output, APPEND);
+			ft_lstadd_back_redirect(&shl->cmd[i_struct]->output_list, new);
 		}
 		else if (temp->type == HEREDOC)
 		{
 			if (flag == false)
 			{
-				shell->history = ft_strjoin_heredoc(shell->history, shell->input);
-				shell->history = ft_strjoin_heredoc(shell->history, "\n");
+				shl->history = ft_strjoin_heredoc(shl->history, shl->input);
+				shl->history = ft_strjoin_heredoc(shl->history, "\n");
 				flag = true;
 			}
-			ft_handle_heredoc(shell, temp->value, i_struct);
-			if (shell->exit_status == 130)
+			ft_handle_heredoc(shl, temp->value, i_struct);
+			if (shl->exit_status == 130)
 				return ;
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
-
+			new = ft_lstnew_redirect(shl->cmd[i_struct]->heredoc_pipe, HEREDOC);
+			ft_lstadd_back_redirect(&shl->cmd[i_struct]->input_list, new);
 		}
 		else if (temp->type == PIPE)
 		{
-			shell->cmd[i_struct]->pipe_flag = 1;
+			shl->cmd[i_struct]->pipe_flag = 1;
 			i_args = 0;
 			i_struct++;
 		}

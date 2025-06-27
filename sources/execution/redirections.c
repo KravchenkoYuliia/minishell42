@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/24 14:30:59 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:36:05 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_check_infile(char *input)
 {
 	int	fd;
-	
+
 	if (access(input, F_OK) == -1)
 	{
 		ft_error_msg(SHELL_NAME_ERROR, input, ": No such file or directory");
@@ -32,7 +32,7 @@ int	ft_check_infile(char *input)
 
 int	ft_redir_input(t_minishell *shell, int index)
 {
-	int	fd;
+	int			fd;
 	t_redirect	*temp;
 
 	temp = shell->cmd[index]->input_list;
@@ -59,22 +59,23 @@ int	ft_redir_input(t_minishell *shell, int index)
 
 int	ft_redir_output(t_minishell *shell, int index)
 {
-	int		fd;
+	int			i;
+	int			fd;
 	t_redirect	*temp;
 
 	temp = shell->cmd[index]->output_list;
-	int i = 0;
+	i = 0;
 	while (temp)
 	{
 		if (temp->type == APPEND)
 		{
 			fd = open(temp->file_name, O_RDWR | O_CREAT | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		}
 		else if (temp->type == OUTPUT)
 		{
 			fd = open(temp->file_name, O_RDWR | O_CREAT | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		}
 		if (fd == -1)
 		{

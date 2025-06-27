@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/21 18:28:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:42:42 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_get_nb_of_cmd(t_minishell *shell)
 {
-	int	i;
+	int		i;
 	t_token	*temp;
 
 	i = 0;
@@ -24,12 +24,11 @@ void	ft_get_nb_of_cmd(t_minishell *shell)
 	while (temp)
 	{
 		if (temp->type == PIPE)
-			i++;;
+			i++;
 		temp = temp->next;
 	}
 	shell->nb_of_cmd = i;
 }
-
 
 void	ft_init_nb_of_words(t_minishell *shell)
 {
@@ -43,16 +42,16 @@ void	ft_init_nb_of_words(t_minishell *shell)
 	}
 }
 
-void	ft_get_nb_of_words_NO_pipe(t_minishell *shell)
+void	ft_get_nb_of_words_no_pipe(t_minishell *shell)
 {
-	int	i;
+	int		i;
 	t_token	*temp;
 
 	i = 0;
 	temp = shell->token_lst;
 	while (temp)
 	{
-		if (temp->type == WORD) 
+		if (temp->type == WORD)
 			i++;
 		temp = temp->next;
 	}
@@ -61,8 +60,8 @@ void	ft_get_nb_of_words_NO_pipe(t_minishell *shell)
 
 void	ft_get_nb_of_words(t_minishell *shell)
 {
-	int	i_word;
-	int	i_bloc_cmd;
+	int		i_word;
+	int		i_bloc_cmd;
 	t_token	*temp;
 
 	i_word = 0;
@@ -83,7 +82,7 @@ void	ft_get_nb_of_words(t_minishell *shell)
 	shell->cmd[i_bloc_cmd]->nb_of_words = i_word;
 }
 
-void    ft_save_STD_FILENO(t_minishell *shell)
+void	ft_save_std_fileno(t_minishell *shell)
 {
 	dup2(shell->save_stdin, STDIN_FILENO);
 	dup2(shell->save_stdout, STDOUT_FILENO);

@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:04:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/18 17:44:39 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:02:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_minishell *shell, int index)
+int	ft_echo(t_minishell *shell, int idx)
 {
 	int	i;
 	int	n_flag;
 
 	i = 1;
 	n_flag = 0;
-	if (!shell->cmd[index]->args[1])
+	if (!shell->cmd[idx]->args[1])
 	{
 		printf("\n");
 		return (0);
 	}
-	while (shell->cmd[index]->args[i] && ft_is_option(shell->cmd[index]->args[i]))
+	while (shell->cmd[idx]->args[i] && ft_is_option(shell->cmd[idx]->args[i]))
 	{
 		n_flag = 1;
 		i++;
 	}
-	while (shell->cmd[index]->args[i] != NULL)
+	while (shell->cmd[idx]->args[i] != NULL)
 	{
-		printf("%s", shell->cmd[index]->args[i]);
-		if (shell->cmd[index]->args[i + 1] != NULL)
+		printf("%s", shell->cmd[idx]->args[i]);
+		if (shell->cmd[idx]->args[i + 1] != NULL)
 			printf(" ");
 		i++;
 	}
@@ -45,7 +45,6 @@ int	ft_cd(t_minishell *shell, int index)
 {
 	char	directory[PATH_MAX];
 	char	*home_path;
-
 
 	if (!shell->cmd[index]->args[1])
 	{
@@ -69,7 +68,8 @@ int	ft_cd(t_minishell *shell, int index)
 	}
 	if (chdir(directory) != 0)
 	{
-		ft_error_msg("toupetishell🤏: cd", directory, ": No such file or directory");
+		ft_error_msg("toupetishell🤏: cd",
+			directory, ": No such file or directory");
 		return (1);
 	}
 	ft_bzero(directory, PATH_MAX);
@@ -78,12 +78,12 @@ int	ft_cd(t_minishell *shell, int index)
 	return (0);
 }
 
-int	ft_pwd(t_minishell *shell, int	index)
+int	ft_pwd(t_minishell *shell, int index)
 {
+	char	buffer[PATH_MAX];
+
 	(void) shell;
 	(void) index;
-	char	buffer[PATH_MAX];
-	
 	ft_bzero(buffer, PATH_MAX);
 	if (getcwd(buffer, PATH_MAX) == NULL)
 		return (1);
@@ -91,21 +91,21 @@ int	ft_pwd(t_minishell *shell, int	index)
 	return (0);
 }
 
-int     ft_env(t_minishell *shell, int index)
+int	ft_env(t_minishell *shell, int index)
 {
-        t_env   *list;
+	t_env	*list;
 
-        if (shell->cmd[index]->args[1])
-        {
-                ft_error_msg(NULL, NULL, "env with no options or arguments :)");
-                return (1);
-        }
-        list = shell->env;
-        while (list)
-        {
-                printf("%s", ((char *)(list->line)));
-                printf("\n");
-                list = list->next;
-        }
-        return (0);
+	if (shell->cmd[index]->args[1])
+	{
+		ft_error_msg(NULL, NULL, "env with no options or arguments :)");
+		return (1);
+	}
+	list = shell->env;
+	while (list)
+	{
+		printf("%s", ((char *)(list->line)));
+		printf("\n");
+		list = list->next;
+	}
+	return (0);
 }
