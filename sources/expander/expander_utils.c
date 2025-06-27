@@ -6,14 +6,33 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/24 14:48:55 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:28:45 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* bool	ft_expand_split()
-{} */
+void	ft_word_split(t_minishell **shell)
+{
+	int 	i;
+	char	**tab;
+	t_token	*splited;
+	t_token *head;
+	
+	i = 1;
+	tab = ft_split((*shell)->token_lst->value, ' ');
+	(*shell)->token_lst->value = ft_strdup(tab[0]);
+	free (tab[0]);
+	head = (*shell)->token_lst;
+	while (tab[i])
+	{
+		splited = new_token_nd(tab[i], WORD, 0);
+		splited->next = (*shell)->token_lst->next;
+		(*shell)->token_lst->next = splited;
+		i++;
+	}
+	free (tab);
+}
 
 char	*ft_get_env(char *var, t_env *env, int exit_status)
 {
@@ -68,4 +87,28 @@ bool	ft_is_unquotable(int type, char *value)
 	if (ft_strchr(value, '\'') == 0	&& ft_strchr(value, '\"') == 0)
 		return (false);
 	return (true);
+}
+
+bool	ft_is_splitable(char *value)
+{
+	int		i;
+	bool	sp_quote;
+	bool	db_quote;
+	
+	if (ft_strchr(value, ' ') == NULL || ft_strchr(value, '|') != NULL)
+		return(false);
+	sp_quote = false;
+	db_quote = false;
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' && !db_quote)
+			sp_quote = !sp_quote;
+		else if (value[i] == '\"' && !sp_quote)
+			db_quote = !db_quote;
+		if (value[i] == ' ' && (!sp_quote && !db_quote))
+			return (true);
+		i++;
+	}
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/24 16:11:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:23:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 			db_quote = !db_quote;
 			i++;
 		}
-		if (((*shl)->token_lst->value[i] == '\'' && !sp_quote) 
-			|| ((*shl)->token_lst->value[i] == '\"' && !db_quote))
+		if (((*shl)->token_lst->value[i] == '\'' 
+		|| (*shl)->token_lst->value[i] == '\"') 
+		&& (!db_quote && !sp_quote))
 			continue;
 		value[j++] = (*shl)->token_lst->value[i++];
 	}
@@ -103,7 +104,6 @@ void	ft_expand_a(t_minishell *shell, char *var, int index)
 
 void	ft_expander(t_minishell *shl)
 {
-	int		index;
 	t_token *head;
 	char	*vl_bf;
 	
@@ -113,14 +113,12 @@ void	ft_expander(t_minishell *shl)
 	head = shl->token_lst;
 	while (shl->token_lst)
 	{
-		if (ft_strchr(shl->token_lst->value, '$') != 0 
-			&& shl->token_lst->type != 2)
+		while (ft_is_expandable(shl->token_lst->value) != -2)
+			ft_expand_a(shl, vl_bf, ft_is_expandable(shl->token_lst->value));
+		if (ft_is_splitable(shl->token_lst->value))
 		{
-			while (ft_is_expandable(shl->token_lst->value) != -2)
-			{	
-				index = ft_is_expandable(shl->token_lst->value);
-				ft_expand_a(shl, vl_bf, index);
-			}
+			printf("is splitable is true\n");
+			ft_word_split(&shl);
 		}
 		if (ft_is_unquotable(shl->token_lst->type, shl->token_lst->value))
 			shl->token_lst->value = ft_strdup(ft_unquote(&shl, vl_bf, 0, 0));
@@ -129,15 +127,3 @@ void	ft_expander(t_minishell *shl)
 	free(vl_bf);
 	shl->token_lst = head;
 }
-	
-/* i++;
-			j = 0;
-			while (ft_isdigit((*shell)->token_lst->value[i]) 
-				|| (*shell)->token_lst->value[i] == '?')
-					var[j++] = (*shell)->token_lst->value[i++];
-			if (var)
-				ft_expand_b(shell, var, index);
-			while (ft_isalpha((*shell)->token_lst->value[i])
-				|| (*shell)->token_lst->value[i] == '_')
-				var[j++] = (*shell)->token_lst->value[i++];
-			break; */

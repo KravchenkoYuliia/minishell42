@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/26 17:47:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:15:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,13 @@ bool	ft_redirs_lim(char c);
 //expander
 /////////////////
 void	ft_expander(t_minishell *shell);
-void	ft_expand_var(t_minishell **shell);
-int		ft_is_expandable(char *value);
+void	ft_expand_a(t_minishell *shell, char *var, int index);
+void	ft_expand_b(t_minishell **shell, char *var, int index);
 char	*ft_get_env(char *var, t_env *env, int exit_status);
+int		ft_is_expandable(char *value);
 bool	ft_is_unquotable(int type, char *value);
+bool	ft_is_splitable(char *value);
+void	ft_word_split(t_minishell **shell);
 /////////////////
 
 //execution
