@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:39:37 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/17 12:05:18 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:18:37 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_lstadd_back_tok(t_token **lst, t_token *new)
 	if (!s_temp)
 		*lst = new;
 	else
-		s_temp->next = new;	
+		s_temp->next = new;
 }
 
 t_token	*new_token_nd(char *value, int type, int incr)
@@ -53,5 +53,5 @@ t_token	*new_token_nd(char *value, int type, int incr)
 	token->type = type;
 	token->incr = incr;
 	token->next = NULL;
-	return(free(value), token);
+	return (free(value), token);
 }

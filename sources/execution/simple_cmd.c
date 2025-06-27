@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/26 17:40:14 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:21:06 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 	shell->exit_status = status;
 
 	sigemptyset(&shell->sig.sa_mask);
-        shell->sig.sa_handler = ft_ctrlC;
+        shell->sig.sa_handler = ft_ctrl_c;
         shell->sig.sa_flags = 0;
         sigaction(SIGINT, &shell->sig, NULL);
 }

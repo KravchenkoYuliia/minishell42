@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/10 15:51:28 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:12:27 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*ft_parsing_a(char *input, int i)
 {
 	t_token	*token;
-	
+
 	token = NULL;
 	if (input[i] == 39 || input[i] == 34)
 		token = ft_if_quotes_a(input, i);
@@ -29,7 +29,7 @@ t_token	*ft_parsing_a(char *input, int i)
 t_token	*ft_parsing_b(char *input, int i)
 {
 	t_token	*token;
-	
+
 	token = NULL;
 	if (input[i] == 60)
 	{
@@ -48,7 +48,7 @@ t_token	*ft_parsing_b(char *input, int i)
 	return (token);
 }
 
-t_token *ft_parser(char *input)
+t_token	*ft_parser(char *input)
 {
 	t_token	*token_lst;
 	t_token	*new_token;
@@ -58,7 +58,7 @@ t_token *ft_parser(char *input)
 	i = 0;
 	while (i < ft_strlen(input))
 	{
-		if ((input[i] == 39 || input[i] == 34 || input [i] == 124) 
+		if ((input[i] == 39 || input[i] == 34 || input[i] == 124)
 			|| ft_redirs_lim(input[i]))
 		{
 			new_token = ft_parsing_a(input, i);

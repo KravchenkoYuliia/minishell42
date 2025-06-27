@@ -6,13 +6,13 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 09:06:32 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:20:31 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_ctrlC(int sign)
+void	ft_ctrl_c(int sign)
 {
 	if (sign == SIGINT)
 	{

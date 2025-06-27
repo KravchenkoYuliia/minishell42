@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/10 17:10:04 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:57:51 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	ft_check_unclosed_quotes(char *input)
 {
-	int 	i;
+	int		i;
 	int		sp;
 	int		db;
 
@@ -29,7 +29,7 @@ bool	ft_check_unclosed_quotes(char *input)
 			db++;
 		if (sp % 2 == 0)
 			sp = 0;
-		if ( db % 2 == 0)
+		if (db % 2 == 0)
 			db = 0;
 		i++;
 	}
@@ -41,7 +41,7 @@ bool	ft_check_unclosed_quotes(char *input)
 bool	ft_check_pipes(char *input)
 {
 	int	i;
-	
+
 	i = 0;
 	while (input[i])
 	{
@@ -63,14 +63,17 @@ int	ft_check_redirs(char *input)
 	{
 		if (input[i] == '>' || input[i] == '<')
 		{
-			if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
+			if ((input[i] == '>' && input[i + 1] == '>')
+				|| (input[i] == '<' && input[i + 1] == '<'))
 				i += 2;
 			else
 				i++;
 			while (input[i] && input[i] == ' ')
 				i++;
-			if (input[i] == '|' || input[i] == '\0' || (input[i] == 34 && input[i + 1] == 34) || (input[i] == 39 && input[i + 1] == 39) ||
-			input[i] == '>' || input[i] == '<')
+			if (input[i] == '|' || input[i] == '\0'
+				|| (input[i] == 34 && input[i + 1] == 34)
+				|| (input[i] == 39 && input[i + 1] == 39)
+				|| input[i] == '>' || input[i] == '<')
 				return (i);
 			i++;
 		}
@@ -82,7 +85,7 @@ int	ft_check_redirs(char *input)
 bool	ft_lexer(char *input)
 {
 	int	redir_check;
-	
+
 	redir_check = ft_check_redirs(input);
 	if (!input)
 		return (false);
@@ -92,9 +95,12 @@ bool	ft_lexer(char *input)
 		return (lexer_err_handler(2, 'c'), false);
 	if (redir_check != -1)
 	{
-		if (input[redir_check] == '\0' || input[redir_check] == 34 || input[redir_check] == 39)
+		if (input[redir_check] == '\0'
+			|| input[redir_check] == 34
+			|| input[redir_check] == 39)
 		{
-			printf("toupetishell🤏​: syntax error near unexpected token 'new_line'\n");
+			printf("toupetishell🤏​: ");
+			printf("syntax error near unexpected token 'new_line'\n");
 			return (false);
 		}	
 		else

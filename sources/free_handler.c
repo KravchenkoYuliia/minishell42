@@ -6,15 +6,15 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/22 07:56:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:19:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void free_token_list(t_token *head)
+void	free_token_list(t_token *head)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!head)
 		return ;
@@ -27,9 +27,9 @@ void free_token_list(t_token *head)
 	}
 }
 
-void ft_free_env(t_env *head)
+void	ft_free_env(t_env *head)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	if (!head)
 		return ;
@@ -47,7 +47,7 @@ void	ft_free_args(char **array) //free **array
 	int	i;
 
 	i = 0;
-	while(array[i])
+	while (array[i])
 	{
 		free(array[i]);
 		i++;
@@ -57,7 +57,7 @@ void	ft_free_args(char **array) //free **array
 
 void	ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < stop && structs[i])

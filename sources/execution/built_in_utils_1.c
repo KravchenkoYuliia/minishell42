@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:17:14 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/13 15:45:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:30:29 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_charset(char *str, char c)
 {

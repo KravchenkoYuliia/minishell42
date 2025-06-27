@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 09:06:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:23:51 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 bool	ft_find_heredoc(t_token *token_lst)
 {
 	t_token	*temp;
-	
+
 	temp = token_lst;
 	while (temp)
 	{
@@ -44,14 +44,14 @@ bool	ft_find_heredoc(t_token *token_lst)
 
 char	*ft_cut_input(char *cut_me)
 {
-	int	i;
+	int		i;
 	char	*new_input;
 	char	**lines;
 
 	i = 0;
 	new_input = NULL;
 	lines = ft_split(cut_me, '\n');
-	while(lines[i])
+	while (lines[i])
 		i++;
 	if (i <= 1)
 		return (cut_me);
@@ -65,7 +65,7 @@ char	*ft_cut_input(char *cut_me)
 
 void	ft_minishell(t_minishell *shell)
 {
-	t_token *cursor;
+	t_token	*cursor;
 
 	while (1)
 	{
@@ -76,14 +76,15 @@ void	ft_minishell(t_minishell *shell)
 		if (shell->input && ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input);
-			if (shell->input && *shell->input && !ft_find_heredoc(shell->token_lst))
+			if (shell->input && *shell->input
+				&& !ft_find_heredoc(shell->token_lst))
 			{
 				add_history(shell->input);
 				shell->heredoc_in_input = false;
 			}
 			ft_expander(shell);
 			cursor = shell->token_lst;
-			while(cursor)
+			while (cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
@@ -108,17 +109,17 @@ void	ft_minishell(t_minishell *shell)
 
 int	flag = HEREDOC_IS_OFF;
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_minishell		*shell;
+
 	(void)av;
-	
 	shell = NULL;
 	ft_init_minishell(&shell, env);
 	if (ac != 1)
-		return(0);
+		return (0);
 	sigemptyset(&shell->sig.sa_mask);
-	shell->sig.sa_handler = ft_ctrlC;
+	shell->sig.sa_handler = ft_ctrl_c;
 	shell->sig.sa_flags = 0;
 	sigaction(SIGINT, &shell->sig, NULL);
 	ft_minishell(shell);
