@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:27:18 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:43:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,16 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 	flag = HEREDOC_IS_ON;
 	while (1)
 	{
-		write(1, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
+		//write(1, "> ", 2);
+		line = readline("> ");//get_next_line(STDIN_FILENO);
+		if (!line)
+		{
+			write(1, "\n", 1);
+			ft_ctrl_d_heredoc_msg(shell->prompt_count, limiter);
+			free(line);
+			flag = HEREDOC_IS_OFF;
+			return ;
+		}
 		if (line)
 		{
 			shell->history = ft_strjoin_heredoc(shell->history, line);

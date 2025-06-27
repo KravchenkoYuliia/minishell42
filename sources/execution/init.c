@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:30:27 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:21:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	ft_fill_cmd_struct(t_minishell *shl)
 		{
 			shl->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
 			i_args++;
+
 			if (i_args == shl->cmd[i_struct]->nb_of_words)
 				shl->cmd[i_struct]->args[i_args] = NULL;
 		}

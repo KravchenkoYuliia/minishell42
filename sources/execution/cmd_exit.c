@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:44:07 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:25:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,32 @@ bool	ft_only_numeric(char *str)
 	return (true);
 }
 
+void	ft_ctrl_d_heredoc_msg(int line, char *limiter)
+{
+	ft_write_stdout(SHELL_NAME);
+	ft_write_stdout("warning: here-document at line ");
+	ft_putnbr_fd(line, 1);
+	ft_write_stdout(" delimited by end-of-file (wanted `");
+	ft_write_stdout(limiter);
+	ft_write_stdout("')");
+	write(1, "\n", 1);
+
+}
+
+void	ft_ctrl_d(t_minishell *shell)
+{
+	shell->exit_status = 0;
+	ft_free_env(shell->env);
+	free(shell);
+	ft_write_stdout("exit\n");
+	exit(shell->exit_status);
+}
+
 int	ft_exit(t_minishell *shell, int index)
 {
+	printf("exit\n");
 	if (shell->cmd[index]->args[1])
 	{
-		printf("exit\n");
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
 		if (!ft_only_numeric(shell->cmd[index]->args[1]))
 		{

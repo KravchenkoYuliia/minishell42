@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:44:49 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:40:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
+	int				prompt_count;
 	char				*input;
 	t_token				*token_lst;
 	int					exit_status;	
@@ -114,7 +115,8 @@ typedef struct s_minishell
 
 ///signals///////////////////
 void		ft_ctrl_c(int signal);
-void		ft_ctrl_c_child(int signal);
+void		ft_ctrl_d(t_minishell *shell);
+void		ft_ctrl_d_heredoc_msg(int line, char *limiter);
 ////////////////////////////////
 
 //lexer
@@ -161,6 +163,7 @@ void		ft_word_split(t_minishell **shell);
 
 //execution
 /////////////////
+void		ft_write_stdout(char *msg);
 void		ft_fill_env(t_minishell *shell, t_env **env_list, char **env);
 t_env		*ft_lstlast_env(t_env *lst);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 12:23:51 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:58:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	*shell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!*shell)
 		exit(EXIT_FAILURE);
+	(*shell)->prompt_count = 0;
 	(*shell)->token_lst = NULL;
 	(*shell)->input = NULL;
 	(*shell)->exit_status = 0;
@@ -65,13 +66,16 @@ char	*ft_cut_input(char *cut_me)
 
 void	ft_minishell(t_minishell *shell)
 {
-	t_token	*cursor;
+	//t_token	*cursor;
 
 	while (1)
 	{
 		shell->heredoc_in_input = true;
 		shell->history = NULL;
 		shell->input = readline(SHELL_NAME);
+		if (!shell->input)
+			ft_ctrl_d(shell);
+		shell->prompt_count += 1;
 		shell->input = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
 		{
@@ -83,12 +87,12 @@ void	ft_minishell(t_minishell *shell)
 				shell->heredoc_in_input = false;
 			}
 			ft_expander(shell);
-			cursor = shell->token_lst;
+			/*cursor = shell->token_lst;
 			while (cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
-			}
+			}*/
 			if (shell->token_lst)
 			{
 				if (ft_execution(shell) == SIGINT_NEW_LINE)

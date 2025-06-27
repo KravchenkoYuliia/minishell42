@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:42:42 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:16:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,9 @@ void	ft_save_std_fileno(t_minishell *shell)
 	dup2(shell->save_stdout, STDOUT_FILENO);
 	close(shell->save_stdin);
 	close(shell->save_stdout);
+}
+
+void	ft_write_stdout(char *msg)
+{
+	write(1, msg, ft_strlen(msg));
 }
