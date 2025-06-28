@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 17:40:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:11:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_minishell
 	t_token				*token_lst;
 	int					exit_status;	
 	t_env				*env;
+	char				**env_execve;
 	t_cmd_struct		**cmd;
 	int					nb_of_cmd;
 	int					pipe[2];
@@ -199,6 +200,10 @@ void		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 void		ft_simple_cmd(t_minishell *shell, int index);
 void		ft_child_loop(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
+int		ft_copy_env_for_execve(t_minishell *shell);
+int		ft_malloc_env_for_execve(char ***env, int nb);
+void		ft_handle_shlvl(char **env);
+int			ft_count_var_in_env(t_env *env);
 int			ft_redirections(t_minishell *shell, int index);
 int			ft_redir_input(t_minishell *shell, int index);
 int			ft_redir_output(t_minishell *shell, int index);

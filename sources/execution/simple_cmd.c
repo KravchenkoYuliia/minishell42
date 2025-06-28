@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:37:55 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:11:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		{
 			ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0],
 				": No such file or directory");
-			return ;
+			shell->exit_status = 127;
+			exit(127);
 		}
 		if (!ft_strchr(shell->cmd[index]->args[0], '/'))
 			cmd = ft_find_absolute_path(shell, index);
@@ -45,9 +46,14 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		}
 		close(shell->save_stdin);
 		close(shell->save_stdout);
-		if (execve(cmd, shell->cmd[index]->args, NULL) != 0)
+		ft_copy_env_for_execve(shell);
+		if (!ft_strncmp(cmd, "./minishell", 11))
+                        ft_handle_shlvl(shell->env_execve);
+		if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 		{
 			perror(SHELL_NAME_ERROR);
+			shell->exit_status = 127;
+			exit(127);
 		}
 	}
 	waitpid(pid, &status, 0);

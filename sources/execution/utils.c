@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 18:16:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:18:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,79 @@ void	ft_save_std_fileno(t_minishell *shell)
 void	ft_write_stdout(char *msg)
 {
 	write(1, msg, ft_strlen(msg));
+}
+
+int	ft_count_var_in_env(t_env *env)	
+{
+	int		i;
+	t_env	*temp;
+
+	i = 0;
+	temp = env;
+	while (temp)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+
+
+
+int	ft_malloc_env_for_execve(char ***env, int nb)
+{
+	int	i;
+
+	i = 0;
+	(*env) = (char **)malloc(sizeof(char *) * nb + 1);
+	if (!(*env))
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int	ft_copy_env_for_execve(t_minishell *shell)
+{
+	int		i;
+	int		nb_of_variables;
+	t_env	*temp;
+
+	i = 0;
+	temp = shell->env;
+	nb_of_variables = ft_count_var_in_env(shell->env);
+	if (ft_malloc_env_for_execve(&shell->env_execve,
+				nb_of_variables) == ERROR)
+		return (ERROR);
+	while (temp)
+	{
+		shell->env_execve[i] = ft_strdup(temp->line);
+		if (!shell->env_execve[i])
+			return (ERROR);
+		temp = temp->next;
+		i++;
+	}
+	shell->env_execve[i] = NULL;
+	return (SUCCESS);
+}
+
+void	ft_handle_shlvl(char **env)
+{
+	int	i;
+	int	shlvl;
+	char	*newline;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp("SHLVL=", env[i], 6))
+		{
+			newline = ft_strdup("SHLVL=");
+			shlvl = ft_atoi(env[i] + 6);
+			shlvl++;
+			newline = ft_strjoin(newline, ft_itoa(shlvl));
+			free(env[i]);
+			env[i] = newline;
+		}
+		i++;
+	}
 }

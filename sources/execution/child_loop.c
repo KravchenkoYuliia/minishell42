@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:10:21 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:55:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	{
 		ft_error_msg(SHELL_NAME_ERROR, shell->cmd[index]->args[0],
 			": No such file or directory");
+		shell->exit_status = 127;
 		exit(127);
 	}
 	if (cmd && !ft_strchr(shell->cmd[index]->args[0], '/'))

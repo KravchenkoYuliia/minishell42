@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 17:58:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:10:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
 	ft_fill_env(*shell, &(*shell)->env, env);
+	(*shell)->env_execve = NULL;
 	(*shell)->cmd = NULL;
 	(*shell)->history = NULL;
 	(*shell)->nb_of_cmd = 0;
