@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 17:59:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:19:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	ft_parent_process(t_minishell *shell)
 		{
 			pipe(shell->cmd[index]->pipe);
 			pid = fork();
+			if (pid == -1)
+				return ;
 			if (pid == 0)
 			{
 				ft_child_loop(shell, index);
@@ -71,13 +73,30 @@ void	ft_parent_process(t_minishell *shell)
 		}
 		while (waitpid(pid, &status, 0) != -1)
 		{
+			if (WIFSIGNALED(status))
+			{
+				status = WTERMSIG(status);
+				status += 128;
+				write(1, "\n", 1);
+			}
+			else if (WIFEXITED(status))
+				status = WEXITSTATUS(status);
+			shell->exit_status = status;
+			continue ;
+		}
+		sigemptyset(&shell->sig.sa_mask);
+		shell->sig.sa_handler = ft_ctrl_c;
+		shell->sig.sa_flags = 0;
+		sigaction(SIGINT, &shell->sig, NULL);
+		/*while (waitpid(pid, &status, 0) != -1)
+		{
 			if (WIFEXITED(status))
 			{
 				status = WEXITSTATUS(status);
 				shell->exit_status = status;
 			}
 			continue ;
-		}
+		}*/
 	}
 	ft_save_std_fileno(shell);
 }

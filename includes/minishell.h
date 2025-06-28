@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 15:11:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:22:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@
 
 extern int	flag;
 
-enum h_type
-{
-	HEREDOC_IS_ON,
-	HEREDOC_IS_OFF,
-	SIGINT_NEW_LINE,	
-};
-
 typedef struct s_token
 {
 	char			*value;
@@ -65,6 +58,9 @@ enum e_type
 	INPUT,
 	OUTPUT,
 	APPEND,
+	HEREDOC_IS_ON,
+	HEREDOC_IS_OFF,
+	SIGINT_NEW_LINE,	
 };
 
 typedef struct s_cmd_struct
@@ -171,6 +167,7 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *content);
 void		ft_print_env(t_env *env);
 int			ft_export_forempty_env(t_minishell *shell);	
+void		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 t_redirect	*ft_lstnew_redirect(void *content, int type);

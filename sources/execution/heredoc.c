@@ -6,11 +6,45 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 18:43:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:01:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+void	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
+{
+	int		status;
+	pid_t	pid;
+
+	pipe(shell->cmd[index]->heredoc_pipe);
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0)
+	{
+		 ft_handle_heredoc(shell, limiter, index);
+		 exit(EXIT_SUCCESS);
+	}
+	close(shell->cmd[index]->heredoc_pipe[0]);
+	close(shell->cmd[index]->heredoc_pipe[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		status = WTERMSIG(status);
+		status += 128;
+		write(1, "\n", 1);
+	}
+	else if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	shell->exit_status = status;
+	/*shell->exit_status = status;
+	sigemptyset(&shell->sig.sa_mask);
+	shell->sig.sa_handler = ft_ctrl_c;
+	shell->sig.sa_flags = 0;
+	sigaction(SIGINT, &shell->sig, NULL);*/
+}
 
 char	*ft_strjoin_heredoc(char *s1, char *s2)
 {
@@ -50,15 +84,13 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 	char	*line;
 
 	line = NULL;
-	pipe(shell->cmd[idx]->heredoc_pipe);
 	flag = HEREDOC_IS_ON;
+	close(shell->cmd[idx]->heredoc_pipe[0]);
 	while (1)
 	{
-		//write(1, "> ", 2);
-		line = readline("> ");//get_next_line(STDIN_FILENO);
+		line = readline("> ");
 		if (!line)
 		{
-			write(1, "\n", 1);
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, limiter);
 			free(line);
 			flag = HEREDOC_IS_OFF;
@@ -106,6 +138,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 				return ;
 			}
 		}
+		free(line);
 	}
 	flag = HEREDOC_IS_OFF;
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/28 15:10:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:46:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ void	ft_minishell(t_minishell *shell)
 			if (shell->token_lst)
 			{
 				if (ft_execution(shell) == SIGINT_NEW_LINE)
-				{
 					add_history(shell->history);
-					continue ;
-				}
 			}
 		}
 		else
@@ -120,6 +117,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	shell = NULL;
+	signal(SIGQUIT, SIG_IGN);
 	ft_init_minishell(&shell, env);
 	if (ac != 1)
 		return (0);

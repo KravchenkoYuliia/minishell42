@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 12:20:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:58:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	ft_ctrl_c(int sign)
 		}
 		else if (flag == HEREDOC_IS_ON)
 		{
+			printf("hello\n");
 			flag = HEREDOC_IS_OFF;
-			printf("\n");
+			//printf("\n");
+			exit(130);
 		}
 	}
 	else
