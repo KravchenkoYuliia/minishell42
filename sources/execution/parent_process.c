@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 16:19:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:56:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_parent_process(t_minishell *shell)
 	int		status;
 	int		index;
 	pid_t	pid;
+	struct sigaction	child_sig;
 
 	index = 0;
 	if (shell->heredoc_in_input == true)
@@ -62,6 +63,11 @@ void	ft_parent_process(t_minishell *shell)
 				return ;
 			if (pid == 0)
 			{
+				sigemptyset(&child_sig.sa_mask);
+		                child_sig.sa_handler = ft_ctrl_c_child;
+        	        	child_sig.sa_flags = 0;
+	        	        sigaction(SIGINT, &child_sig, NULL);
+
 				ft_child_loop(shell, index);
 			}
 			close(shell->cmd[index]->heredoc_pipe[0]);
@@ -71,8 +77,12 @@ void	ft_parent_process(t_minishell *shell)
 			close(shell->cmd[index]->pipe[0]);
 			index++;
 		}
-		while (waitpid(pid, &status, 0) != -1)
+		while (waitpid(-1, &status, 0) != -1)
 		{
+			sigemptyset(&shell->sig.sa_mask);
+			shell->sig.sa_handler = SIG_IGN;
+			shell->sig.sa_flags = 0;
+			sigaction(SIGINT, &shell->sig, NULL);
 			if (WIFSIGNALED(status))
 			{
 				status = WTERMSIG(status);

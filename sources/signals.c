@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 16:58:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:45:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ void	ft_ctrl_c(int sign)
 {
 	if (sign == SIGINT)
 	{
-		if (flag == HEREDOC_IS_OFF)
-		{	
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-		else if (flag == HEREDOC_IS_ON)
-		{
-			printf("hello\n");
-			flag = HEREDOC_IS_OFF;
-			//printf("\n");
-			exit(130);
-		}
+		flag = CTRLC_ALERT;
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	else
 		perror(SHELL_NAME_ERROR);
+}
+
+void	ft_ctrl_c_child(int sign)
+{
+	if (sign == SIGINT)
+	{
+		write(1, "\n", 1);
+		exit(130);
+	}
 }

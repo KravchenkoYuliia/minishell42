@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/28 16:46:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:45:29 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ void	ft_minishell(t_minishell *shell)
 		shell->input = readline(SHELL_NAME);
 		if (!shell->input)
 			ft_ctrl_d(shell);
+		if (flag == CTRLC_ALERT)
+		{
+			flag = CTRLC_OFF;
+			shell->exit_status = 130;
+		}
+		if (shell->exit_status == 130)
+			shell->prompt_count += 1;
 		shell->prompt_count += 1;
 		shell->input = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
@@ -96,6 +103,7 @@ void	ft_minishell(t_minishell *shell)
 			}*/
 			if (shell->token_lst)
 			{
+
 				if (ft_execution(shell) == SIGINT_NEW_LINE)
 					add_history(shell->history);
 			}
@@ -109,7 +117,7 @@ void	ft_minishell(t_minishell *shell)
 	}
 }
 
-int	flag = HEREDOC_IS_OFF;
+int	flag = CTRLC_OFF;
 
 int	main(int ac, char **av, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 16:22:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:42:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,16 @@ typedef struct s_token
 
 enum e_type
 {
+	CTRLC_ALERT,
+	CTRLC_OFF,
 	WORD,
 	PIPE,
 	HEREDOC,
 	INPUT,
 	OUTPUT,
 	APPEND,
-	HEREDOC_IS_ON,
-	HEREDOC_IS_OFF,
-	SIGINT_NEW_LINE,	
+	SIGINT_NEW_LINE,
+
 };
 
 typedef struct s_cmd_struct
@@ -114,6 +115,7 @@ typedef struct s_minishell
 void		ft_ctrl_c(int signal);
 void		ft_ctrl_d(t_minishell *shell);
 void		ft_ctrl_d_heredoc_msg(int line, char *limiter);
+void		ft_ctrl_c_child(int sign);
 ////////////////////////////////
 
 //lexer

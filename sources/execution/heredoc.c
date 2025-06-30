@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 17:01:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:38:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,49 @@ void	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 {
 	int		status;
 	pid_t	pid;
-
+	struct sigaction	child_sig;
 	pipe(shell->cmd[index]->heredoc_pipe);
 	pid = fork();
 	if (pid == -1)
-		return ;
+	{
+		ft_error_msg(SHELL_NAME, NULL, "fork failed in simple cmd");
+		exit(EXIT_FAILURE);
+	}
 	if (pid == 0)
 	{
+		sigemptyset(&child_sig.sa_mask);
+                child_sig.sa_handler = ft_ctrl_c_child;
+                child_sig.sa_flags = 0;
+                sigaction(SIGINT, &child_sig, NULL);
+
 		 ft_handle_heredoc(shell, limiter, index);
-		 exit(EXIT_SUCCESS);
+		 //exit(EXIT_SUCCESS);
 	}
-	close(shell->cmd[index]->heredoc_pipe[0]);
-	close(shell->cmd[index]->heredoc_pipe[1]);
+	sigemptyset(&shell->sig.sa_mask);
+        shell->sig.sa_handler = SIG_IGN;
+        shell->sig.sa_flags = 0;
+        sigaction(SIGINT, &shell->sig, NULL);
+	
+
+
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 	{
 		status = WTERMSIG(status);
 		status += 128;
-		write(1, "\n", 1);
 	}
 	else if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	shell->exit_status = status;
-	/*shell->exit_status = status;
+	
+	close(shell->cmd[index]->heredoc_pipe[0]);
+	close(shell->cmd[index]->heredoc_pipe[1]);
+
 	sigemptyset(&shell->sig.sa_mask);
-	shell->sig.sa_handler = ft_ctrl_c;
-	shell->sig.sa_flags = 0;
-	sigaction(SIGINT, &shell->sig, NULL);*/
+        shell->sig.sa_handler = ft_ctrl_c;
+        shell->sig.sa_flags = 0;
+        sigaction(SIGINT, &shell->sig, NULL);
+
 }
 
 char	*ft_strjoin_heredoc(char *s1, char *s2)
@@ -84,7 +100,6 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 	char	*line;
 
 	line = NULL;
-	flag = HEREDOC_IS_ON;
 	close(shell->cmd[idx]->heredoc_pipe[0]);
 	while (1)
 	{
@@ -93,7 +108,6 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 		{
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, limiter);
 			free(line);
-			flag = HEREDOC_IS_OFF;
 			return ;
 		}
 		if (line)
@@ -101,13 +115,13 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 			shell->history = ft_strjoin_heredoc(shell->history, line);
 			shell->history = ft_strjoin_heredoc(shell->history, "\n");
 		}
-		if (flag == HEREDOC_IS_OFF)
+		/*if (flag == HEREDOC_IS_OFF)
 		{
 			shell->exit_status = 130;
 			if (line)
 				free(line);
 			return ;
-		}
+		}*/
 		if (ft_strlen(line) >= ft_strlen(limiter))
 		{	
 			if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n'
@@ -116,6 +130,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 				write(shell->cmd[idx]->heredoc_pipe[1], line, ft_strlen(line));
 				write(shell->cmd[idx]->heredoc_pipe[1], "\n", 1);
 				free(line);
+
 			}
 			else
 			{
@@ -138,7 +153,5 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 				return ;
 			}
 		}
-		free(line);
 	}
-	flag = HEREDOC_IS_OFF;
 }
