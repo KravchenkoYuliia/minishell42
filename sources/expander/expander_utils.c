@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 10:09:52 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:57:28 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_is_expandable(char *value)
 
 bool	ft_is_unquotable(int type, char *value)
 {
-	if (type == 2)
+	if (type == HEREDOC)
 		return (false);
 	if (ft_strchr(value, '\'') == 0 && ft_strchr(value, '\"') == 0)
 		return (false);

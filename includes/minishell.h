@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 13:42:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:19:14 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void		lexer_err_handler(int err_code, char c);
 
 //parser
 /////////////////
-t_token		*ft_parser(char *input);
+t_token		*ft_parser(char *input, int i);
 t_token		*ft_parsing_a(char *input, int i);
 t_token		*ft_parsing_b(char *input, int i);
 t_token		*ft_if_quotes_a(char *input, int start);
@@ -142,7 +142,7 @@ t_token		*ft_if_output(char *input, int start);
 t_token		*new_token_nd(char *value, int type, int incr);
 t_token		*ft_lstlast_tok(t_token *lst);
 void		ft_lstadd_back_tok(t_token **lst, t_token *new);
-void		parser_err_handler(int err_code);
+void		parser_err_handler(t_token *token_lst, int err_code);
 void		set_buf_redirs(char *i, int s, char *v_b, int b_s);
 void		ft_if_quotes_b(char *i, int s, char *v_b, int b_s);
 bool		ft_redirs_lim(char c);

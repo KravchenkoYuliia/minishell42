@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 14:24:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:19:48 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_cut_input(char *cut_me)
 
 void	ft_minishell(t_minishell *shell)
 {
-	//t_token	*cursor;
+	t_token	*cursor;
 
 	while (1)
 	{
@@ -87,7 +87,7 @@ void	ft_minishell(t_minishell *shell)
 		shell->input = ft_cut_input(shell->input);
 		if (shell->input && ft_lexer(shell->input))
 		{
-			shell->token_lst = ft_parser(shell->input);
+			shell->token_lst = ft_parser(shell->input, 0);
 			if (shell->input && *shell->input
 				&& !ft_find_heredoc(shell->token_lst))
 			{
@@ -95,12 +95,12 @@ void	ft_minishell(t_minishell *shell)
 				shell->heredoc_in_input = false;
 			}
 			ft_expander(shell);
-			/*cursor = shell->token_lst;
+			cursor = shell->token_lst;
 			while (cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
 				cursor = cursor->next;
-			}*/
+			}
 			if (shell->token_lst)
 			{
 

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 12:12:27 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:52:41 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,31 @@ t_token	*ft_parsing_b(char *input, int i)
 	return (token);
 }
 
-t_token	*ft_parser(char *input)
+t_token	*ft_parser(char *input, int i)
 {
 	t_token	*token_lst;
 	t_token	*new_token;
-	int		i;
 
 	token_lst = NULL;
-	i = 0;
 	while (i < ft_strlen(input))
 	{
 		if ((input[i] == 39 || input[i] == 34 || input[i] == 124)
 			|| ft_redirs_lim(input[i]))
-		{
 			new_token = ft_parsing_a(input, i);
-			i += new_token->incr;
-			ft_lstadd_back_tok(&token_lst, new_token);
-		}
 		else if (input[i] == 60 || input[i] == 62)
-		{
 			new_token = ft_parsing_b(input, i);
+		if (new_token && input[i] != 32)
+		{
 			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
 		}
 		else if (input[i] == 32)
 			i++;
+		else
+		{
+		//	parser_err_handler(token_lst, 1);
+		//	break;
+		}
 	}
 	return (token_lst);
 }

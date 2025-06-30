@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 17:57:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:00:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,21 @@ char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 	bool	sp_quote;
 	bool	db_quote;
 
-	ft_bzero(value, 100000);
+	ft_bzero(value, 1000000);
 	sp_quote = false;
 	db_quote = false;
 	while ((*shl)->token_lst->value[i])
 	{
 		if ((*shl)->token_lst->value[i] == '\'' && !db_quote)
-		{
 			sp_quote = !sp_quote;
-			i++;
-		}
 		else if ((*shl)->token_lst->value[i] == '\"' && !sp_quote)
-		{	
 			db_quote = !db_quote;
-			i++;
-		}
+		if (((*shl)->token_lst->value[i] == '\'' && sp_quote) 
+			|| ((*shl)->token_lst->value[i] == '\"' && db_quote))
+			i++;	
 		if (((*shl)->token_lst->value[i] == '\''
 				|| (*shl)->token_lst->value[i] == '\"')
-			&& (!db_quote && !sp_quote))
+			&& ((!db_quote && !sp_quote) || (db_quote || sp_quote)))
 			continue ;
 		value[j++] = (*shl)->token_lst->value[i++];
 	}
@@ -50,7 +47,7 @@ char	*ft_update_token(char *value, char *var_value, int var_len, int index)
 
 	if (!var_value)
 		var_value = NULL;
-	new_value = ft_calloc(100000, 1);
+	new_value = ft_calloc(1000000, 1);
 	if (!new_value)
 		return (NULL);
 	i = 0;
@@ -80,7 +77,7 @@ void	ft_expand_a(t_minishell *shell, char *var, int index)
 	int	i;
 	int	j;
 
-	ft_bzero(var, 100000);
+	ft_bzero(var, 1000000);
 	i = index + 1;
 	while (shell->token_lst->value[i])
 	{
@@ -107,19 +104,16 @@ void	ft_expander(t_minishell *shl)
 	t_token	*head;
 	char	*vl_bf;
 
-	vl_bf = ft_calloc(100000, 1);
+	vl_bf = ft_calloc(1000000, 1);
 	if (!vl_bf)
 		return ;
 	head = shl->token_lst;
-	while (shl->token_lst)
+	while (shl->token_lst && shl->token_lst->type != HEREDOC)
 	{
 		while (ft_is_expandable(shl->token_lst->value) != -2)
 			ft_expand_a(shl, vl_bf, ft_is_expandable(shl->token_lst->value));
 		if (ft_is_splitable(shl->token_lst->value))
-		{
-			printf("is splitable is true\n");
 			ft_word_split(&shl);
-		}
 		if (ft_is_unquotable(shl->token_lst->type, shl->token_lst->value))
 			shl->token_lst->value = ft_strdup(ft_unquote(&shl, vl_bf, 0, 0));
 		shl->token_lst = shl->token_lst->next;

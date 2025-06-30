@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 12:17:49 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:56:49 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ t_token	*ft_if_heredoc(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = malloc(100);
+	value_buf = ft_calloc(ft_strlen(input), 1);
 	if (!value_buf)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, HEREDOC, ft_strlen(value_buf) + 3);
 	return (token);
@@ -58,9 +58,9 @@ t_token	*ft_if_input(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = malloc(100);
+	value_buf = ft_calloc(ft_strlen(input), 1);
 	if (!value_buf)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, INPUT, ft_strlen(value_buf) + 2);
 	return (token);
@@ -71,9 +71,9 @@ t_token	*ft_if_append(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = malloc(100);
+	value_buf = ft_calloc(ft_strlen(input), 1);
 	if (!value_buf)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, APPEND, ft_strlen(value_buf) + 3);
 	return (token);
@@ -84,9 +84,9 @@ t_token	*ft_if_output(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = malloc(100);
+	value_buf = ft_calloc(ft_strlen(input), 1);
 	if (!value_buf)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, OUTPUT, ft_strlen(value_buf) + 2);
 	return (token);

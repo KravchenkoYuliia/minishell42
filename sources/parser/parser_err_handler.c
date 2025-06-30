@@ -6,13 +6,18 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:32:12 by lfournie          #+#    #+#             */
-/*   Updated: 2025/05/22 14:58:30 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:33:18 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* void	parser_err_handler(int err_code)
+void	parser_err_handler(t_token *token_lst, int err_code)
 {
-	
-} */
+	if (err_code == 1)
+	{
+		ft_error_msg(SHELL_NAME_ERROR, "malloc: ",
+			"Token list memory allocation has failed");
+		free_token_list(token_lst);
+	}
+}
