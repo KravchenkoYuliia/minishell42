@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 13:38:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:21:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,38 @@ void	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
                 sigaction(SIGINT, &child_sig, NULL);
 
 		 ft_handle_heredoc(shell, limiter, index);
-		 //exit(EXIT_SUCCESS);
+		 exit(EXIT_SUCCESS);
 	}
-	sigemptyset(&shell->sig.sa_mask);
-        shell->sig.sa_handler = SIG_IGN;
-        shell->sig.sa_flags = 0;
-        sigaction(SIGINT, &shell->sig, NULL);
-	
-
-
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
+	if (pid != 0)
 	{
-		status = WTERMSIG(status);
-		status += 128;
-	}
-	else if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	shell->exit_status = status;
+		printf("just after child flag == %d\n", flag);
+		sigemptyset(&shell->sig.sa_mask);
+	        shell->sig.sa_handler = SIG_IGN;
+        	shell->sig.sa_flags = 0;
+	        sigaction(SIGINT, &shell->sig, NULL);
 	
-	close(shell->cmd[index]->heredoc_pipe[0]);
-	close(shell->cmd[index]->heredoc_pipe[1]);
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			status = WTERMSIG(status);
+			status += 128;
+			flag = CTRLC_ALERT;
+		}
+		else if (WIFEXITED(status))
+		{
+			flag = CTRLC_ALERT;
+			status = WEXITSTATUS(status);
+		}
+		shell->exit_status = status;
+		close(shell->cmd[index]->heredoc_pipe[0]);
+		close(shell->cmd[index]->heredoc_pipe[1]);
+	
 
-	sigemptyset(&shell->sig.sa_mask);
-        shell->sig.sa_handler = ft_ctrl_c;
-        shell->sig.sa_flags = 0;
-        sigaction(SIGINT, &shell->sig, NULL);
+		sigemptyset(&shell->sig.sa_mask);
+		shell->sig.sa_handler = ft_ctrl_c;
+		shell->sig.sa_flags = 0;
+		sigaction(SIGINT, &shell->sig, NULL);
+	}
 
 }
 

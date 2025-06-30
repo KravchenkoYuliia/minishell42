@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 13:45:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:24:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_minishell(t_minishell *shell)
 			if (shell->token_lst)
 			{
 
-				if (ft_execution(shell) == SIGINT_NEW_LINE)
+				if (ft_execution(shell) == SIGINT_NEW_LINE || (flag == CTRLC_ALERT && shell->history))
 					add_history(shell->history);
 			}
 		}

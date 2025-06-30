@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 12:00:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:16:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 				flag = true;
 			}
 			ft_fork_heredoc(shell, temp->value, i_struct);
+			if (flag == CTRLC_ALERT)
+			{
+				return ;
+			}
 			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
 			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
 		}
