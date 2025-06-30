@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/27 09:57:51 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:44:16 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	ft_check_redirs(char *input)
 			while (input[i] && input[i] == ' ')
 				i++;
 			if (input[i] == '|' || input[i] == '\0'
-				|| (input[i] == 34 && input[i + 1] == 34)
-				|| (input[i] == 39 && input[i + 1] == 39)
 				|| input[i] == '>' || input[i] == '<')
 				return (i);
 			i++;

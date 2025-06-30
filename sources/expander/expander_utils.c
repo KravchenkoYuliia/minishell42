@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 14:57:28 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:15:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_is_expandable(char *value)
 	sp_quote = false;
 	db_quote = false;
 	i = -1;
+	if (ft_strchr(value, '$') == NULL)
+		return (-2);
 	while (value[++i])
 	{
 		if (value[i] == '\'' && !db_quote)

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 15:00:13 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:00 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 			sp_quote = !sp_quote;
 		else if ((*shl)->token_lst->value[i] == '\"' && !sp_quote)
 			db_quote = !db_quote;
-		if (((*shl)->token_lst->value[i] == '\'' && sp_quote) 
-			|| ((*shl)->token_lst->value[i] == '\"' && db_quote))
-			i++;	
-		if (((*shl)->token_lst->value[i] == '\''
-				|| (*shl)->token_lst->value[i] == '\"')
-			&& ((!db_quote && !sp_quote) || (db_quote || sp_quote)))
-			continue ;
-		value[j++] = (*shl)->token_lst->value[i++];
+		if ((((*shl)->token_lst->value[i] == '\'' && db_quote)
+			|| ((*shl)->token_lst->value[i] == '\"' && sp_quote))
+			|| ((*shl)->token_lst->value[i] != '\'' 
+			&& (*shl)->token_lst->value[i] != '\"'))
+			value[j++] = (*shl)->token_lst->value[i++];
+		else
+			i++;
 	}
 	return (value);
 }
@@ -106,7 +105,10 @@ void	ft_expander(t_minishell *shl)
 
 	vl_bf = ft_calloc(1000000, 1);
 	if (!vl_bf)
+	{	
+		free_token_list(shl->token_lst);
 		return ;
+	}
 	head = shl->token_lst;
 	while (shl->token_lst && shl->token_lst->type != HEREDOC)
 	{

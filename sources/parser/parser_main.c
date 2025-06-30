@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 14:52:41 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:56:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ t_token	*ft_parser(char *input, int i)
 			i++;
 		else
 		{
-		//	parser_err_handler(token_lst, 1);
-		//	break;
+			parser_err_handler(token_lst, 1);
+			break;
 		}
 	}
 	return (token_lst);
