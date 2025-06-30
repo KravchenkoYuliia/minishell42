@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 15:19:14 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:15:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define ERROR 1
 # define SUCCESS 0
+# define SINGLE_QUOTE 39
+# define DOUBLE_QUOTE 34
 # define SHELL_NAME "toupetishell🤏: "
 # define SHELL_NAME_ERROR "toupetishell🤏"
 
@@ -158,6 +160,7 @@ int			ft_is_expandable(char *value);
 bool		ft_is_unquotable(int type, char *value);
 bool		ft_is_splitable(char *value);
 void		ft_word_split(t_minishell **shell);
+char		*ft_unquote(t_minishell **shl, char *value, int i, int j);
 /////////////////
 
 //execution
@@ -214,6 +217,7 @@ int			ft_pwd(t_minishell *shell, int index);
 int			ft_export(t_minishell *shell, int index);
 int			ft_unset(t_minishell *shell, int index);
 int			ft_exit(t_minishell *shell, int index);
+char	*ft_quotes(char *has_quotes, char *result);
 
 /////////////////
 

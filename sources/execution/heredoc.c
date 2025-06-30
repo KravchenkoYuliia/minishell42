@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 14:21:59 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:18:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	}
 	if (pid != 0)
 	{
-		printf("just after child flag == %d\n", flag);
 		sigemptyset(&shell->sig.sa_mask);
 	        shell->sig.sa_handler = SIG_IGN;
         	shell->sig.sa_flags = 0;
@@ -101,12 +100,33 @@ char	*ft_strjoin_heredoc(char *s1, char *s2)
 	return (history);
 }
 
+char	*ft_limiter(char *check_me)
+{
+	int		i;
+	char	*new_lim;
+
+	i = 0;
+	new_lim = calloc(sizeof(char), ft_strlen(check_me) + 1);
+	while (check_me[i])
+	{
+		if (check_me[i] == SINGLE_QUOTE || check_me[i] == DOUBLE_QUOTE)
+		{
+			new_lim = ft_quotes(check_me, new_lim);
+			free(check_me);
+			return (new_lim);
+		}
+		i++;
+	}
+	return (check_me);
+}
+
 void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 {
 	char	*line;
 
 	line = NULL;
 	close(shell->cmd[idx]->heredoc_pipe[0]);
+	limiter = ft_limiter(limiter);
 	while (1)
 	{
 		line = readline("> ");
@@ -121,13 +141,6 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 			shell->history = ft_strjoin_heredoc(shell->history, line);
 			shell->history = ft_strjoin_heredoc(shell->history, "\n");
 		}
-		/*if (flag == HEREDOC_IS_OFF)
-		{
-			shell->exit_status = 130;
-			if (line)
-				free(line);
-			return ;
-		}*/
 		if (ft_strlen(line) >= ft_strlen(limiter))
 		{	
 			if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n'
@@ -141,6 +154,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 			else
 			{
 				free(line);
+				free(limiter);
 				return ;
 			}
 		}
@@ -156,6 +170,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int idx)
 			else
 			{
 				free(line);
+				free(limiter);
 				return ;
 			}
 		}
