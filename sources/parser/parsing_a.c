@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 12:03:43 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:40:57 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*ft_if_quotes_a(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	ft_if_quotes_b(input, start, value_buf, 0);
@@ -52,7 +52,7 @@ t_token	*ft_if_command(char *input, int start)
 	char	*value_buf;
 	int		j;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	j = 0;
@@ -75,7 +75,7 @@ t_token	*ft_if_pipe(char *input, int start)
 
 	(void)input;
 	(void)start;
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	value_buf[0] = 124;

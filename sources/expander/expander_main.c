@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 18:06:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:37:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ void	ft_expand_a(t_minishell *shell, char *var, int index)
 		else
 		{
 			j = 0;
-			while (ft_redirs_lim(shell->token_lst->value[i])
+			while (shell->token_lst->value[i] 
+				&& ft_redirs_lim(shell->token_lst->value[i])
 				&& shell->token_lst->value[i] != '$')
-			var[j++] = shell->token_lst->value[i++];
+				var[j++] = shell->token_lst->value[i++];
 			break ;
 		}
 	}

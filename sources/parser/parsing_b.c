@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 12:56:49 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:41:13 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*ft_if_heredoc(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
@@ -58,7 +58,7 @@ t_token	*ft_if_input(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
@@ -71,7 +71,7 @@ t_token	*ft_if_append(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
@@ -84,7 +84,7 @@ t_token	*ft_if_output(char *input, int start)
 	t_token	*token;
 	char	*value_buf;
 
-	value_buf = ft_calloc(ft_strlen(input), 1);
+	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
 	set_buf_redirs(input, start, value_buf, 0);
