@@ -6,15 +6,13 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 16:15:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:00:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define ERROR 1
-# define SUCCESS 0
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define SHELL_NAME "toupetishell🤏: "
@@ -63,7 +61,8 @@ enum e_type
 	OUTPUT,
 	APPEND,
 	SIGINT_NEW_LINE,
-
+	SUCCESS,
+	ERROR,
 };
 
 typedef struct s_cmd_struct
@@ -172,14 +171,14 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *content);
 void		ft_print_env(t_env *env);
 int			ft_export_forempty_env(t_minishell *shell);	
-void		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
+int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 t_redirect	*ft_lstnew_redirect(void *content, int type);
 t_redirect	*ft_lstlast_redirect(t_redirect *lst);
 void		ft_lstadd_back_redirect(t_redirect **lst, t_redirect *new);
 int			ft_execution(t_minishell *shell);
-void		ft_init_struct_foreach_cmd(t_minishell *shell);
+int		ft_init_struct_foreach_cmd(t_minishell *shell);
 void		ft_get_nb_of_cmd(t_minishell *shell);
 void		ft_total_exit(char *msg, t_minishell *shell, int stop);
 void		ft_error_msg(char *shell_name, char *cmd, char *msg);
@@ -217,7 +216,11 @@ int			ft_pwd(t_minishell *shell, int index);
 int			ft_export(t_minishell *shell, int index);
 int			ft_unset(t_minishell *shell, int index);
 int			ft_exit(t_minishell *shell, int index);
+char	*ft_expand_line_heredoc(char *expand_me);
 char	*ft_quotes(char *has_quotes, char *result);
+bool	ft_quote_or_not_quote(char *limiter);
+char	*ft_unquote_limiter(char *unquote_me);
+
 
 /////////////////
 

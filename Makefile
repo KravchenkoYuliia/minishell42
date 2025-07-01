@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/06/30 18:15:18 by yukravch         ###   ########.fr        #
+#    Updated: 2025/07/01 11:24:29 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ FILES = 	main.c	env/copy_env.c \
 			execution/built_in.c execution/built_in_utils.c \
 			execution/built_in_1.c execution/built_in_utils_1.c \
 			execution/child_loop.c \
-			execution/quotes.c
+			execution/quotes.c execution/expand.c
 
 		 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))

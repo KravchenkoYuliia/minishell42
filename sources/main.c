@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 18:09:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:16:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_minishell(t_minishell *shell)
 				shell->heredoc_in_input = false;
 			}
 			ft_expander(shell);
-	/*		cursor = shell->token_lst;
+			/*cursor = shell->token_lst;
 			while (cursor)
 			{
 				printf("value: %s, type: %d\n", cursor->value, cursor->type);
@@ -105,9 +105,14 @@ void	ft_minishell(t_minishell *shell)
 			}*/
 			if (shell->token_lst && shell->token_lst->value[0])
 			{
-
-				if (ft_execution(shell) == SIGINT_NEW_LINE || (flag == CTRLC_ALERT && shell->history))
+				int i = ft_execution(shell);
+				if (i == SIGINT_NEW_LINE || (flag == CTRLC_ALERT && shell->history))
+				{
+					flag = CTRLC_OFF;
 					add_history(shell->history);
+				}
+				else if (i == ERROR)
+					continue;
 			}
 		}
 		else

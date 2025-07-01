@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 14:25:15 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:27:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_parent_process(t_minishell *shell)
 		add_history(shell->history);
 		free(shell->history);
 	}
-
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe_flag == 0)

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 14:16:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:06:13 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ void	ft_start_value(t_minishell *shell)
 	}
 }
 
-void	ft_fill_cmd_struct(t_minishell *shell)
+int	ft_fill_cmd_struct(t_minishell *shell)
 {
 	int			i_struct;
 	int			i_args;
-	bool		flag;
+	bool		flag_input_in_history;
 	t_token		*temp;
 	t_redirect	*new;
 
 	i_struct = 0;
 	i_args = 0;
-	flag = false;
+	flag_input_in_history = false;
 	temp = shell->token_lst;
 	while (temp)
 	{
@@ -97,16 +97,20 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 		}
 		else if (temp->type == HEREDOC)
 		{
-			if (flag == false)
+			if (flag_input_in_history == false)
 			{
 				shell->history = ft_strjoin_heredoc(shell->history, shell->input);
 				shell->history = ft_strjoin_heredoc(shell->history, "\n");
-				flag = true;
+				flag_input_in_history = true;
 			}
-			ft_fork_heredoc(shell, temp->value, i_struct);
+			if (ft_fork_heredoc(shell, temp->value, i_struct) == ERROR)
+			{
+				printf("fork heredoc returned error\n");
+				return (ERROR);
+			}
 			if (flag == CTRLC_ALERT)
 			{
-				return ;
+				return ERROR;
 			}
 			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
 			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
@@ -119,15 +123,21 @@ void	ft_fill_cmd_struct(t_minishell *shell)
 		}
 		temp = temp->next;
 	}
+	return (SUCCESS);
 }
 
-void	ft_init_struct_foreach_cmd(t_minishell *shell)
+int	ft_init_struct_foreach_cmd(t_minishell *shell)
 {
 	ft_get_nb_of_cmd(shell);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
 	ft_start_value(shell);
-	ft_fill_cmd_struct(shell);
+	if (ft_fill_cmd_struct(shell) == ERROR)
+	{
+		printf("fill cmd struct returned error\n");
+		return (ERROR);
+	}
 	free_token_list(shell->token_lst);
 	shell->token_lst = NULL;
+	return (SUCCESS);
 }

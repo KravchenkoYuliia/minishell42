@@ -6,11 +6,36 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:04:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/30 18:13:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 07:52:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	ft_quote_or_not_quote(char *limiter)
+{
+	int		i;
+
+	i = 0;
+	while (limiter[i])
+	{
+		if (limiter[i] == SINGLE_QUOTE || limiter[i] == DOUBLE_QUOTE)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+char	*ft_unquote_limiter(char *unquote_me)
+{
+	char	*limiter;
+
+	limiter = calloc(sizeof(char), ft_strlen(unquote_me));
+	limiter = ft_quotes(unquote_me, limiter);
+	free(unquote_me);
+	return (limiter);
+}
+
 
 char	*ft_quotes(char *has_quotes, char *result)
 {
