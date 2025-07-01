@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:00:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:53:23 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define SHELL_NAME "toupetishell🤏: "
-# define SHELL_NAME_ERROR "toupetishell🤏"
+# define SHELL_NAME "toupetishell\001🤏\002: "
+# define SHELL_NAME_ERROR "toupetishell\001🤏\002"
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -144,7 +144,7 @@ t_token		*new_token_nd(char *value, int type, int incr);
 t_token		*ft_lstlast_tok(t_token *lst);
 void		ft_lstadd_back_tok(t_token **lst, t_token *new);
 void		parser_err_handler(t_token *token_lst, int err_code);
-void		set_buf_redirs(char *i, int s, char *v_b, int b_s);
+int		set_buf_redirs(char *i, int s, char *v_b, int b_s);
 void		ft_if_quotes_b(char *i, int s, char *v_b, int b_s);
 bool		ft_redirs_lim(char c);
 /////////////////
@@ -180,7 +180,7 @@ void		ft_lstadd_back_redirect(t_redirect **lst, t_redirect *new);
 int			ft_execution(t_minishell *shell);
 int		ft_init_struct_foreach_cmd(t_minishell *shell);
 void		ft_get_nb_of_cmd(t_minishell *shell);
-void		ft_total_exit(char *msg, t_minishell *shell, int stop);
+void	ft_total_exit(t_minishell *shell);
 void		ft_error_msg(char *shell_name, char *cmd, char *msg);
 void		ft_get_nb_of_words(t_minishell *shell);
 void		ft_parent_process(t_minishell *shell);
@@ -230,6 +230,8 @@ void		free_token_list(t_token *head);
 void		ft_free_env(t_env *head);
 void		ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
 void		ft_free_args(char **array);
+void		free_redir_list(t_redirect *head);
+void		ft_free_all(t_minishell **shell);
 /////////////////
 
 #endif

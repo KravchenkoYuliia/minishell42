@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 13:37:50 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:10:51 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*ft_update_token(char *value, char *var_value, int var_len, int index)
 	char	*new_value;
 
 	if (!var_value)
-		var_value = NULL;
-	new_value = ft_calloc(1000000, 1);
+		return (NULL);
+	new_value = ft_calloc((ft_strlen(value) + ft_strlen(var_value) + 1), 1);
 	if (!new_value)
 		return (NULL);
 	i = 0;
@@ -118,7 +118,7 @@ void	ft_expander(t_minishell *shl)
 		if (ft_is_splitable(shl->token_lst->value))
 			ft_word_split(&shl);
 		if (ft_is_unquotable(shl->token_lst->type, shl->token_lst->value))
-			shl->token_lst->value = ft_strdup(ft_unquote(&shl, vl_bf, 0, 0));
+			shl->token_lst->value = ft_unquote(&shl, vl_bf, 0, 0);
 		shl->token_lst = shl->token_lst->next;
 	}
 	free(vl_bf);

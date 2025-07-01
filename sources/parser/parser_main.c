@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 15:56:10 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:27:42 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_token	*ft_parser(char *input, int i)
 	t_token	*new_token;
 
 	token_lst = NULL;
+	new_token = NULL;
 	while (i < ft_strlen(input))
 	{
 		if ((input[i] == 39 || input[i] == 34 || input[i] == 124)
@@ -61,18 +62,15 @@ t_token	*ft_parser(char *input, int i)
 			new_token = ft_parsing_a(input, i);
 		else if (input[i] == 60 || input[i] == 62)
 			new_token = ft_parsing_b(input, i);
-		if (new_token && input[i] != 32)
+		if (new_token && (input[i] != 32 && input[i] != 9))
 		{
 			i += new_token->incr;
 			ft_lstadd_back_tok(&token_lst, new_token);
 		}
-		else if (input[i] == 32)
+		else if (input[i] == 32 || input[i] == 9)
 			i++;
 		else
-		{
-			parser_err_handler(token_lst, 1);
-			break;
-		}
+			return (parser_err_handler(token_lst, 1), token_lst);
 	}
 	return (token_lst);
 }

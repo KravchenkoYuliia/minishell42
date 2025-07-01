@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/28 15:18:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:34:04 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_malloc_env_for_execve(char ***env, int nb)
 	int	i;
 
 	i = 0;
-	(*env) = (char **)malloc(sizeof(char *) * nb + 1);
+	(*env) = (char **)malloc(sizeof(char *) * (nb + 1));
 	if (!(*env))
 		return (ERROR);
 	return (SUCCESS);

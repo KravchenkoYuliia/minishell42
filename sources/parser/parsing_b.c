@@ -6,13 +6,13 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 10:41:13 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:48:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
+int	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 {
 	bool	in_quote;
 
@@ -37,57 +37,61 @@ void	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 		if ((!ft_redirs_lim(input[start])) && in_quote)
 			value_buf[buf_start++] = input[start++];
 	}
-	value_buf[buf_start] = '\0';
+	return (start - buf_start);
 }
 
 t_token	*ft_if_heredoc(char *input, int start)
 {
+	int		incr;
 	t_token	*token;
 	char	*value_buf;
 
 	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
-	set_buf_redirs(input, start, value_buf, 0);
-	token = new_token_nd(value_buf, HEREDOC, ft_strlen(value_buf) + 3);
+	incr = set_buf_redirs(input, start, value_buf, 0);
+	token = new_token_nd(value_buf, HEREDOC, incr + 2);
 	return (token);
 }
 
 t_token	*ft_if_input(char *input, int start)
 {
+	int		incr;
 	t_token	*token;
 	char	*value_buf;
 
 	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
-	set_buf_redirs(input, start, value_buf, 0);
-	token = new_token_nd(value_buf, INPUT, ft_strlen(value_buf) + 2);
+	incr = set_buf_redirs(input, start, value_buf, 0);
+	token = new_token_nd(value_buf, INPUT, incr + 1);
 	return (token);
 }
 
 t_token	*ft_if_append(char *input, int start)
 {
+	int		incr;
 	t_token	*token;
 	char	*value_buf;
 
 	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
-	set_buf_redirs(input, start, value_buf, 0);
-	token = new_token_nd(value_buf, APPEND, ft_strlen(value_buf) + 3);
+	incr = set_buf_redirs(input, start, value_buf, 0);
+	token = new_token_nd(value_buf, APPEND, incr + 2);
 	return (token);
 }
 
 t_token	*ft_if_output(char *input, int start)
 {
+	int		incr;
 	t_token	*token;
 	char	*value_buf;
 
 	value_buf = ft_calloc(ft_strlen(input) + 1, 1);
 	if (!value_buf)
 		return (NULL);
-	set_buf_redirs(input, start, value_buf, 0);
-	token = new_token_nd(value_buf, OUTPUT, ft_strlen(value_buf) + 2);
+	incr = set_buf_redirs(input, start, value_buf, 0);
+	token = new_token_nd(value_buf, OUTPUT, incr + 1);
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 18:25:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:35:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,19 @@ void	ft_ctrl_d_heredoc_msg(int line, char *limiter)
 
 void	ft_ctrl_d(t_minishell *shell)
 {
+	int status;
+	
+	status = shell->exit_status;
 	shell->exit_status = 0;
 	ft_free_env(shell->env);
 	free(shell);
 	ft_write_stdout("exit\n");
-	exit(shell->exit_status);
+	exit(status);
 }
 
 int	ft_exit(t_minishell *shell, int index)
 {
-	printf("exit\n");
+	printf("exit");
 	if (shell->cmd[index]->args[1])
 	{
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
@@ -68,6 +71,8 @@ int	ft_exit(t_minishell *shell, int index)
 			return (ERROR);
 		}
 	}
+	//return SUCCESS;
+	//return (ft_total_exit(shell), SUCCESS);
 	ft_save_std_fileno(shell);
 	exit((unsigned char)shell->exit_status);
 }
