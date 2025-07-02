@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:35:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:05:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 		 ft_handle_heredoc(shell, limiter, index);
 		 exit(EXIT_SUCCESS);
 	}
-		/*sigemptyset(&shell->sig.sa_mask);
+		sigemptyset(&shell->sig.sa_mask);
 	        shell->sig.sa_handler = SIG_IGN;
         	shell->sig.sa_flags = 0;
-	        sigaction(SIGINT, &shell->sig, NULL);*/
+	        sigaction(SIGINT, &shell->sig, NULL);
 		waitpid(pid, &status, 0);
 		if (flag == CTRLC_ALERT)
 		{
@@ -55,8 +55,12 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 		else if (WIFEXITED(status))
 		{
 			status = WEXITSTATUS(status);
-			if (flag == CTRLC_ALERT)
-				status = 130;
+			if (status == CTRLC_ALERT)
+			{
+				flag = CTRLC_ALERT;
+				shell->exit_status = 130;
+				return (ERROR);
+			}
 		}
 		shell->exit_status = status;
 	

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:10:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:02:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	ft_ctrl_c_child(int sign)
 	{
 		write(1, "\n", 1);
 		flag = CTRLC_ALERT;
-		exit(130);
+		exit(CTRLC_ALERT);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 17:59:41 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:23:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_token	*ft_if_command(char *input, int start)
 		value_buf[j++] = input[start++];
 	if (input[start] == 39 || input[start] == 34)
 		ft_if_quotes_b(input, start, value_buf, j);
-	printf ("strlen buffer = %d\n", ft_strlen(value_buf));
+	//printf ("strlen buffer = %d\n", ft_strlen(value_buf));
 	token = new_token_nd(value_buf, WORD, ft_strlen(value_buf));
 	return (token);
 }

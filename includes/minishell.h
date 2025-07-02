@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:53:23 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:19:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define SHELL_NAME "toupetishell\001🤏\002: "
-# define SHELL_NAME_ERROR "toupetishell\001🤏\002"
+# define SHELL_NAME "toupetishell: "          //\001🤏\002: "
+# define SHELL_NAME_ERROR "toupetishell"      //\001🤏\002"
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -40,7 +40,7 @@
 # include <asm/termbits.h>
 # include <sys/ioctl.h>
 
-extern int	flag;
+extern volatile sig_atomic_t	flag;
 
 typedef struct s_token
 {
@@ -52,8 +52,8 @@ typedef struct s_token
 
 enum e_type
 {
-	CTRLC_ALERT,
-	CTRLC_OFF,
+	SUCCESS,
+	ERROR,
 	WORD,
 	PIPE,
 	HEREDOC,
@@ -61,8 +61,10 @@ enum e_type
 	OUTPUT,
 	APPEND,
 	SIGINT_NEW_LINE,
-	SUCCESS,
-	ERROR,
+	EXIT_CHILD,
+	EXIT_PARENT,
+	CTRLC_ALERT,
+	CTRLC_OFF,
 };
 
 typedef struct s_cmd_struct
@@ -110,6 +112,7 @@ typedef struct s_minishell
 	char				*history;
 	bool				heredoc_in_input;
 	struct sigaction	sig;
+	int	exit_msg;
 }	t_minishell;
 
 ///signals///////////////////

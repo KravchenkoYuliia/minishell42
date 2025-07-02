@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:54:29 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:58:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,7 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 				flag_input_in_history = true;
 			}
 			if (ft_fork_heredoc(shell, temp->value, i_struct) == ERROR)
-			{
-				printf("fork heredoc returned error\n");
 				return (ERROR);
-			}
-			if (flag == CTRLC_ALERT)
-			{
-				return ERROR;
-			}
 			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
 			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
 		}
@@ -136,10 +129,7 @@ int	ft_init_struct_foreach_cmd(t_minishell *shell)
 	ft_get_nb_of_words(shell);
 	ft_start_value(shell);
 	if (ft_fill_cmd_struct(shell) == ERROR)
-	{
-		printf("fill cmd struct returned error\n");
 		return (ERROR);
-	}
 	free_token_list(shell->token_lst);
 	shell->token_lst = NULL;
 	return (SUCCESS);

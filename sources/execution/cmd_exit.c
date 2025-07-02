@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 16:35:34 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:25:57 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	ft_ctrl_d(t_minishell *shell)
 
 int	ft_exit(t_minishell *shell, int index)
 {
-	printf("exit");
+	if (shell->exit_msg == EXIT_PARENT)
+		write(1, "exit\n", 5);
 	if (shell->cmd[index]->args[1])
 	{
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
