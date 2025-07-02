@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 15:25:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:49:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ void	ft_ctrl_d(t_minishell *shell)
 
 int	ft_exit(t_minishell *shell, int index)
 {
-	if (shell->exit_msg == EXIT_PARENT)
-		write(1, "exit\n", 5);
+	//if (shell->process == PARENT_CMD)
+		//write(1, "exit\n", 5);
 	if (shell->cmd[index]->args[1])
 	{
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
 		if (!ft_only_numeric(shell->cmd[index]->args[1]))
 		{
-			printf("%s: exit: %s: numeric argument required\n",
-				SHELL_NAME_ERROR, shell->cmd[index]->args[1]);
+			//printf("%s: exit: %s: numeric argument required\n",
+			//	SHELL_NAME_ERROR, shell->cmd[index]->args[1]);
 			shell->exit_status = 2;
 		}
 		else if (shell->cmd[index]->args[2])
 		{
-			printf("%s: exit: too many arguments\n", SHELL_NAME_ERROR);
+			//printf("%s: exit: too many arguments\n", SHELL_NAME_ERROR);
 			shell->exit_status = 1;
 			return (ERROR);
 		}

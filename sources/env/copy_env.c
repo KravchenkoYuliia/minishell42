@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 12:29:04 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:12:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_fill_env(t_minishell *shell, t_env **env_list, char **env)
 		i++;
 	}
 	ft_change_last_line(env_list);
+	//ft_handle_shlvl_in_list(*env_list);
 	if (!*env_list)
 		ft_export_forempty_env(shell);
 }

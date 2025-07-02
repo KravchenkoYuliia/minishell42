@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/07/01 11:24:29 by yukravch         ###   ########.fr        #
+#    Updated: 2025/07/02 16:56:58 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,22 +30,22 @@ SRC_DIR = sources
 OBJ_DIR = objects
 INC_DIR = -I includes -I libft42/includes
 
-FILES = 	main.c	env/copy_env.c \
+FILES = 	main.c	env/copy_env.c env/env_for_execve.c \
 			free_handler_a.c  free_handler_b.c signals.c \
 			lexer/lexer_main.c lexer/lexer_err_handler.c \
 			parser/parser_main.c parser/parsing_a.c parser/parsing_b.c \
 			parser/parsing_utils.c parser/parser_err_handler.c \
 			expander/expander_main.c expander/expander_utils.c \
 			execution/execution.c \
-			execution/utils.c execution/init.c \
+			execution/utils.c execution/init.c execution/init_utils.c  \
 			execution/parent_process.c execution/heredoc.c execution/redirection_list.c \
 			execution/exit.c\
-			execution/cmd_exit.c execution/export.c\
-			execution/unset.c \
+			execution/echo.c execution/cd.c \
+			execution/pwd.c execution/export.c \
+			execution/unset.c execution/env.c \
+			execution/cmd_exit.c \
 			execution/simple_cmd.c execution/get_abs_path.c \
 			execution/redirections.c \
-			execution/built_in.c execution/built_in_utils.c \
-			execution/built_in_1.c execution/built_in_utils_1.c \
 			execution/child_loop.c \
 			execution/quotes.c execution/expand.c
 

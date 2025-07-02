@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 15:19:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:09:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ enum e_type
 	OUTPUT,
 	APPEND,
 	SIGINT_NEW_LINE,
-	EXIT_CHILD,
-	EXIT_PARENT,
+	CHILD,
+	PARENT,
 	CTRLC_ALERT,
 	CTRLC_OFF,
 };
@@ -112,7 +112,7 @@ typedef struct s_minishell
 	char				*history;
 	bool				heredoc_in_input;
 	struct sigaction	sig;
-	int	exit_msg;
+	int	process;
 }	t_minishell;
 
 ///signals///////////////////
@@ -173,6 +173,8 @@ t_env		*ft_lstlast_env(t_env *lst);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *content);
 void		ft_print_env(t_env *env);
+void		ft_handle_shlvl_in_list(t_env *env);
+void		ft_handle_shlvl_in_array(char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
@@ -206,7 +208,6 @@ void		ft_child_loop(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
 int		ft_copy_env_for_execve(t_minishell *shell);
 int		ft_malloc_env_for_execve(char ***env, int nb);
-void		ft_handle_shlvl(char **env);
 int			ft_count_var_in_env(t_env *env);
 int			ft_redirections(t_minishell *shell, int index);
 int			ft_redir_input(t_minishell *shell, int index);

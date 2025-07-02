@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/02 15:21:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:40:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->history = NULL;
 	(*shell)->nb_of_cmd = 0;
 	(*shell)->heredoc_in_input = true;
-	(*shell)->exit_msg = EXIT_CHILD;
+	(*shell)->process = PARENT;
 }
 
 bool	ft_find_heredoc(t_token *token_lst)
@@ -74,6 +74,7 @@ void	ft_minishell(t_minishell *shell)
 	{
 		shell->heredoc_in_input = true;
 		shell->history = NULL;
+		shell->process = PARENT;
 		shell->input = readline(SHELL_NAME);
 		if (!shell->input)
 			ft_ctrl_d(shell);

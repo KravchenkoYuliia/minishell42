@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 14:29:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:08:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	close(shell->save_stdout);
 	ft_copy_env_for_execve(shell);
 	if (!ft_strncmp(cmd, "./minishell", 11))
-		ft_handle_shlvl(shell->env_execve);
+		ft_handle_shlvl_in_array(shell->env_execve);
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		perror(SHELL_NAME_ERROR);

@@ -6,11 +6,32 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:39:21 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:45:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool    ft_unset_or_not_unset(char *env_line, char **args)
+{
+        int             i;
+        char    *name;
+
+        i = 1;
+        name = ft_copy_name_inenv(env_line);
+        while (args[i])
+        {
+                if (!ft_strchr(args[i], '=')
+                        && ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
+                {
+                        free(name);
+                        return (true);
+                }
+                i++;
+        }
+        free(name);
+        return (false);
+}
 
 int	ft_unset(t_minishell *shell, int index)
 {

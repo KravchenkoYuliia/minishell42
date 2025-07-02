@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 15:21:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:22:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	ft_parent_process(t_minishell *shell)
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
-		shell->exit_msg = EXIT_PARENT;
 		if (shell->cmd[0]->args[0])
 			ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
 	}
 	else
 	{
+		shell->process = CHILD;
 		while (index < shell->nb_of_cmd)
 		{
 			pipe(shell->cmd[index]->pipe);
@@ -102,15 +102,6 @@ void	ft_parent_process(t_minishell *shell)
 		shell->sig.sa_handler = ft_ctrl_c;
 		shell->sig.sa_flags = 0;
 		sigaction(SIGINT, &shell->sig, NULL);
-		/*while (waitpid(pid, &status, 0) != -1)
-		{
-			if (WIFEXITED(status))
-			{
-				status = WEXITSTATUS(status);
-				shell->exit_status = status;
-			}
-			continue ;
-		}*/
 	}
 	ft_save_std_fileno(shell);
 }
