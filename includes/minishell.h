@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 17:09:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:14:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ bool		ft_is_option(char *args);
 char		*ft_get_home_path(t_env *env);
 int			ft_just_export(t_env *env);
 int			ft_export_value(t_minishell *shell, int index);
+int		ft_option_check(t_minishell *shell, int index, int i);
 bool		ft_unset_or_not_unset(char *env_line, char **args);
 char		*ft_strjoin_export(char *str1, char *str2);
 int			ft_charset(char *str, char c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 17:08:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:41:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_child_loop(t_minishell *shell, int index)
 		while (i < 7)
 		{
 			if ((cmd && ft_strncmp(cmd, built_in_names[i],
-						(ft_strlen(cmd) + 1)) == 0))
+				(ft_strlen(cmd) + 1)) == 0))
 			{
 				ft_built_in_functions[i](shell, index);
 				exit(EXIT_SUCCESS);

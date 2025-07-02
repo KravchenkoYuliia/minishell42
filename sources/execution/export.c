@@ -6,110 +6,11 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:58:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 16:45:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:14:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char    *ft_strjoin_export(char *str1, char *str2)
-{
-        int             i;
-        int             j;
-        char    *line;
-        int             len;
-
-        i = 0;
-        j = 0;
-        len = ft_strlen(str1) + ft_strlen(str2) + 3;
-        line = (char *)malloc(sizeof(char) * len);
-        if (!line)
-                return (NULL);
-        while (str1[i])
-        {
-                line[i] = str1[i];
-                i++;
-        }
-        while (str2[j])
-        {
-                if (j != 0 && str2[j - 1] == '=')
-                        break ;
-                line[i] = str2[j];
-                i++;
-                j++;
-        }
-        line[i] = '\"';
-        i++;
-        while (str2[j])
-        {
-                line[i] = str2[j];
-                i++;
-                j++;
-        }
-        line[i] = '\"';
-        i++;
-        line[i] = '\0';
-        return (line);
-}
-
-bool    ft_name_exists_already(t_env *env, char *name, char *line)
-{
-        int             i;
-        int             j;
-        t_env   *temp;
-
-        j = ft_strlen(name);
-        temp = env;
-        while (temp)
-        {
-                i = 0;
-                while (temp->line[i] && temp->line[i] != '=')
-                        i++;
-                if (i >= j)
-                {
-                        if (ft_strncmp(temp->line, name, i) == 0)
-                        {
-                                free(temp->line);
-                                temp->line = line;
-                                return (true);
-                        }
-                }
-                else
-                {
-                        if (ft_strncmp(temp->line, name, j) == 0)
-                        {
-                                free(temp->line);
-                                temp->line = line;
-                                return (true);
-                        }
-                }
-                temp = temp->next;
-        }
-        return (false);
-}
-
-
-char    *ft_copy_name_inenv(char *line)
-{
-        int             i;
-        int             j;
-        char    *buffer;
-
-        i = 0;
-        j = 0;
-        while (line[i] && line[i] != '=')
-                i++;
-        buffer = (char *)malloc(sizeof(char) * i + 1);
-        if (!buffer)
-                return (NULL);
-        while (j < i)
-        {
-                buffer[j] = line[j];
-                j++;
-        }
-        buffer[j] = '\0';
-        return (buffer);
-}
 
 int	ft_just_export(t_env *env)
 {
@@ -138,12 +39,28 @@ int	ft_just_export(t_env *env)
 	return (SUCCESS);
 }
 
+void	ft_execution_of_export(t_minishell *shell, int index, int i)
+{
+	char	*line;
+	char	*buffer;
+	t_env	*new;
+
+	if (ft_charset(shell->cmd[index]->args[i], '=') == SUCCESS)
+	{
+		line = ft_strdup(shell->cmd[index]->args[i]);
+		buffer = ft_copy_name_inenv(line);
+		if (ft_name_exists_already(shell->env, buffer, line) == false)
+		{
+			new = ft_lstnew_env(line);
+			ft_lstadd_back_env(&shell->env, new);
+		}
+		free(buffer);
+	}
+}
+
 int	ft_export_value(t_minishell *shell, int index)
 {
 	int		i;
-	char	*line;
-	t_env	*new;
-	char	*buffer;
 
 	i = 1;
 	while (shell->cmd[index]->args[i])
@@ -155,28 +72,13 @@ int	ft_export_value(t_minishell *shell, int index)
 				break ;
 			i++;
 		}
-		if (shell->cmd[index]->args[i][0] == '-')
-		{
-			printf("%s: export: %s: invalid option\n",
-				SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
-			shell->exit_status = 2;
+		if (ft_option_check(shell, index, i) == ERROR)
 			return (ERROR);
-		}
 		if (!ft_isalpha(shell->cmd[index]->args[i][0])
 			&& shell->cmd[index]->args[i][0] != '_')
 			printf("%s: export: `%s': not a valid identifier\n",
 				SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
-		if (ft_charset(shell->cmd[index]->args[i], '=') == SUCCESS)
-		{
-			line = ft_strdup(shell->cmd[index]->args[i]);
-			buffer = ft_copy_name_inenv(line);
-			if (ft_name_exists_already(shell->env, buffer, line) == false)
-			{
-				new = ft_lstnew_env(line);
-				ft_lstadd_back_env(&shell->env, new);
-			}
-			free(buffer);
-		}
+		ft_execution_of_export(shell, index, i);
 		i++;
 	}
 	return (SUCCESS);

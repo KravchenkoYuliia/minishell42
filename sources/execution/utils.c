@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 17:00:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:09:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,44 @@ int     ft_charset(char *str, char c)
                 i++;
         }
         return (ERROR);
+}
+
+char	*ft_strjoin_export(char *str1, char *str2)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*line;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(str1) + ft_strlen(str2) + 3;
+	line = (char *)malloc(sizeof(char) * len);
+	if (!line)
+		return (NULL);
+	while (str1[i])
+	{
+		line[i] = str1[i];
+		i++;
+	}
+	while (str2[j])
+	{
+		if (j != 0 && str2[j - 1] == '=')
+			break ;
+		line[i] = str2[j];
+		i++;
+		j++;
+	}
+	line[i] = '\"';
+	i++;
+	while (str2[j])
+	{
+		line[i] = str2[j];
+		i++;
+		j++;
+	}
+	line[i] = '\"';
+	i++;
+	line[i] = '\0';
+	return (line);
 }
