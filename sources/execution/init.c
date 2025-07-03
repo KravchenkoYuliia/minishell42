@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 14:58:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:38:17 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->args = NULL;
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
 				* (shell->cmd[i]->nb_of_words + 1));
+		if (!shell->cmd[i]->args)
+		{
+			shell->malloc_err = true;
+			break;
+		}
 		shell->cmd[i]->args[0] = NULL;
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
@@ -128,6 +133,8 @@ int	ft_init_struct_foreach_cmd(t_minishell *shell)
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
 	ft_start_value(shell);
+	if (shell->malloc_err)
+		return (ERROR);
 	if (ft_fill_cmd_struct(shell) == ERROR)
 		return (ERROR);
 	free_token_list(shell->token_lst);

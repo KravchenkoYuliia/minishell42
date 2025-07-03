@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:26:49 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/10 17:09:59 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:25:17 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lexer_err_handler(int err_code, char c)
 {
-	printf("toupetishell🤏​: ");
+	printf("%s", SHELL_NAME_ERROR);
 	if (err_code == 1)
 		printf("unclosed quotes\n");
 	if (err_code == 2)

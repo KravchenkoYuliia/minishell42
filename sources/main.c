@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 12:42:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:49:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
 	ft_fill_env(*shell, &(*shell)->env, env);
+	if ((*shell)->malloc_err)
+		return ;
 	(*shell)->env_execve = NULL;
 	(*shell)->cmd = NULL;
 	(*shell)->history = NULL;
 	(*shell)->nb_of_cmd = 0;
 	(*shell)->heredoc_in_input = true;
 	(*shell)->process = PARENT;
+	(*shell)->malloc_err = false;
 }
 
 bool	ft_find_heredoc(t_token *token_lst)
@@ -54,6 +57,8 @@ char	*ft_cut_input(char *cut_me)
 	i = 0;
 	new_input = NULL;
 	lines = ft_split(cut_me, '\n');
+	if (!lines)
+		return(NULL);
 	while (lines[i])
 		i++;
 	if (i <= 1)
@@ -87,11 +92,13 @@ void	ft_minishell(t_minishell *shell)
 		}
 		shell->prompt_count += 1;
 		shell->input = ft_cut_input(shell->input);
+		if (!shell->input)
+			break;
 		if (shell->input && ft_lexer(shell->input))
 		{
 			shell->token_lst = ft_parser(shell->input, 0);
 			if (!shell->token_lst)
-				continue;
+				break;
 			if (shell->input && *shell->input
 				&& !ft_find_heredoc(shell->token_lst))
 			{
@@ -124,6 +131,7 @@ void	ft_minishell(t_minishell *shell)
 			shell->exit_status = 2;
 		}
 	}
+	ft_free_all(&shell);
 }
 
 volatile sig_atomic_t	flag = CTRLC_OFF;
@@ -136,6 +144,11 @@ int	main(int ac, char **av, char **env)
 	shell = NULL;
 	signal(SIGQUIT, SIG_IGN);
 	ft_init_minishell(&shell, env);
+	if (shell->malloc_err)
+	{
+		ft_free_all(&shell);
+		return (0);
+	}
 	if (ac != 1)
 		return (0);
 	sigemptyset(&shell->sig.sa_mask);

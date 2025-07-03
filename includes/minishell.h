@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 11:51:26 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:23:23 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_minishell
 	bool				heredoc_in_input;
 	struct sigaction	sig;
 	int	process;
+	bool	malloc_err;
 }	t_minishell;
 
 ///signals///////////////////

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 16:44:16 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:13:46 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ bool	ft_lexer(char *input)
 {
 	int	redir_check;
 
-	redir_check = ft_check_redirs(input);
 	if (!input)
 		return (false);
+	redir_check = ft_check_redirs(input);
 	if (!ft_check_unclosed_quotes(input))
 		return (lexer_err_handler(1, 'c'), false);
 	if (!ft_check_pipes(input))
@@ -97,7 +97,7 @@ bool	ft_lexer(char *input)
 			|| input[redir_check] == 34
 			|| input[redir_check] == 39)
 		{
-			printf("toupetishell🤏​: ");
+			printf("%s", SHELL_NAME_ERROR);
 			printf("syntax error near unexpected token 'new_line'\n");
 			return (false);
 		}	
