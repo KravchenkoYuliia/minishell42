@@ -6,11 +6,12 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 16:25:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:28:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	ft_error_msg(char *shell_name, char *cmd, char *msg)
 {

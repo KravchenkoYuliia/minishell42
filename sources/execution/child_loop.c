@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 12:06:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:41:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 
 void	ft_child_loop(t_minishell *shell, int index)
 {
-	int		i;
-	char	*cmd;
-	char	*built_in_names[] = {"echo", "cd", "pwd",
-		"export", "unset", "env", "exit"};
-	int		(*ft_built_in_functions[])(t_minishell *, int) = {
-		&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env,
-		&ft_exit};
-
-	i = 0;
-	cmd = NULL;
 	close(shell->save_stdin);
 	close(shell->save_stdout);
 	ft_redirections(shell, index);
@@ -64,19 +54,50 @@ void	ft_child_loop(t_minishell *shell, int index)
 	close(shell->cmd[index]->pipe[1]);
 	if (shell->cmd[index]->args[0])
 	{
-		cmd = shell->cmd[index]->args[0];
-		while (i < 7)
+		if (ft_exec_built_in_cmd(shell, index, shell->cmd[index]->args[0]) == true)
 		{
-			if ((cmd && ft_strncmp(cmd, built_in_names[i],
-				(ft_strlen(cmd) + 1)) == 0))
-			{
-				ft_built_in_functions[i](shell, index);
+			if (shell->process == CHILD)
 				exit(EXIT_SUCCESS);
-			}
-			i++;
+			else
+				return ;
 		}
 		ft_simple_cmd_withpipe(shell, index);
 	}
 	else
 		exit(EXIT_SUCCESS);
+}
+
+void	ft_waiting_for_child(t_minishell *shell, int nb_of_child, pid_t pid)
+{
+	int	status;
+
+	status = 0;
+	if (nb_of_child == 1)
+	{
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			status = WTERMSIG(status);
+			status += 128;
+			write(1, "\n", 1);
+		}
+		else if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		shell->exit_status = status;
+	}
+	else
+	{
+		while (waitpid(-1, &status, 0) != -1)
+		{
+			if (WIFSIGNALED(status))
+			{
+				status = WTERMSIG(status);
+				status += 128;
+				write(1, "\n", 1);
+			}
+			if (WIFEXITED(status))
+				status = WEXITSTATUS(status);
+			shell->exit_status = status;
+		}
+	}
 }

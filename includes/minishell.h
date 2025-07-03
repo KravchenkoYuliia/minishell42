@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 12:23:23 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:44:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ enum e_type
 	PARENT,
 	CTRLC_ALERT,
 	CTRLC_OFF,
+	SIGIGN,
 };
 
 typedef struct s_cmd_struct
@@ -121,6 +122,7 @@ void		ft_ctrl_c(int signal);
 void		ft_ctrl_d(t_minishell *shell);
 void		ft_ctrl_d_heredoc_msg(int line, char *limiter);
 void		ft_ctrl_c_child(int sign);
+void		ft_set_of_sig(t_minishell *shell, int type);
 ////////////////////////////////
 
 //lexer
@@ -205,9 +207,11 @@ bool		ft_name_exists_already(t_env *env, char *name, char *line);
 void		ft_change_valueof_name(t_env *env, char *line);
 char		*ft_find_absolute_path(t_minishell *shell, int index);
 void		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
+bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
 void		ft_simple_cmd(t_minishell *shell, int index);
-void		ft_child_loop(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
+void		ft_child_loop(t_minishell *shell, int index);
+void		ft_waiting_for_child(t_minishell *shell, int nb, pid_t pid);
 int		ft_copy_env_for_execve(t_minishell *shell);
 int		ft_malloc_env_for_execve(char ***env, int nb);
 int			ft_count_var_in_env(t_env *env);
