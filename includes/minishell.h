@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 20:14:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:51:26 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define SHELL_NAME "toupetishell: "          //\001🤏\002: "
-# define SHELL_NAME_ERROR "toupetishell"      //\001🤏\002"
+# define SHELL_NAME "toupetishell: "
+# define SHELL_NAME_ERROR "toupetishell"
 
 # include "ft_printf.h"
 # include "get_next_line.h"

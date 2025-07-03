@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 17:48:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:45:37 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 {
 	bool	in_quote;
+	int		start_bf;
 
+	start_bf = start;
 	in_quote = false;
 	while (input[start] == 32 && input[start])
 		start++;
@@ -37,7 +39,7 @@ int	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
 		if ((!ft_redirs_lim(input[start])) && in_quote)
 			value_buf[buf_start++] = input[start++];
 	}
-	return (start - buf_start);
+	return (start - start_bf);
 }
 
 t_token	*ft_if_heredoc(char *input, int start)

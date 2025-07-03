@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 16:22:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 09:26:20 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	ft_parent_process(t_minishell *shell)
 		shell->process = CHILD;
 		while (index < shell->nb_of_cmd)
 		{
-			pipe(shell->cmd[index]->pipe);
+			if (pipe(shell->cmd[index]->pipe) == -1)
+				write(2, "HERE\n", 5);
 			pid = fork();
 			if (pid == -1)
 				return ;

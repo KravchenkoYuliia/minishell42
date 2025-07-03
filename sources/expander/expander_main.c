@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 17:10:51 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:14:17 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_expander(t_minishell *shl)
 	if (!vl_bf)
 	{	
 		free_token_list(shl->token_lst);
+		shl->token_lst = NULL;
 		return ;
 	}
 	head = shl->token_lst;
