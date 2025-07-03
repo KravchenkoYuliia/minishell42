@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 14:49:39 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:29:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->input = NULL;
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
+	(*shell)->malloc_error = false;
 	ft_fill_env(*shell, &(*shell)->env, env);
-	if ((*shell)->malloc_err)
+	if ((*shell)->malloc_error)
 		return ;
 	(*shell)->env_execve = NULL;
 	(*shell)->cmd = NULL;
@@ -31,7 +32,6 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->nb_of_cmd = 0;
 	(*shell)->heredoc_in_input = true;
 	(*shell)->process = PARENT;
-	(*shell)->malloc_err = false;
 }
 
 bool	ft_find_heredoc(t_token *token_lst)
@@ -144,7 +144,7 @@ int	main(int ac, char **av, char **env)
 	shell = NULL;
 	signal(SIGQUIT, SIG_IGN);
 	ft_init_minishell(&shell, env);
-	if (shell->malloc_err)
+	if (shell->malloc_error)
 	{
 		ft_free_all(&shell);
 		return (0);

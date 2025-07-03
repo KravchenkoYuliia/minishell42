@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 14:20:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:20:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,24 @@ int	ft_redir_input(t_minishell *shell, int index)
 	return (SUCCESS);
 }
 
+int	ft_open_fd(t_redirect *temp)
+{
+	int	fd;
+
+	fd = 0;
+	if (temp->type == APPEND)
+	{
+		fd = open(temp->file_name, O_RDWR | O_CREAT | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	else if (temp->type == OUTPUT)
+	{
+		fd = open(temp->file_name, O_RDWR | O_CREAT | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	return (fd);
+}
+
 int	ft_redir_output(t_minishell *shell, int index)
 {
 	int			i;
@@ -65,18 +83,10 @@ int	ft_redir_output(t_minishell *shell, int index)
 
 	temp = shell->cmd[index]->output_list;
 	i = 0;
+	fd = 0;
 	while (temp)
 	{
-		if (temp->type == APPEND)
-		{
-			fd = open(temp->file_name, O_RDWR | O_CREAT | O_APPEND,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		}
-		else if (temp->type == OUTPUT)
-		{
-			fd = open(temp->file_name, O_RDWR | O_CREAT | O_TRUNC,
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		}
+		fd = ft_open_fd(temp);
 		if (fd == -1)
 		{
 			perror(SHELL_NAME_ERROR);

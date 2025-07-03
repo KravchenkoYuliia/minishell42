@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 15:42:13 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:06:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,42 @@ void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 	ft_simple_cmd(shell, index);
 }
 
+void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
+{
+	while (index < shell->nb_of_cmd)
+	{
+		if (pipe(shell->cmd[index]->pipe) == -1)
+			write(2, "HERE\n", 5);
+		pid = fork();
+		if (pid == -1)
+			return ;
+		if (pid == 0)
+		{
+			ft_set_of_sig(shell, CHILD);
+			ft_child_loop(shell, index);
+		}
+		if (shell->cmd[index]->heredoc == 1)
+		{
+			close(shell->cmd[index]->heredoc_pipe[0]);
+			close(shell->cmd[index]->heredoc_pipe[1]);
+		}
+		close(shell->cmd[index]->pipe[1]);
+		dup2(shell->cmd[index]->pipe[0], STDIN_FILENO);
+		close(shell->cmd[index]->pipe[0]);
+		index++;
+	}
+	ft_set_of_sig(shell, SIGIGN);
+	ft_waiting_for_child(shell, 10, 0);
+	ft_set_of_sig(shell, PARENT);
+}
+
 void	ft_parent_process(t_minishell *shell)
 {
 	int		index;
 	pid_t	pid;
 
 	index = 0;
+	pid = 0;
 	if (shell->heredoc_in_input == true)
 	{
 		add_history(shell->history);
@@ -41,31 +71,7 @@ void	ft_parent_process(t_minishell *shell)
 	else
 	{
 		shell->process = CHILD;
-		while (index < shell->nb_of_cmd)
-		{
-			if (pipe(shell->cmd[index]->pipe) == -1)
-				write(2, "HERE\n", 5);
-			pid = fork();
-			if (pid == -1)
-				return ;
-			if (pid == 0)
-			{
-				ft_set_of_sig(shell, CHILD);
-				ft_child_loop(shell, index);
-			}
-			if (shell->cmd[index]->heredoc == 1)
-			{
-				close(shell->cmd[index]->heredoc_pipe[0]);
-				close(shell->cmd[index]->heredoc_pipe[1]);
-			}
-			close(shell->cmd[index]->pipe[1]);
-			dup2(shell->cmd[index]->pipe[0], STDIN_FILENO);
-			close(shell->cmd[index]->pipe[0]);
-			index++;
-		}
-		ft_set_of_sig(shell, SIGIGN);
-		ft_waiting_for_child(shell, 10, 0);
-		ft_set_of_sig(shell, PARENT);
+		ft_creating_child(shell, index, pid);
 	}
 	ft_save_std_fileno(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 15:44:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:13:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_minishell
 	bool				heredoc_in_input;
 	struct sigaction	sig;
 	int	process;
-	bool	malloc_err;
+	bool	malloc_error;
 }	t_minishell;
 
 ///signals///////////////////
@@ -191,7 +191,6 @@ void		ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_total_exit(t_minishell *shell);
 void		ft_error_msg(char *shell_name, char *cmd, char *msg);
 void		ft_get_nb_of_words(t_minishell *shell);
-void		ft_parent_process(t_minishell *shell);
 void		ft_save_std_fileno(t_minishell *shell);
 void		ft_change_pwd(t_env *env, char *directory);
 bool		ft_is_option(char *args);
@@ -206,8 +205,11 @@ char		*ft_copy_name_inenv(char *line);
 bool		ft_name_exists_already(t_env *env, char *name, char *line);
 void		ft_change_valueof_name(t_env *env, char *line);
 char		*ft_find_absolute_path(t_minishell *shell, int index);
+void		ft_parent_process(t_minishell *shell);
+void	ft_creating_child(t_minishell *shell, int index, pid_t pid);
 void		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
+void	ft_cmd_checking(t_minishell *shell, int index, char *cmd);
 void		ft_simple_cmd(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
 void		ft_child_loop(t_minishell *shell, int index);
