@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:09:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 20:09:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:22:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,25 @@ void	ft_write_stdout(char *msg)
 	write(1, msg, ft_strlen(msg));
 }
 
-int     ft_charset(char *str, char c)
+int	ft_charset(char *str, char c)
 {
-        int     i;
+	int	i;
 
-        i = 0 ;
-        while (str[i])
-        {
-                if (str[i] == c)
-                        return (SUCCESS);
-                i++;
-        }
-        return (ERROR);
-}
-
-char	*ft_strjoin_export(char *str1, char *str2)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*line;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(str1) + ft_strlen(str2) + 3;
-	line = (char *)malloc(sizeof(char) * len);
-	if (!line)
-		return (NULL);
-	while (str1[i])
+	i = 0 ;
+	while (str[i])
 	{
-		line[i] = str1[i];
+		if (str[i] == c)
+			return (SUCCESS);
 		i++;
 	}
+	return (ERROR);
+}
+
+char	*ft_add_str2(char *line, char *str2, int i)
+{
+	int	j;
+
+	j = 0;
 	while (str2[j])
 	{
 		if (j != 0 && str2[j - 1] == '=')
@@ -76,5 +63,26 @@ char	*ft_strjoin_export(char *str1, char *str2)
 	line[i] = '\"';
 	i++;
 	line[i] = '\0';
+	return (line);
+}
+
+char	*ft_strjoin_export(char *str1, char *str2)
+{
+	int		i;
+	int		len;
+	char	*line;
+
+	i = 0;
+	len = ft_strlen(str1) + ft_strlen(str2) + 3;
+	line = (char *)malloc(sizeof(char) * len);
+	if (!line)
+		return (NULL);
+	while (str1[i])
+	{
+		line[i] = str1[i];
+		i++;
+	}
+	line[i] = '\0';
+	line = ft_add_str2(line, str2, i);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 18:41:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:06:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		ft_error_msg(shell->cmd[index]->args[0], NULL, ": command not found");
 		exit(127);
 	}
-	close(shell->save_stdin);
-	close(shell->save_stdout);
 	ft_copy_env_for_execve(shell);
 	if (!ft_strncmp(cmd, "./minishell", 11))
 		ft_handle_shlvl_in_array(shell->env_execve);
@@ -59,6 +57,8 @@ void	ft_child_loop(t_minishell *shell, int index)
 
 	i = 0;
 	cmd = NULL;
+	close(shell->save_stdin);
+	close(shell->save_stdout);
 	ft_redirections(shell, index);
 	close(shell->cmd[index]->pipe[0]);
 	close(shell->cmd[index]->pipe[1]);

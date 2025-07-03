@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 17:08:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:07:13 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 		child_sig.sa_handler = ft_ctrl_c_child;
 		child_sig.sa_flags = 0;
 		sigaction(SIGINT, &child_sig, NULL);
+		close(shell->save_stdin);
+		close(shell->save_stdout);
 		if (ft_strchr(shell->cmd[index]->args[0], '/')
 			&& (access(shell->cmd[index]->args[0], X_OK) == -1))
 		{
@@ -49,8 +51,6 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 			shell->exit_status = 127;
 			exit(127);
 		}
-		close(shell->save_stdin);
-		close(shell->save_stdout);
 		ft_copy_env_for_execve(shell);
 		if (!ft_strncmp(cmd, "./minishell", 11))
                         ft_handle_shlvl_in_array(shell->env_execve);
