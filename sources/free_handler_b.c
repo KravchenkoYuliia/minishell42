@@ -6,15 +6,19 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/01 13:51:54 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:14:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_free_all(t_minishell **shell)
+void	ft_free_all(t_minishell *shell)
 {
-	if ((*shell)->input)
+	if (shell->env)
+		ft_free_env(shell->env);
+	if (shell)
+		free(shell);
+	/*if ((*shell)->input)
 		free ((*shell)->input);
 	if ((*shell)->token_lst)
 		free_token_list((*shell)->token_lst);
@@ -26,7 +30,7 @@ void	ft_free_all(t_minishell **shell)
 		ft_free_struct_foreach_cmd((*shell)->cmd, 0);
 	if ((*shell)->history)
 		free ((*shell)->history);
-	free (shell);
+	free (shell);*/
 }
 
 /*typedef struct s_minishell

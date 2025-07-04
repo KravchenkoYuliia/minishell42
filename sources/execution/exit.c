@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:43:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:15:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_total_exit(t_minishell *shell)
 
 	ft_save_std_fileno(shell);
 	status = shell->exit_status;
-	ft_free_all(&shell);
+	ft_free_all(shell);
 	/* if (shell->token_lst)
 		free_token_list(shell->token_lst);
 	if (shell->env)

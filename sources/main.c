@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 19:37:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:01:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ bool	ft_execution_check_error(t_minishell *shell)
 	int	check;
 
 	check = ft_execution(shell);
-	if (g_flag == CTRLC_ALERT && shell->history)
+	if (shell->history)
 	{
-		g_flag = CTRLC_OFF;
 		add_history(shell->history);
 		free(shell->history);
+	}
+	if (g_flag == CTRLC_ALERT)
+	{
+		g_flag = CTRLC_OFF;
 		ft_set_of_sig(shell, PARENT);
 		return (true);
 	}
@@ -104,9 +107,12 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	shell = NULL;
 	signal(SIGQUIT, SIG_IGN);
-	ft_init_minishell(&shell, env);
 	if (ac != 1)
+	{
+		ft_error_msg(SHELL_NAME_ERROR, av[1], ": No such file or directory");
 		return (0);
+	}
+	ft_init_minishell(&shell, env);
 	sigemptyset(&shell->sig.sa_mask);
 	shell->sig.sa_handler = ft_ctrl_c;
 	shell->sig.sa_flags = 0;

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 14:42:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:07:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	write(STDERR_FILENO, " bytes in ", 10);
 	write(STDERR_FILENO, name, ft_strlen(name));
 	write(STDERR_FILENO, "\n", 1);
-	//free tout
+	ft_free_all(shell);
 	rl_clear_history();
 	exit(EXIT_FAILURE);
 }

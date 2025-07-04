@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:30:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:58:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 {
 	*shell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!*shell)
-		exit(EXIT_FAILURE);
+		ft_malloc_failed(NULL, sizeof(t_minishell), "ft_init_minishell");
 	(*shell)->prompt_count = 0;
 	(*shell)->token_lst = NULL;
 	(*shell)->input = NULL;
