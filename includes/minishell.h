@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:13:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:22:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ enum e_type
 	SIGINT_NEW_LINE,
 	CHILD,
 	PARENT,
+	SIGIGN,
+	NEW_PROMPT,
 	CTRLC_ALERT,
 	CTRLC_OFF,
-	SIGIGN,
 };
 
 typedef struct s_cmd_struct
@@ -117,6 +118,20 @@ typedef struct s_minishell
 	bool	malloc_error;
 }	t_minishell;
 
+////////////////////////////
+////////main////////////////
+
+char	*ft_cut_input(char *cut_me);
+bool	ft_find_heredoc(t_token *token_lst);
+void	ft_init_minishell(t_minishell **shell, char **env);
+void	ft_init_for_every_prompt(t_minishell *shell);
+void	ft_checking_input(t_minishell *shell);
+void	ft_add_history_and_expand(t_minishell *shell);
+bool	ft_new_prompt(t_minishell *shell);
+bool	ft_parsing_check_error(t_minishell  *shell);
+bool	ft_execution_check_error(t_minishell *shell);
+
+////////////////////////////
 ///signals///////////////////
 void		ft_ctrl_c(int signal);
 void		ft_ctrl_d(t_minishell *shell);
@@ -244,6 +259,7 @@ void		ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
 void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
 void		ft_free_all(t_minishell **shell);
+void	ft_malloc_failed(t_minishell *shell, int nb, char *name);
 /////////////////
 
 #endif

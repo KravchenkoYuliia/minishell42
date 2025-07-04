@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:40:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 13:27:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 			shell->exit_status = 130;
 			return (ERROR);
 		}
-		/*if (WIFSIGNALED(status))
-		{
-			printf("status == %d\nflag == %d\n", status,  flag);
-			status = WTERMSIG(status);
-			status += 128;
-			flag = CTRLC_ALERT;
-		}*/
 		else if (WIFEXITED(status))
 		{
 			status = WEXITSTATUS(status);

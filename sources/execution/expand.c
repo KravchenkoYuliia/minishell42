@@ -6,38 +6,46 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/01 17:46:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:50:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-char    *ft_strjoin_expand(char *str, char c)
+char	*ft_strjoin_expand(char *str, char c)
 {
-        int             i;
-        int             j;
-        int             len;
-        char    *line;
+	int		i;
+	int		j;
+	int		len;
+	char	*line;
 
-        i = 0;
-        j = 0;
-        len = ft_strlen(str) + 2;
-        line = (char *)malloc(sizeof(char) * len);
-        if (str)
-        {
-                while (str && str[i])
-                {
-                        line[i] = str[i];
-                        i++;
-                }
-                free(str);
-        }
+	i = 0;
+	j = 0;
+	len = ft_strlen(str) + 2;
+	line = (char *)malloc(sizeof(char) * len);
+	if (str)
+	{
+		while (str && str[i])
+		{
+			line[i] = str[i];
+			i++;
+		}
+		free(str);
+	}
 	line[i] = c;
 	i++;
-        line[i] = '\0';
-        return (line);
+	line[i] = '\0';
+	return (line);
+}
+
+char	*ft_get_result(char *expand_me, int start, char *result)
+{
+	while (expand_me[start])
+	{
+		result = ft_strjoin_expand(result, expand_me[start]);
+		start++;
+	}
+	return (result);
 }
 
 char	*ft_getenv_variable(char *expand_me, int start)
@@ -61,11 +69,7 @@ char	*ft_getenv_variable(char *expand_me, int start)
 	result = ft_strjoin_heredoc(result, expanded);
 	if (result && start < ft_strlen(expand_me))
 	{
-		while (expand_me[start])
-		{
-			result = ft_strjoin_expand(result, expand_me[start]); 
-			start++;
-		}
+		result = ft_get_result(expand_me, start, result);
 		free(expand_me);
 	}
 	return (result);
@@ -86,7 +90,7 @@ char	*ft_expand_line_heredoc(char *expand_me)
 			i++;
 		}
 	}
-	if(expand_me[i] == '$')
+	if (expand_me[i] == '$')
 		line = ft_strjoin_heredoc(line, ft_getenv_variable(expand_me, i + 1));
 	else
 		line[ft_strlen(line)] = '\0';

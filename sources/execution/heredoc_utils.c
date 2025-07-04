@@ -6,12 +6,11 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 18:22:46 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:36:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:36:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*ft_strjoin_heredoc(char *s1, char *s2)
 {
@@ -39,4 +38,3 @@ char	*ft_strjoin_heredoc(char *s1, char *s2)
 	history[i] = '\0';
 	return (history);
 }
-
