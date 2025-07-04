@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 16:58:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:30:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->input = NULL;
 	(*shell)->exit_status = 0;
 	(*shell)->env = NULL;
-	(*shell)->malloc_error = false;
 	ft_fill_env(*shell, &(*shell)->env, env);
 	(*shell)->env_execve = NULL;
 	(*shell)->cmd = NULL;
@@ -44,6 +43,7 @@ void	ft_init_minishell(t_minishell **shell, char **env)
 	(*shell)->nb_of_cmd = 0;
 	(*shell)->heredoc_in_input = true;
 	(*shell)->process = PARENT;
+	(*shell)->quote_lim = false;
 }
 
 char	*ft_cut_input(char *cut_me)

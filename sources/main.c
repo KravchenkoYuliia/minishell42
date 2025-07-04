@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 18:36:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:37:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,6 @@ int	main(int ac, char **av, char **env)
 	shell = NULL;
 	signal(SIGQUIT, SIG_IGN);
 	ft_init_minishell(&shell, env);
-	if (shell->malloc_error)
-	{
-		ft_free_all(&shell);
-		return (0);
-	}
 	if (ac != 1)
 		return (0);
 	sigemptyset(&shell->sig.sa_mask);

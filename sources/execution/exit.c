@@ -6,13 +6,11 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:46:33 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 14:41:59 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:43:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	ft_total_exit(t_minishell *shell)
 {

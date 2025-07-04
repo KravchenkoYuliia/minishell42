@@ -6,12 +6,11 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:42:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:41:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 {
@@ -34,16 +33,67 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	return (SUCCESS);
 }
 
+char	*ft_handle_line(t_minishell *shell, char *line)
+{
+	if (line)
+	{
+		if (g_flag == CTRLC_ALERT)
+			shell->exit_status = 130;
+		shell->history = ft_strjoin_heredoc(shell->history, line);
+		shell->history = ft_strjoin_heredoc(shell->history, "\n");
+	}
+	if (!shell->quote_lim)
+		line = ft_expand_line_heredoc(shell, line);
+	return (line);
+}
+
+int	ft_line_is_not_limiter(char *line, char *limiter)
+{
+	if (ft_strlen(line) >= ft_strlen(limiter))
+	{	
+		if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n'
+			&& ft_strncmp(line, limiter, ft_strlen(line)) != 0)
+			return (true);
+		else
+			return (false);
+	}
+	else
+	{
+		if (ft_strncmp(limiter, line, ft_strlen(limiter)) != '\n'
+			&& ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
+			return (true);
+		else
+			return (false);
+	}
+}
+
+int	ft_write_till_limiter(t_minishell *shell,
+		int index, char *line, char *limiter)
+{
+	if (ft_line_is_not_limiter(line, limiter) == true)
+	{
+		write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
+		write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
+		free(line);
+	}
+	else
+	{
+		free(line);
+		//free(limiter);
+		//close(shell->cmd[index]->heredoc_pipe[1]);
+		//ft_free_struct_foreach_cmd(shell->cmd, 0);
+		return (EXIT_FLAG);
+	}
+	return (SUCCESS);
+}
+
 void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 {
 	char	*line;
-	bool	quote;
 
 	line = NULL;
+	limiter = ft_unquote_lim_heredoc(shell, limiter);
 	close(shell->cmd[index]->heredoc_pipe[0]);
-	quote = ft_quote_or_not_quote(limiter);
-	if (quote == true)
-		limiter = ft_unquote_limiter(limiter);
 	while (1)
 	{
 		line = readline("> ");
@@ -57,51 +107,8 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 			free(line);
 			continue ;
 		}
-		if (line)
-		{
-			if (g_flag == CTRLC_ALERT)
-				shell->exit_status = 130;
-			shell->history = ft_strjoin_heredoc(shell->history, line);
-			shell->history = ft_strjoin_heredoc(shell->history, "\n");
-		}
-		if (!quote)
-			line = ft_expand_line_heredoc(line);
-		if (ft_strlen(line) >= ft_strlen(limiter))
-		{	
-			if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n'
-				&& ft_strncmp(line, limiter, ft_strlen(line)) != 0)
-			{
-				write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
-				write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
-				free(line);
-
-			}
-			else
-			{
-				free(line);
-				//free(limiter);
-				//close(shell->cmd[index]->heredoc_pipe[1]);
-				//ft_free_struct_foreach_cmd(shell->cmd, 0);
-				exit(EXIT_SUCCESS);
-			}
-		}
-		else
-		{
-			if (ft_strncmp(limiter, line, ft_strlen(limiter)) != '\n'
-				&& ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
-			{
-				write(shell->cmd[index]->heredoc_pipe[1], line, ft_strlen(line));
-				write(shell->cmd[index]->heredoc_pipe[1], "\n", 1);
-				free(line);
-			}
-			else
-			{
-				free(line);
-				//free(limiter);
-				//close(shell->cmd[index]->heredoc_pipe[1]);
-				//ft_free_struct_foreach_cmd(shell->cmd, 0);
-				exit(EXIT_SUCCESS);
-			}
-		}
+		line = ft_handle_line(shell, line);
+		if (ft_write_till_limiter(shell, index, line, limiter) == EXIT_FLAG)
+			exit(EXIT_SUCCESS);
 	}
 }

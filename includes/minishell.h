@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:30:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:40:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ enum e_type
 {
 	SUCCESS,
 	ERROR,
+	EXIT_FLAG,
 	WORD,
 	PIPE,
 	HEREDOC,
 	INPUT,
 	OUTPUT,
 	APPEND,
-	SIGINT_NEW_LINE,
 	CHILD,
 	PARENT,
 	SIGIGN,
@@ -115,7 +115,7 @@ typedef struct s_minishell
 	bool				heredoc_in_input;
 	struct sigaction	sig;
 	int	process;
-	bool	malloc_error;
+	bool	quote_lim;
 }	t_minishell;
 
 ////////////////////////////
@@ -251,10 +251,11 @@ int			ft_pwd(t_minishell *shell, int index);
 int			ft_export(t_minishell *shell, int index);
 int			ft_unset(t_minishell *shell, int index);
 int			ft_exit(t_minishell *shell, int index);
-char	*ft_expand_line_heredoc(char *expand_me);
+char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me);
 char	*ft_quotes(char *has_quotes, char *result);
 bool	ft_quote_or_not_quote(char *limiter);
 char	*ft_unquote_limiter(char *unquote_me);
+char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 
 
 /////////////////
