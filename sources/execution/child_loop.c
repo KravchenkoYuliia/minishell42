@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 14:35:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:22:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,37 +71,4 @@ void	ft_child_loop(t_minishell *shell, int index)
 	}
 	else
 		exit(EXIT_SUCCESS);
-}
-
-void	ft_exit_status(t_minishell *shell, int status)
-{
-	if (WIFSIGNALED(status))
-	{
-		status = WTERMSIG(status);
-		status += 128;
-		write(1, "\n", 1);
-	}
-	else if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	shell->exit_status = status;
-}
-
-void	ft_waiting_for_child(t_minishell *shell, int nb_of_child, pid_t pid)
-{
-	int	status;
-
-	status = 0;
-	if (nb_of_child == 1)
-	{
-		waitpid(pid, &status, 0);
-		ft_exit_status(shell, status);
-	}
-	else
-	{
-		while (waitpid(-1, &status, 0) != -1)
-		{
-			ft_exit_status(shell, status);
-			continue ;
-		}
-	}
 }

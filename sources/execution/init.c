@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 16:31:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:14:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,55 +67,17 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 {
 	int			i_struct;
 	int			i_args;
-	bool		flag_input_in_history;
 	t_token		*temp;
-	t_redirect	*new;
 
 	i_struct = 0;
 	i_args = 0;
-	flag_input_in_history = false;
 	temp = shell->token_lst;
 	while (temp)
 	{
+		if (ft_fill_redirection(shell, i_struct, temp) == CTRLC_ALERT)
+			return (CTRLC_ALERT);
 		if (temp->type == WORD)
-		{
-			shell->cmd[i_struct]->args[i_args] = ft_strdup(temp->value);
-			i_args++;
-
-			if (i_args == shell->cmd[i_struct]->nb_of_words)
-				shell->cmd[i_struct]->args[i_args] = NULL;
-		}
-		else if (temp->type == INPUT)
-		{
-			shell ->cmd[i_struct]->input = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->input, INPUT);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
-		}
-		else if (temp->type == OUTPUT)
-		{
-			shell->cmd[i_struct]->output = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, OUTPUT);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
-		}
-		else if (temp->type == APPEND)
-		{
-			shell->cmd[i_struct]->output = ft_strdup(temp->value);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->output, APPEND);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
-		}
-		else if (temp->type == HEREDOC)
-		{
-			if (flag_input_in_history == false)
-			{
-				shell->history = ft_strjoin_heredoc(shell->history, shell->input);
-				shell->history = ft_strjoin_heredoc(shell->history, "\n");
-				flag_input_in_history = true;
-			}
-			if (ft_fork_heredoc(shell, temp->value, i_struct) == ERROR)
-				return (ERROR);
-			new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
-			ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
-		}
+			i_args = ft_put_word_to_struct(shell, i_struct, i_args, temp);
 		else if (temp->type == PIPE)
 		{
 			shell->cmd[i_struct]->pipe_flag = 1;

@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/07/04 16:57:44 by yukravch         ###   ########.fr        #
+#    Updated: 2025/07/04 18:30:30 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ FILES = 	main.c	input_and_init.c input_and_init_utils.c\
 			parser/parsing_utils.c parser/parser_err_handler.c \
 			expander/expander_main.c expander/expander_utils.c \
 			execution/execution.c \
-			execution/utils.c execution/init.c execution/init_utils.c  \
+			execution/utils.c execution/init.c execution/init_utils.c \
+		       	execution/fill_struct.c execution/fill_struct_utils.c \
 			execution/parent_process.c execution/heredoc.c execution/heredoc_utils.c\
 			execution/redirection_list.c \
 			execution/exit.c\
@@ -47,6 +48,7 @@ FILES = 	main.c	input_and_init.c input_and_init_utils.c\
 			execution/unset.c execution/env.c \
 			execution/cmd_exit.c \
 			execution/simple_cmd.c execution/built_in.c execution/child_loop.c \
+			execution/exit_status.c \
 			execution/get_abs_path.c \
 			execution/redirections.c \
 			execution/quotes.c execution/expand.c \
