@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 16:22:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:57:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include <asm/termbits.h>
 # include <sys/ioctl.h>
 
-extern volatile sig_atomic_t	flag;
+extern volatile sig_atomic_t	g_flag;
 
 typedef struct s_token
 {
@@ -130,6 +130,7 @@ void	ft_add_history_and_expand(t_minishell *shell);
 bool	ft_new_prompt(t_minishell *shell);
 bool	ft_parsing_check_error(t_minishell  *shell);
 bool	ft_execution_check_error(t_minishell *shell);
+bool	ft_only_white_space(char *input);
 
 ////////////////////////////
 ///signals///////////////////

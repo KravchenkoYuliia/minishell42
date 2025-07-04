@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   input_and_init_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/05 15:41:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 16:59:30 by yukravch         ###   ########.fr       */
+/*   Created: 2025/07/04 16:56:24 by yukravch          #+#    #+#             */
+/*   Updated: 2025/07/04 16:57:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_execution(t_minishell *shell)
+bool	ft_only_white_space(char *input)
 {
-	if (ft_init_struct_foreach_cmd(shell) == ERROR)
-		return (ERROR);
-	if (g_flag == CTRLC_ALERT)
-		return (CTRLC_ALERT);
-	ft_parent_process(shell);
-	return (SUCCESS);
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] > 13 && input[i] != 32)
+			return (false);
+		i++;
+	}
+	return (true);
 }

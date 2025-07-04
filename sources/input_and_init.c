@@ -6,12 +6,11 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 16:27:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:58:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 bool	ft_find_heredoc(t_token *token_lst)
 {
@@ -57,7 +56,7 @@ char	*ft_cut_input(char *cut_me)
 	new_input = NULL;
 	lines = ft_split(cut_me, '\n');
 	if (!lines)
-		return(NULL);
+		return (NULL);
 	while (lines[i] && lines[i][0] > 13 && lines[i][0] != 32)
 		i++;
 	if (i <= 1)
@@ -86,9 +85,9 @@ void	ft_checking_input(t_minishell *shell)
 {
 	if (!shell->input)
 		ft_ctrl_d(shell);
-	if (flag == CTRLC_ALERT)
+	if (g_flag == CTRLC_ALERT)
 	{
-		flag = CTRLC_OFF;
+		g_flag = CTRLC_OFF;
 		shell->exit_status = 130;
 	}
 	shell->prompt_count += 1;

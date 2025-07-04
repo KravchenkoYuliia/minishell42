@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 15:11:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:59:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_ctrl_c(int sign)
 {
 	if (sign == SIGINT)
 	{
-		flag = CTRLC_ALERT;
+		g_flag = CTRLC_ALERT;
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -31,7 +31,7 @@ void	ft_ctrl_c_child(int sign)
 	if (sign == SIGINT)
 	{
 		write(1, "\n", 1);
-		flag = CTRLC_ALERT;
+		g_flag = CTRLC_ALERT;
 		exit(CTRLC_ALERT);
 	}
 }

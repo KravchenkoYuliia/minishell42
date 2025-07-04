@@ -6,25 +6,11 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 16:46:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:58:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	ft_only_white_space(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] > 13 && input[i] != 32)
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 bool	ft_new_prompt(t_minishell *shell)
 {
@@ -53,7 +39,7 @@ void	ft_add_history_and_expand(t_minishell *shell)
 	ft_expander(shell);
 }
 
-bool	ft_parsing_check_error(t_minishell  *shell)
+bool	ft_parsing_check_error(t_minishell *shell)
 {
 	shell->token_lst = ft_parser(shell->input, 0);
 	if (!shell->token_lst)
@@ -68,11 +54,11 @@ bool	ft_parsing_check_error(t_minishell  *shell)
 bool	ft_execution_check_error(t_minishell *shell)
 {
 	int	check;
-       
+
 	check = ft_execution(shell);
-	if (flag == CTRLC_ALERT && shell->history)
+	if (g_flag == CTRLC_ALERT && shell->history)
 	{
-		flag = CTRLC_OFF;
+		g_flag = CTRLC_OFF;
 		add_history(shell->history);
 		free(shell->history);
 		return (true);
@@ -106,10 +92,9 @@ void	ft_minishell(t_minishell *shell)
 		else
 			shell->exit_status = 2;
 	}
-	//ft_free_all(&shell);
 }
 
-volatile sig_atomic_t	flag = CTRLC_OFF;
+volatile sig_atomic_t	g_flag = CTRLC_OFF;
 
 int	main(int ac, char **av, char **env)
 {

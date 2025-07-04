@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 13:27:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:00:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	}
 	ft_set_of_sig(shell, SIGIGN);
 		waitpid(pid, &status, 0);
-		if (flag == CTRLC_ALERT)
+		if (g_flag == CTRLC_ALERT)
 		{
 			shell->exit_status = 130;
 			return (ERROR);
@@ -42,7 +42,7 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 			status = WEXITSTATUS(status);
 			if (status == CTRLC_ALERT)
 			{
-				flag = CTRLC_ALERT;
+				g_flag = CTRLC_ALERT;
 				shell->exit_status = 130;
 				return (ERROR);
 			}
@@ -73,7 +73,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		}
 		if (line)
 		{
-			if (flag == CTRLC_ALERT)
+			if (g_flag == CTRLC_ALERT)
 				shell->exit_status = 130;
 			shell->history = ft_strjoin_heredoc(shell->history, line);
 			shell->history = ft_strjoin_heredoc(shell->history, "\n");
