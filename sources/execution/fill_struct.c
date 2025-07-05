@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:08:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:14:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:10:23 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,14 @@ void	ft_put_input_to_struct(t_minishell *shell, int i_struct, t_token *temp)
 	t_redirect	*new;
 
 	shell->cmd[i_struct]->input = ft_strdup(temp->value);
+	if (!shell->cmd[i_struct]->input)
+		ft_malloc_failed(shell, ft_strlen(temp->value), "ft_put_input_to_struct");
 	new = ft_lstnew_redirect(shell->cmd[i_struct]->input, INPUT);
+	if (!new)
+	{
+		free(shell->cmd[i_struct]->input);
+		ft_malloc_failed(shell, sizeof(t_redirect), "ft_put_input_to_struct");
+	}
 	ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
 }
 
@@ -52,7 +59,17 @@ void	ft_put_output_to_struct(t_minishell *shell, int i_struct, t_token *temp)
 	t_redirect	*new;
 
 	shell->cmd[i_struct]->output = ft_strdup(temp->value);
+	if (!shell->cmd[i_struct]->output)
+	{
+		free(shell->cmd[i_struct]->output);
+		ft_malloc_failed(shell, ft_strlen(temp->value), "ft_put_output_to_struct");
+	}
 	new = ft_lstnew_redirect(shell->cmd[i_struct]->output, OUTPUT);
+	if (!new)
+	{
+		free(shell->cmd[i_struct]->output);
+		ft_malloc_failed(shell, sizeof(t_redirect), "ft_put_output_to_struct");
+	}
 	ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
 }
 
@@ -61,7 +78,14 @@ void	ft_put_append_to_struct(t_minishell *shell, int i_struct, t_token *temp)
 	t_redirect	*new;
 
 	shell->cmd[i_struct]->output = ft_strdup(temp->value);
+	if (!shell->cmd[i_struct]->output)
+		ft_malloc_failed(shell, ft_strlen(temp->value), "ft_put_output_to_struct");
 	new = ft_lstnew_redirect(shell->cmd[i_struct]->output, APPEND);
+	if (!new)
+	{
+		free(shell->cmd[i_struct]->output);
+		ft_malloc_failed(shell, sizeof(t_redirect), "ft_put_output_to_struct");
+	}
 	ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
 }
 
@@ -70,5 +94,10 @@ void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct)
 	t_redirect	*new;
 
 	new = ft_lstnew_redirect(shell->cmd[i_struct]->heredoc_pipe, HEREDOC);
+	if (!new)
+	{
+		free(new);
+		ft_malloc_failed(shell, sizeof(t_redirect), "ft_put_input_to_struct");
+	}
 	ft_lstadd_back_redirect(&shell->cmd[i_struct]->input_list, new);
 }

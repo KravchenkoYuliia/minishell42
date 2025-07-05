@@ -6,42 +6,49 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 19:31:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:30:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ft_unset_or_not_unset(char *env_line, char **args)
+int	ft_unset_or_not_unset(char *env_line, char **args)
 {
 	int		i;
 	char	*name;
 
 	i = 1;
 	name = ft_copy_name_inenv(env_line);
+	if (!name)
+		return (MALLOC_FAIL);
 	while (args[i])
 	{
 		if (!ft_strchr(args[i], '=')
 			&& ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
 		{
 			free(name);
-			return (true);
+			return (SUCCESS);
 		}
 		i++;
 	}
 	free(name);
-	return (false);
+	return (ERROR);
 }
 
-void	ft_unset_head(t_minishell *shell, int index)
+int	ft_unset_head(t_minishell *shell, int index)
 {
+	int		status;
 	t_env	*head;
 	t_env	*ex;
 
+	status = 0;
 	head = shell->env;
+	status = ft_unset_or_not_unset(head->line,
+                        shell->cmd[index]->args);
+	if (status == MALLOC_FAIL)
+		return (MALLOC_FAIL);
 	while (head && shell->cmd[index]->args
-		&& ft_unset_or_not_unset(head->line,
-			shell->cmd[index]->args) == true)
+		&& status == SUCCESS)
 	{
 		ex = head;
 		if (head->next)
@@ -51,14 +58,20 @@ void	ft_unset_head(t_minishell *shell, int index)
 		}
 		free(ex);
 	}
+	return (SUCCESS);
 }
 
-void	ft_unset_body(char **args, t_env *current,
+int	ft_unset_body(char **args, t_env *current,
 		t_env *previous, t_env *ex)
 {
+	int	status;
+
 	while (current)
 	{
-		if (ft_unset_or_not_unset(current->line, args) == true)
+		status = ft_unset_or_not_unset(current->line, args);
+		if (status == MALLOC_FAIL)
+			return (MALLOC_FAIL);
+		if (status == SUCCESS)
 		{
 			ex = current;
 			if (current->next)
@@ -79,6 +92,7 @@ void	ft_unset_body(char **args, t_env *current,
 			current = current->next;
 		}
 	}
+	return (SUCCESS);
 }
 
 int	ft_unset(t_minishell *shell, int index)
@@ -89,10 +103,12 @@ int	ft_unset(t_minishell *shell, int index)
 
 	if (shell->cmd[index]->args[0] && !shell->cmd[index]->args[1])
 		return (SUCCESS);
-	ft_unset_head(shell, index);
+	if (ft_unset_head(shell, index) == MALLOC_FAIL)
+		return (MALLOC_FAIL);
 	ex = NULL;
 	previous = shell->env;
 	current = shell->env->next;
-	ft_unset_body(shell->cmd[index]->args, current, previous, ex);
+	if (ft_unset_body(shell->cmd[index]->args, current, previous, ex) == MALLOC_FAIL)
+		return (MALLOC_FAIL);
 	return (SUCCESS);
 }

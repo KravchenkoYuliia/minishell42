@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:06:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:06:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 {
-	ft_redirections(shell, index);
-	if (ft_exec_built_in_cmd(shell, index, cmd) == true)
+	int	status;
+
+	status = 0;
+	status = ft_exec_built_in_cmd(shell, index, cmd);
+	if (status == MALLOC_FAIL)
+		ft_malloc_failed(shell, 0, "ft_exec_built_in_cmd");
+	else if (status == true)
 		return ;
-	ft_simple_cmd(shell, index);
+	else if (status == false)
+		ft_simple_cmd(shell, index);
 }
 
 void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
@@ -56,7 +62,7 @@ void	ft_parent_process(t_minishell *shell)
 
 	index = 0;
 	pid = 0;
-	if (shell->heredoc_in_input == true)
+	if (shell->heredoc_in_input == true && shell->history)
 	{
 		add_history(shell->history);
 		free(shell->history);
@@ -65,7 +71,8 @@ void	ft_parent_process(t_minishell *shell)
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
-		if (shell->cmd[0]->args[0])
+		ft_redirections(shell, index);
+		if (shell->cmd[0]->args && shell->cmd[0]->args[0])
 			ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
 	}
 	else

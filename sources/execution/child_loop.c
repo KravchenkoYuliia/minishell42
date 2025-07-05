@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:22:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:34:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 		shell->exit_status = 127;
 		exit(127);
 	}
-	if (!ft_strncmp(cmd, "./minishell", 11))
-		ft_handle_shlvl_in_array(shell->env_execve);
 }
 
 void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
@@ -40,6 +38,8 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
+	if (!ft_strncmp(cmd, "./minishell", 11))
+		ft_handle_shlvl_in_array(shell->env_execve);
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		perror(SHELL_NAME_ERROR);
@@ -57,7 +57,7 @@ void	ft_child_loop(t_minishell *shell, int index)
 	ft_redirections(shell, index);
 	close(shell->cmd[index]->pipe[0]);
 	close(shell->cmd[index]->pipe[1]);
-	if (shell->cmd[index]->args[0])
+	if (shell->cmd[index]->args && shell->cmd[index]->args[0])
 	{
 		if (ft_exec_built_in_cmd(shell,
 				index, shell->cmd[index]->args[0]) == true)

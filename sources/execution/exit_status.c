@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:22:07 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:31:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:31:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_wait_heredoc_child(t_minishell *shell, pid_t pid)
 			shell->exit_status = 130;
 			return (CTRLC_ALERT);
 		}
+		else if (status == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 	}
 	shell->exit_status = status;
 	return (SUCCESS);
@@ -42,6 +44,8 @@ void	ft_exit_status(t_minishell *shell, int status)
 	}
 	else if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
+	if (status == MALLOC_FAIL)
+		ft_malloc_failed(shell, 0, "CHILD");
 	shell->exit_status = status;
 }
 

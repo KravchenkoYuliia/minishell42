@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 20:14:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:32:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ enum e_type
 	NEW_PROMPT,
 	CTRLC_ALERT,
 	CTRLC_OFF,
+	MALLOC_FAIL,
 };
 
 typedef struct s_cmd_struct
@@ -193,7 +194,7 @@ void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *content);
 void		ft_print_env(t_env *env);
 void		ft_handle_shlvl_in_list(t_env *env);
-void		ft_handle_shlvl_in_array(char **env);
+int		ft_handle_shlvl_in_array(char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
@@ -221,7 +222,7 @@ char		*ft_get_home_path(t_env *env);
 int			ft_just_export(t_env *env);
 int			ft_export_value(t_minishell *shell, int index);
 int		ft_option_check(t_minishell *shell, int index, int i);
-bool		ft_unset_or_not_unset(char *env_line, char **args);
+int		ft_unset_or_not_unset(char *env_line, char **args);
 char		*ft_strjoin_export(char *str1, char *str2);
 int			ft_charset(char *str, char c);
 char		*ft_copy_name_inenv(char *line);
@@ -231,7 +232,7 @@ char		*ft_find_absolute_path(t_minishell *shell, int index);
 void		ft_parent_process(t_minishell *shell);
 void	ft_creating_child(t_minishell *shell, int index, pid_t pid);
 void		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
-bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
+int	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
 void	ft_cmd_checking(t_minishell *shell, int index, char *cmd);
 void		ft_simple_cmd(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
@@ -254,7 +255,7 @@ int			ft_exit(t_minishell *shell, int index);
 char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me);
 char	*ft_quotes(char *has_quotes, char *result);
 bool	ft_quote_or_not_quote(char *limiter);
-char	*ft_unquote_limiter(char *unquote_me);
+char	*ft_unquote_limiter(t_minishell *shell, char *unquote_me);
 char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 
 
@@ -264,7 +265,7 @@ char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 /////////////////
 void		free_token_list(t_token *head);
 void		ft_free_env(t_env *head);
-void		ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
+void		ft_free_struct_foreach_cmd(t_cmd_struct **structs);
 void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
 void		ft_free_all(t_minishell *shell);

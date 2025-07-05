@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 16:42:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:37:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,32 +62,41 @@ void	ft_free_args(char **array) //free **array
 	int	i;
 
 	i = 0;
-	while (array[i])
+	if (array[i])
 	{
-		free(array[i]);
-		i++;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
 	}
 	free(array);
 }
 
-void	ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop)
+void	ft_free_struct_foreach_cmd(t_cmd_struct **structs)
 {
 	int	i;
 
-	(void)stop;
 	i = 0;
-	while (/* i < stop &&  */*structs && structs[i])
+	if (structs)
 	{
-		if (structs[i]->args)
-			ft_free_args(structs[i]->args);
-		if (structs[i]->input_list)
-			free_redir_list(structs[i]->input_list);
-		if (structs[i]->output_list)
-			free_redir_list(structs[i]->output_list);
-		free(structs[i]);
-		i++;
+		while (structs[i])
+		{
+			if (structs[i]->heredoc_pipe[1] >= 0)
+		                close(structs[i]->heredoc_pipe[1]);
+			if (structs[i]->heredoc_pipe[0] >= 0)
+		                close(structs[i]->heredoc_pipe[0]);
+			if (structs[i]->args)
+				ft_free_args(structs[i]->args);
+			if (structs[i]->input_list)
+				free_redir_list(structs[i]->input_list);
+			if (structs[i]->output_list)
+				free_redir_list(structs[i]->output_list);
+			free(structs[i]);
+			i++;
+		}
+		free(structs);
 	}
-	free(structs);
 }
 
 /*typedef struct s_cmd_struct

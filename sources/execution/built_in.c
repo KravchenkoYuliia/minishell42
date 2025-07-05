@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:15:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 17:56:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:07:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ void	ft_init_functions(int (*ft_built_in_functions[7])
 	ft_built_in_functions[6] = &ft_exit;
 }
 
-bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd)
+int	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd)
 {
 	char	*built_in_names[7];
 	int		i;
+	int		status;
 	int		(*ft_built_in_functions[7])(t_minishell *, int);
 
 	i = 0;
@@ -49,8 +50,11 @@ bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd)
 		if ((cmd && ft_strncmp(cmd, built_in_names[i],
 					(ft_strlen(cmd) + 1)) == 0))
 		{
-			ft_built_in_functions[i](shell, index);
-			return (true);
+			status = ft_built_in_functions[i](shell, index);
+			if (status == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+			else
+				return (true);
 		}
 		i++;
 	}

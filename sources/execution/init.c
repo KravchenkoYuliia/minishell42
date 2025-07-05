@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:42:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:16:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 	int	i;
 
 	i = 0;
-	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * nb);
+	*cmd = NULL;
+	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * (nb + 1));
 	if (!*cmd)
 	{
-		printf("Malloc failed in malloc_struct_foreach_cmd\n");
-		ft_total_exit(shell);
+		cmd[0] = NULL;
+		ft_malloc_failed(shell, sizeof(t_cmd_struct) * nb, "ft_malloc_struct_foreach_cmd");
 	}
 	while (i < nb)
 	{
@@ -30,11 +31,12 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 		(*cmd)[i] = (t_cmd_struct *)malloc(sizeof(t_cmd_struct));
 		if (!(*cmd)[i])
 		{
-			printf("Malloc failed for one of the struct foreach cmd\n");
-			ft_total_exit(shell);
+			(*cmd)[i] = NULL;
+			ft_malloc_failed(shell, sizeof(t_cmd_struct), "ft_malloc_struct_foreach_cmd");
 		}
 		i++;
 	}
+	(*cmd)[i] = NULL;
 }
 
 void	ft_start_value(t_minishell *shell)
@@ -44,21 +46,32 @@ void	ft_start_value(t_minishell *shell)
 	i = 0;
 	while (i < shell->nb_of_cmd)
 	{
+		shell->cmd[i]->input_list = NULL;
+		shell->cmd[i]->output_list = NULL;
 		shell->cmd[i]->args = NULL;
-		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
-				* (shell->cmd[i]->nb_of_words + 1));
-		if (!shell->cmd[i]->args)
+		if (shell->cmd[i]->nb_of_words > 0)
 		{
-			break ;
+			shell->cmd[i]->args = (char **)malloc(sizeof(char *)
+				* (shell->cmd[i]->nb_of_words + 1));
+			if (!shell->cmd[i]->args)
+			{
+				shell->cmd[i]->args[0] = NULL;
+				ft_malloc_failed(shell, sizeof(char *)
+                                	* (shell->cmd[i]->nb_of_words + 1),
+					"ft_start_value");
+			}
+			shell->cmd[i]->args[0] = NULL;
 		}
-		shell->cmd[i]->args[0] = NULL;
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
 		shell->cmd[i]->pipe_flag = 0;
-		shell->cmd[i]->input_list = NULL;
-		shell->cmd[i]->output_list = NULL;
+		shell->cmd[i]->heredoc_pipe[0] = 0;
+		shell->cmd[i]->heredoc_pipe[1] = 0;
+		shell->cmd[i]->pipe[0] = 0;
+		shell->cmd[i]->pipe[1] = 0;
+
 		i++;
 	}
 }

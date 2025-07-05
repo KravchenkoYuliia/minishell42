@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 20:01:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:59:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	ft_new_prompt(t_minishell *shell)
 	if (ft_only_white_space(shell->input) == true)
 	{
 		shell->exit_status = 0;
+		free(shell->input);
 		return (true);
 	}
 	return (false);
@@ -33,7 +34,6 @@ void	ft_add_history_and_expand(t_minishell *shell)
 		&& !ft_find_heredoc(shell->token_lst))
 	{
 		add_history(shell->input);
-		free(shell->input);
 		shell->heredoc_in_input = false;
 	}
 	ft_expander(shell);

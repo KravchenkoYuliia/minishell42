@@ -6,17 +6,18 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 19:37:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:52:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_handle_shlvl_in_array(char **env)
+int	ft_handle_shlvl_in_array(char **env)
 {
 	int		i;
 	int		shlvl;
 	char	*newline;
+	char	*itoa_return;
 
 	i = 0;
 	while (env[i])
@@ -24,16 +25,27 @@ void	ft_handle_shlvl_in_array(char **env)
 		if (!ft_strncmp("SHLVL=", env[i], 6))
 		{
 			newline = ft_strdup("SHLVL=");
+			if (!newline)
+				return (MALLOC_FAIL);
 			shlvl = ft_atoi(env[i] + 6);
 			shlvl++;
-			newline = ft_strjoin(newline, ft_itoa(shlvl));
+			itoa_return = ft_itoa(shlvl);
+			if (!itoa_return)
+			{
+				free(newline);
+				return (MALLOC_FAIL);
+			}
+			newline = ft_strjoin(newline, itoa_return);
+			if (!newline)
+				return (MALLOC_FAIL);
 			free(env[i]);
 			env[i] = newline;
 		}
 		i++;
 	}
+	return (SUCCESS);
 }
-
+/*
 void	ft_handle_shlvl_in_list(t_env *env)
 {
 	int		shlvl;
@@ -55,7 +67,7 @@ void	ft_handle_shlvl_in_list(t_env *env)
 		temp = temp->next;
 	}
 }
-
+*/
 int	ft_env(t_minishell *shell, int index)
 {
 	bool	first_line;

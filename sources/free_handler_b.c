@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 20:14:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:32:57 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 
 void	ft_free_all(t_minishell *shell)
 {
+	//if (shell->input)
+	//	free(shell->input);
+	ft_save_std_fileno(shell);
+	if (shell->env_execve)
+		ft_free_args(shell->env_execve);
+	if (shell->history)
+	{
+		free(shell->history);
+		shell->history = NULL;
+	}
+	if (shell->cmd)
+		ft_free_struct_foreach_cmd(shell->cmd);
+	if (shell->token_lst)
+		free_token_list(shell->token_lst);
 	if (shell->env)
 		ft_free_env(shell->env);
 	if (shell)

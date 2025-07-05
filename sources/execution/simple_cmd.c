@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 14:34:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:35:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,20 @@ void	ft_execute_child(t_minishell *shell, int index, char *cmd)
 		ft_error_msg(shell->cmd[index]->args[0], NULL, ": command not found");
 		exit(127);
 	}
-	ft_copy_env_for_execve(shell);
+	if (ft_copy_env_for_execve(shell) == MALLOC_FAIL)
+	{
+		free(cmd);
+		ft_free_all(shell);
+		exit(MALLOC_FAIL);
+	}
+	if (!ft_strncmp(cmd, "./minishell", 11))
+	{
+		if (ft_handle_shlvl_in_array(shell->env_execve) == MALLOC_FAIL)
+		{
+			ft_free_all(shell);
+			exit(MALLOC_FAIL);
+		}
+	}
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		perror(SHELL_NAME_ERROR);

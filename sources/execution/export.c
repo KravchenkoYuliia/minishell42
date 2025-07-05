@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:58:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 20:35:10 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:19:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int	ft_just_export(t_env *env)
 		if (temp)
 		{
 			line = ft_strjoin_export("declare -x ", temp->line);
+			if (!line)
+				return (MALLOC_FAIL);
 			new = ft_lstnew_env(line);
+			if (!new)
+			{	free(line);
+				return (MALLOC_FAIL);
+			}
 			ft_lstadd_back_env(&export, new);
 			temp = temp->next;
 		}
@@ -39,7 +45,7 @@ int	ft_just_export(t_env *env)
 	return (SUCCESS);
 }
 
-void	ft_execution_of_export(t_minishell *shell, int index, int i)
+int	ft_execution_of_export(t_minishell *shell, int index, int i)
 {
 	char	*line;
 	char	*buffer;
@@ -48,14 +54,29 @@ void	ft_execution_of_export(t_minishell *shell, int index, int i)
 	if (ft_charset(shell->cmd[index]->args[i], '=') == SUCCESS)
 	{
 		line = ft_strdup(shell->cmd[index]->args[i]);
+		if (!line)
+			return (MALLOC_FAIL);
+
 		buffer = ft_copy_name_inenv(line);
+		if (!buffer)
+		{
+			free(line);
+			return (MALLOC_FAIL);
+		}
 		if (ft_name_exists_already(shell->env, buffer, line) == false)
 		{
 			new = ft_lstnew_env(line);
+			if (!new)
+			{
+				free(buffer);
+				free(line);
+				return (MALLOC_FAIL);
+			}
 			ft_lstadd_back_env(&shell->env, new);
 		}
 		free(buffer);
 	}
+	return (SUCCESS);
 }
 
 int	ft_export_value(t_minishell *shell, int index)
@@ -78,7 +99,8 @@ int	ft_export_value(t_minishell *shell, int index)
 			&& shell->cmd[index]->args[i][0] != '_')
 			printf("%s: export: `%s': not a valid identifier\n",
 				SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
-		ft_execution_of_export(shell, index, i);
+		if (ft_execution_of_export(shell, index, i) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 		i++;
 	}
 	return (SUCCESS);
@@ -88,13 +110,13 @@ int	ft_export(t_minishell *shell, int index)
 {
 	if (!shell->cmd[index]->args[1])
 	{
-		if (ft_just_export(shell->env) != SUCCESS)
-			return (ERROR);
+		if (ft_just_export(shell->env) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 	}
 	else
 	{
-		if (ft_export_value(shell, index) != SUCCESS)
-			return (ERROR);
+		if (ft_export_value(shell, index) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:04:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 13:26:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:49:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ bool	ft_quote_or_not_quote(char *limiter)
 	return (false);
 }
 
-char	*ft_unquote_limiter(char *unquote_me)
+char	*ft_unquote_limiter(t_minishell *shell, char *unquote_me)
 {
 	char	*limiter;
 
+	(void)shell;
 	limiter = calloc(sizeof(char), ft_strlen(unquote_me));
+	if (!limiter)
+		return (NULL);
 	limiter = ft_quotes(unquote_me, limiter);
 	free(unquote_me);
 	return (limiter);
@@ -62,4 +65,12 @@ char	*ft_quotes(char *has_quotes, char *result)
 			i++;
 	}
 	return (result);
+}
+
+char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter)
+{
+	shell->quote_lim = ft_quote_or_not_quote(limiter);
+	if (shell->quote_lim == true)
+		limiter = ft_unquote_limiter(shell, limiter);
+	return (limiter);
 }
