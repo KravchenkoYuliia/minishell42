@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 16:04:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:36:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_free_all(t_minishell *shell)
 	rl_clear_history();
 }
 
-void	ft_clear_after_prompt_exec(t_minishell *shell)
+void	ft_clear_after_cmd_exec(t_minishell *shell)
 {
 
 	ft_free_args(shell->env_execve);

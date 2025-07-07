@@ -6,25 +6,34 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:20:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:48:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_check_infile(char *input)
+int	ft_check_infile(t_minishell *shell, char *input)
 {
 	int	fd;
 
 	if (access(input, F_OK) == -1)
 	{
-		ft_error_msg(SHELL_NAME_ERROR, input, ": No such file or directory");
-		return (ERROR);
+		ft_error_msg(shell, SHELL_NAME_ERROR, input, ": No such file or directory");
+		if (shell->process == PARENT)
+			return (ERROR);
+		else
+		{
+			close(shell->pipe[0]);
+			close(shell->pipe[1]);
+			ft_free_all(shell);
+			exit(127);
+		}
+
 	}
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_error_msg(SHELL_NAME_ERROR, input, ": Permission denied");
+		ft_error_msg(shell, SHELL_NAME_ERROR, input, ": Permission denied");
 		return (ERROR);
 	}
 	return (fd);
@@ -40,7 +49,7 @@ int	ft_redir_input(t_minishell *shell, int index)
 	{
 		if (temp->type == INPUT)
 		{
-			fd = ft_check_infile(temp->file_name);
+			fd = ft_check_infile(shell, temp->file_name);
 			if (fd < 3)
 				return (ERROR);
 			dup2(fd, STDIN_FILENO);

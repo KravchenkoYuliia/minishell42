@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 16:02:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:50:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 			return ;
 		if (pid == 0)
 		{
+			shell->process = CHILD;
 			ft_set_of_sig(shell, CHILD);
 			ft_child_loop(shell, index);
 		}
+		shell->process = PARENT;
 		if (shell->cmd[index]->heredoc == 1)
 		{
 			close(shell->cmd[index]->heredoc_pipe[0]);
@@ -56,6 +58,7 @@ void	ft_parent_process(t_minishell *shell)
 
 	index = 0;
 	pid = 0;
+	shell->process = PARENT;
 	if (shell->heredoc_in_input == true)
 	{
 		add_history(shell->history);
@@ -63,6 +66,8 @@ void	ft_parent_process(t_minishell *shell)
 	}
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
+	if (shell->cmd[0]->pipe_flag == 0 && !shell->cmd[0]->args[0])
+		ft_redirections(shell, 0);
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
 		if (shell->cmd[0]->args[0])
@@ -73,5 +78,5 @@ void	ft_parent_process(t_minishell *shell)
 		shell->process = CHILD;
 		ft_creating_child(shell, index, pid);
 	}
-	ft_clear_after_prompt_exec(shell);
+	ft_clear_after_cmd_exec(shell);
 }

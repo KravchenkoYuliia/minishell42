@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 15:40:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:40:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_error_msg(char *shell_name, char *cmd, char *msg)
+void	ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg)
 {
 	if (shell_name)
 		write(STDERR_FILENO, shell_name, ft_strlen(shell_name));
@@ -42,5 +42,6 @@ void	ft_error_msg(char *shell_name, char *cmd, char *msg)
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 	}
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	write(STDERR_FILENO, "\n", 1);
+	if (shell && shell->process == PARENT)
+		write(STDERR_FILENO, "\n", 1);
 }

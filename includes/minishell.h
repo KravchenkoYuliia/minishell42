@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 16:01:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:39:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct);
 int	ft_put_word_to_struct(t_minishell *shell, int i_struct, int i_args, t_token *temp);
 void		ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_total_exit(t_minishell *shell);
-void		ft_error_msg(char *shell_name, char *cmd, char *msg);
+void		ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg);
 void		ft_get_nb_of_words(t_minishell *shell);
 void		ft_save_std_fileno(t_minishell *shell);
 void		ft_change_pwd(t_env *env, char *directory);
@@ -243,7 +243,7 @@ int			ft_count_var_in_env(t_env *env);
 int			ft_redirections(t_minishell *shell, int index);
 int			ft_redir_input(t_minishell *shell, int index);
 int			ft_redir_output(t_minishell *shell, int index);
-int			ft_check_infile(char *input);
+int			ft_check_infile(t_minishell *shell, char *input);
 int			ft_env(t_minishell *shell, int index);
 int			ft_echo(t_minishell *shell, int index);
 int			ft_cd(t_minishell *shell, int index);
@@ -269,7 +269,7 @@ void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
 void		ft_free_all(t_minishell *shell);
 void	ft_malloc_failed(t_minishell *shell, int nb, char *name);
-void	ft_clear_after_prompt_exec(t_minishell *shell);
+void	ft_clear_after_cmd_exec(t_minishell *shell);
 /////////////////
 
 #endif

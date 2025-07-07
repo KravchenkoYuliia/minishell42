@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 18:53:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:28:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_cd_home(t_minishell *shell, char directory[PATH_MAX], char *home_path)
 	home_path = ft_get_home_path(shell->env);
 	if (!home_path)
 	{
-		ft_error_msg(SHELL_NAME_ERROR, NULL, ": cd: HOME not set");
+		ft_error_msg(shell, SHELL_NAME_ERROR, NULL, ": cd: HOME not set");
 		shell->exit_status = 1;
 		return (ERROR);
 	}
@@ -45,7 +45,7 @@ int	ft_cd_somewhere_else(t_minishell *shell,
 	ft_strcpy(directory, shell->cmd[index]->args[1]);
 	if (shell->cmd[index]->args[2])
 	{
-		ft_error_msg(SHELL_NAME, NULL, "cd: too many arguments");
+		ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -69,7 +69,7 @@ int	ft_cd(t_minishell *shell, int index)
 	}
 	if (chdir(directory) != 0)
 	{
-		ft_error_msg("toupetishell: cd",
+		ft_error_msg(shell, "toupetishell: cd",
 			directory, ": No such file or directory");
 		return (ERROR);
 	}

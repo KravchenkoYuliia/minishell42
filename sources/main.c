@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/04 20:01:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:38:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_add_history_and_expand(t_minishell *shell)
 		&& !ft_find_heredoc(shell->token_lst))
 	{
 		add_history(shell->input);
-		free(shell->input);
 		shell->heredoc_in_input = false;
 	}
 	ft_expander(shell);
@@ -44,7 +43,7 @@ bool	ft_parsing_check_error(t_minishell *shell)
 	shell->token_lst = ft_parser(shell->input, 0);
 	if (!shell->token_lst)
 	{
-		ft_error_msg(SHELL_NAME, NULL, "Failed to create tokens");
+		ft_error_msg(shell, SHELL_NAME, NULL, "Failed to create tokens");
 		free(shell->input);
 		return (true);
 	}
@@ -109,7 +108,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	if (ac != 1)
 	{
-		ft_error_msg(SHELL_NAME_ERROR, av[1], ": No such file or directory");
+		ft_error_msg(shell, SHELL_NAME_ERROR, av[1], ": No such file or directory");
 		return (0);
 	}
 	ft_init_minishell(&shell, env);

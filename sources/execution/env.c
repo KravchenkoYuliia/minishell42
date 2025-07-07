@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 19:37:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:28:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_env(t_minishell *shell, int index)
 	list = shell->env;
 	if (shell->cmd[index]->args[1])
 	{
-		ft_error_msg(NULL, NULL, "env with no options or arguments :)");
+		ft_error_msg(shell, NULL, NULL, "env with no options or arguments :)");
 		return (ERROR);
 	}
 	while (list)
