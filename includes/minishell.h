@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 20:14:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:42:58 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 /////////////////
 void		free_token_list(t_token *head);
 void		ft_free_env(t_env *head);
-void		ft_free_struct_foreach_cmd(t_cmd_struct **structs, int stop);
+void		ft_free_struct_foreach_cmd(t_cmd_struct **structs);
 void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
 void		ft_free_all(t_minishell *shell);

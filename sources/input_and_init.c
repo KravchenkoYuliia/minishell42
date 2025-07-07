@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:58:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:46:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ char	*ft_cut_input(char *cut_me)
 	while (lines[i] && lines[i][0] > 13 && lines[i][0] != 32)
 		i++;
 	if (i <= 1)
+	{
+		ft_free_args(lines);
 		return (cut_me);
+	}
 	new_input = ft_strdup(lines[i - 1]);
 	if (i > 1 && ft_strstr(lines[0], new_input))
 	{

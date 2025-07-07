@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:42:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:45:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 	int	i;
 
 	i = 0;
-	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * nb);
+	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * (nb + 1));
 	if (!*cmd)
 	{
 		printf("Malloc failed in malloc_struct_foreach_cmd\n");
@@ -35,6 +35,7 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 		}
 		i++;
 	}
+	(*cmd)[i] = NULL;
 }
 
 void	ft_start_value(t_minishell *shell)
