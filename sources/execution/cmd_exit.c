@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 20:42:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:38:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	ft_ctrl_d(t_minishell *shell)
 
 int	ft_exit(t_minishell *shell, int index)
 {
+	int	status;
+
+	status = shell->exit_status;
 	if (shell->process == PARENT)
 		write(1, "exit\n", 5);
 	if (shell->cmd[index]->args[1])
@@ -67,6 +70,6 @@ int	ft_exit(t_minishell *shell, int index)
 			return (ERROR);
 		}
 	}
-	ft_save_std_fileno(shell);
-	exit((unsigned char)shell->exit_status);
+	ft_free_all(shell);
+	exit((unsigned char)status);
 }

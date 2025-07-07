@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 20:07:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:40:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ minishell: malloc: cannot allocate %zu bytes
 
 void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 {
-	(void)shell;
 	write(STDERR_FILENO, SHELL_NAME, ft_strlen(SHELL_NAME));
 	write(STDERR_FILENO, "malloc: cannot allocate ", 24);
 	ft_putnbr_fd(nb, STDERR_FILENO);
@@ -30,7 +29,6 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	write(STDERR_FILENO, name, ft_strlen(name));
 	write(STDERR_FILENO, "\n", 1);
 	ft_free_all(shell);
-	rl_clear_history();
 	exit(EXIT_FAILURE);
 }
 
