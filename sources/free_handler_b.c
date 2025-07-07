@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 15:43:15 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:51:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_free_all(t_minishell *shell)
 		ft_free_struct_foreach_cmd(shell->cmd);
 	if (shell->history)
 		free (shell->history);
-	ft_save_std_fileno(shell);
 	free (shell);
 	rl_clear_history();
 }
