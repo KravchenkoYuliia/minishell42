@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 15:45:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:38:54 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
+		shell->cmd[i]->heredoc_pipe[0] = 0;
+		shell->cmd[i]->heredoc_pipe[1] = 0;
 		shell->cmd[i]->pipe_flag = 0;
 		shell->cmd[i]->input_list = NULL;
 		shell->cmd[i]->output_list = NULL;

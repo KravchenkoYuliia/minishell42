@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 15:42:58 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:01:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
 void		ft_free_all(t_minishell *shell);
 void	ft_malloc_failed(t_minishell *shell, int nb, char *name);
+void	ft_clear_after_prompt_exec(t_minishell *shell);
 /////////////////
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 15:42:28 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:05:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_free_args(char **array) //free **array
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array && array[i])
 	{
 		free(array[i]);
 		i++;
@@ -77,6 +77,10 @@ void	ft_free_struct_foreach_cmd(t_cmd_struct **structs)
 	i = 0;
 	while (structs && structs[i])
 	{
+		if (structs[i]->heredoc_pipe[0] > 0)
+                	close(structs[i]->heredoc_pipe[0]);
+		if (structs[i]->heredoc_pipe[1] > 0)
+                	close(structs[i]->heredoc_pipe[1]);
 		if (structs[i]->args)
 			ft_free_args(structs[i]->args);
 		if (structs[i]->input_list)

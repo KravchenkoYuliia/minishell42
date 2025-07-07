@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 18:06:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:02:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	ft_parent_process(t_minishell *shell)
 		shell->process = CHILD;
 		ft_creating_child(shell, index, pid);
 	}
-	ft_save_std_fileno(shell);
+	ft_clear_after_prompt_exec(shell);
 }
