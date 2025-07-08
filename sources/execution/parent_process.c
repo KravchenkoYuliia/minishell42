@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 19:50:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:02:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_parent_process(t_minishell *shell)
 	index = 0;
 	pid = 0;
 	shell->process = PARENT;
-	if (shell->heredoc_in_input == true)
+	if (shell->heredoc_in_input == true && shell->history)
 	{
 		add_history(shell->history);
 		free(shell->history);

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 19:39:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:11:33 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ void	ft_put_output_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_append_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct);
 int	ft_put_word_to_struct(t_minishell *shell, int i_struct, int i_args, t_token *temp);
+void	ft_fill_heredoc_history(t_minishell *shell, int index);
 void		ft_get_nb_of_cmd(t_minishell *shell);
 void	ft_total_exit(t_minishell *shell);
 void		ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg);

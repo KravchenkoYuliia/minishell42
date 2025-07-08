@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 16:38:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:46:52 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int	ft_init_struct_foreach_cmd(t_minishell *shell)
 	ft_start_value(shell);
 	if (ft_fill_cmd_struct(shell) == ERROR)
 		return (ERROR);
-	free_token_list(shell->token_lst);
+	if (shell->token_lst)
+		free_token_list(shell->token_lst);
 	shell->token_lst = NULL;
 	return (SUCCESS);
 }

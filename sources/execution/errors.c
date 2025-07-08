@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 19:40:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:08:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ void	ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg)
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 	}
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	if (shell && shell->process == PARENT)
+	if (shell && ((shell->process == PARENT) || shell->cmd[0]->pipe_flag == 0))
 		write(STDERR_FILENO, "\n", 1);
 }

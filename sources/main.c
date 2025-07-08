@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 19:38:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:17:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,24 @@ bool	ft_new_prompt(t_minishell *shell)
 
 void	ft_add_history_and_expand(t_minishell *shell)
 {
-	if (shell->input && *shell->input
+	add_history(shell->input);
+
+	/*if (shell->input && *shell->input
 		&& !ft_find_heredoc(shell->token_lst))
 	{
 		add_history(shell->input);
 		shell->heredoc_in_input = false;
 	}
+	else
+	{
+		shell->heredoc_in_input = true;
+		shell->history = malloc(sizeof(char) * (ft_strlen(shell->input) + 1));
+		if (!shell->history)
+			ft_malloc_failed(shell, sizeof(char)
+					* (ft_strlen(shell->input) + 1),
+						"ft_add_history_and_expand");
+		ft_strcpy(shell->history, shell->input);
+	}*/
 	ft_expander(shell);
 }
 
@@ -55,11 +67,11 @@ bool	ft_execution_check_error(t_minishell *shell)
 	int	check;
 
 	check = ft_execution(shell);
-	if (shell->history)
+	/*if (shell->history)
 	{
 		add_history(shell->history);
-		free(shell->history);
-	}
+		//free(shell->history);
+	}*/
 	if (g_flag == CTRLC_ALERT)
 	{
 		g_flag = CTRLC_OFF;
@@ -78,7 +90,7 @@ void	ft_minishell(t_minishell *shell)
 		ft_init_for_every_prompt(shell);
 		shell->input = readline(SHELL_NAME);
 		ft_checking_input(shell);
-		shell->input = ft_cut_input(shell->input);
+		//shell->input = ft_cut_input(shell->input);
 		if (ft_new_prompt(shell) == true)
 			continue ;
 		if (shell->input && ft_lexer(shell->input))
