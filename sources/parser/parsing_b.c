@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 11:45:37 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:08:24 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_token	*ft_if_heredoc(char *input, int start)
 		return (NULL);
 	incr = set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, HEREDOC, incr + 2);
+	free (value_buf);
 	return (token);
 }
 
@@ -67,6 +68,7 @@ t_token	*ft_if_input(char *input, int start)
 		return (NULL);
 	incr = set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, INPUT, incr + 1);
+	free (value_buf);
 	return (token);
 }
 
@@ -81,6 +83,7 @@ t_token	*ft_if_append(char *input, int start)
 		return (NULL);
 	incr = set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, APPEND, incr + 2);
+	free (value_buf);
 	return (token);
 }
 
@@ -95,5 +98,6 @@ t_token	*ft_if_output(char *input, int start)
 		return (NULL);
 	incr = set_buf_redirs(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, OUTPUT, incr + 1);
+	free (value_buf);
 	return (token);
 }

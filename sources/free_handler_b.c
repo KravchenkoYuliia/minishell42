@@ -6,25 +6,30 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 18:36:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:52:53 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_free_all(t_minishell *shell)
+void	ft_free_all(t_minishell **shell)
 {
-	if (shell->token_lst)
-		free_token_list(shell->token_lst);
-	if (shell->env)
-		ft_free_env(shell->env);
-	if (shell->env_execve)
-		ft_free_args(shell->env_execve);
-	if (shell->cmd)
-		ft_free_struct_foreach_cmd(shell->cmd);
-	if (shell->history)
-		free (shell->history);
-	free (shell);
+	if (!*shell)
+		return ;
+	if ((*shell)->token_lst)
+		free_token_list((*shell)->token_lst);
+	if ((*shell)->env)
+		ft_free_env((*shell)->env);
+	if ((*shell)->env_execve)
+		ft_free_args((*shell)->env_execve);
+	if ((*shell)->cmd)
+		ft_free_struct_foreach_cmd((*shell)->cmd);
+	if ((*shell)->history)
+		free ((*shell)->history);
+	if ((*shell)->input)
+		free ((*shell)->input);
+	//free (*shell);
+	shell = NULL;
 	rl_clear_history();
 }
 
@@ -33,6 +38,7 @@ void	ft_clear_after_cmd_exec(t_minishell *shell)
 
 	ft_free_args(shell->env_execve);
 	ft_free_struct_foreach_cmd(shell->cmd);
+	free_token_list(shell->token_lst);
 	if (shell->pipe[0] > 0)
 		close(shell->pipe[0]);
 	if (shell->pipe[0] > 0)

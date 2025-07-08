@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/06/30 18:07:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:13:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	ft_word_split(t_minishell **shell)
 char	*ft_get_env(char *var, t_env *env, int exit_status)
 {
 	int		i;
+	char	*ex_stat;
 	t_env	*cursor;
 
 	i = 0;
-	cursor = env;
+	ex_stat = ft_itoa(exit_status);
 	if (var[i] == '?')
-		return (ft_itoa(exit_status));
+		return (ex_stat);
+	cursor = env;
+	free(ex_stat);
 	while (cursor)
 	{
 		if (ft_strstr(cursor->line, var) != NULL

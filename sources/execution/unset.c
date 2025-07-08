@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/02 19:31:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:35:21 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int	ft_unset(t_minishell *shell, int index)
 	t_env	*previous;
 	t_env	*ex;
 
-	if (shell->cmd[index]->args[0] && !shell->cmd[index]->args[1])
+	if (shell->cmd[index]->args[0] 
+		&& (!shell->cmd[index]->args[1] 
+			|| (shell->cmd[index]->args[1][0] == '_'
+			&& shell->cmd[index]->args[1][1] == '\0')))
 		return (SUCCESS);
 	ft_unset_head(shell, index);
 	ex = NULL;

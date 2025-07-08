@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 13:16:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:36:07 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	{
 		ft_set_of_sig(shell, CHILD);
 		ft_handle_heredoc(shell, limiter, index);
-		ft_free_all(shell);
+		ft_free_all(&shell);
 		exit(EXIT_SUCCESS);
 	}
 	ft_set_of_sig(shell, SIGIGN);
@@ -109,7 +109,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		line = ft_handle_line(shell, line);
 		if (ft_write_till_limiter(shell, index, line, limiter) == EXIT_FLAG)
 		{
-			ft_free_all(shell);
+			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
 	}

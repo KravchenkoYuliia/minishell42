@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 11:14:17 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:48:37 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 		else
 			i++;
 	}
-	return (value);
+	return (ft_strdup(value));
 }
 
 char	*ft_update_token(char *value, char *var_value, int var_len, int index)
@@ -65,10 +65,15 @@ char	*ft_update_token(char *value, char *var_value, int var_len, int index)
 
 void	ft_expand_b(t_minishell **shell, char *var, int index)
 {
-	(*shell)->token_lst->value = ft_strdup(
-			ft_update_token((*shell)->token_lst->value,
-				ft_get_env(var, (*shell)->env, (*shell)->exit_status),
-				ft_strlen(var), index));
+	char	*var_value;
+	char	*new_tok_value;
+	
+	var_value = ft_get_env(var, (*shell)->env, (*shell)->exit_status);
+	new_tok_value = ft_update_token((*shell)->token_lst->value, var_value,
+					ft_strlen(var), index);
+	(*shell)->token_lst->value = ft_strdup(new_tok_value);
+	free(var_value);
+	free(new_tok_value);
 }
 
 void	ft_expand_a(t_minishell *shell, char *var, int index)

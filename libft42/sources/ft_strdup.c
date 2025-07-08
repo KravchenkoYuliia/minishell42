@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:20:47 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/21 08:33:48 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:47:35 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strdup(const char *s)
 	str = malloc(sizeof(char) * l);
 	if (!str)
 		return (NULL);
-	while (s[i])
+	while (s && s[i])
 	{
 		str[i] = s[i];
 		i++;

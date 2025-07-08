@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/07 16:05:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:55:08 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	free_token_list(t_token *head)
 		tmp = head;
 		head = head->next;
 		free(tmp->value);
+		tmp->value = NULL;
+		tmp->next = NULL;
 		free(tmp);
 	}
 }
@@ -38,6 +40,8 @@ void	ft_free_env(t_env *head)
 		temp = head;
 		head = head->next;
 		free(temp->line);
+		temp->line = NULL;
+		temp->next = NULL;
 		free(temp);
 	}
 }
@@ -53,6 +57,8 @@ void	free_redir_list(t_redirect *head)
 		tmp = head;
 		head = head->next;
 		free(tmp->file_name);
+		tmp->file_name = NULL;
+		tmp->next = NULL;
 		free(tmp);
 	}
 }
@@ -65,6 +71,7 @@ void	ft_free_args(char **array) //free **array
 	while (array && array[i])
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
 	free(array);

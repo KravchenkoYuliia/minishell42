@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 15:17:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:34:14 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,21 +113,24 @@ volatile sig_atomic_t	g_flag = CTRLC_OFF;
 
 int	main(int ac, char **av, char **env)
 {
-	t_minishell		*shell;
+	t_minishell		shell;
 
 	(void)av;
-	shell = NULL;
+	//shell = malloc(sizeof(t_minishell));
+	//if (!shell)
+	//	exit(EXIT_FAILURE);
 	signal(SIGQUIT, SIG_IGN);
 	if (ac != 1)
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR, av[1], ": No such file or directory");
+		ft_error_msg(&shell, SHELL_NAME_ERROR, av[1], ": No such file or directory");
 		return (0);
 	}
 	ft_init_minishell(&shell, env);
-	sigemptyset(&shell->sig.sa_mask);
-	shell->sig.sa_handler = ft_ctrl_c;
-	shell->sig.sa_flags = 0;
-	sigaction(SIGINT, &shell->sig, NULL);
-	ft_minishell(shell);
+	sigemptyset(&shell.sig.sa_mask);
+	shell.sig.sa_handler = ft_ctrl_c;
+	shell.sig.sa_flags = 0;
+	sigaction(SIGINT, &shell.sig, NULL);
+	ft_minishell(&shell);
 	return (0);
 }
+

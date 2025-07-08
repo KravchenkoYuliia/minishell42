@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 09:06:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:08:57 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_token	*ft_if_quotes_a(char *input, int start)
 		return (NULL);
 	ft_if_quotes_b(input, start, value_buf, 0);
 	token = new_token_nd(value_buf, WORD, ft_strlen(value_buf));
+	free (value_buf);
 	return (token);
 }
 
@@ -63,6 +64,7 @@ t_token	*ft_if_command(char *input, int start)
 	if (input[start] == 39 || input[start] == 34)
 		ft_if_quotes_b(input, start, value_buf, j);
 	token = new_token_nd(value_buf, WORD, ft_strlen(value_buf));
+	free (value_buf);
 	return (token);
 }
 
@@ -79,5 +81,6 @@ t_token	*ft_if_pipe(char *input, int start)
 	value_buf[0] = 124;
 	value_buf[1] = '\0';
 	token = new_token_nd(value_buf, PIPE, 1);
+	free (value_buf);
 	return (token);
 }

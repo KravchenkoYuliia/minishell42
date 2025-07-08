@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 12:08:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:33:54 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	write(STDERR_FILENO, " bytes in ", 10);
 	write(STDERR_FILENO, name, ft_strlen(name));
 	write(STDERR_FILENO, "\n", 1);
-	ft_free_all(shell);
+	ft_free_all(&shell);
 	exit(EXIT_FAILURE);
 }
 

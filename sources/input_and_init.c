@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_and_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 16:07:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:09:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,26 @@ bool	ft_find_heredoc(t_token *token_lst)
 	return (false);
 }
 
-void	ft_init_minishell(t_minishell **shell, char **env)
+void	ft_init_minishell(t_minishell *shell, char **env)
 {
-	*shell = (t_minishell *)malloc(sizeof(t_minishell));
+	/* *shell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!*shell)
-		ft_malloc_failed(NULL, sizeof(t_minishell), "ft_init_minishell");
-	(*shell)->prompt_count = 0;
-	(*shell)->token_lst = NULL;
-	(*shell)->input = NULL;
-	(*shell)->exit_status = 0;
-	(*shell)->env = NULL;
-	ft_fill_env(*shell, &(*shell)->env, env);
-	(*shell)->env_execve = NULL;
-	(*shell)->cmd = NULL;
-	(*shell)->history = NULL;
-	(*shell)->nb_of_cmd = 0;
-	(*shell)->heredoc_in_input = true;
-	(*shell)->process = PARENT;
-	(*shell)->quote_lim = false;
-	(*shell)->pipe[0] = 0;
-	(*shell)->pipe[1] = 0;
+		ft_malloc_failed(NULL, sizeof(t_minishell), "ft_init_minishell"); */
+	shell->prompt_count = 0;
+	shell->token_lst = NULL;
+	shell->input = NULL;
+	shell->exit_status = 0;
+	shell->env = NULL;
+	ft_fill_env(shell, &shell->env, env);
+	shell->env_execve = NULL;
+	shell->cmd = NULL;
+	shell->history = NULL;
+	shell->nb_of_cmd = 0;
+	shell->heredoc_in_input = true;
+	shell->process = PARENT;
+	shell->quote_lim = false;
+	shell->pipe[0] = 0;
+	shell->pipe[1] = 0;
 
 }
 

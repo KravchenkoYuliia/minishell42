@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/07 19:41:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:18:16 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 	{
 		ft_error_msg(shell, SHELL_NAME_ERROR, shell->cmd[index]->args[0],
 			": No such file or directory");
-		ft_free_all(shell);
+		ft_free_all(&shell);
 		exit(127);
 	}
 	if (!ft_strncmp(cmd, "./minishell", 11))
@@ -37,7 +37,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	if (cmd == NULL)
 	{
 		ft_error_msg(shell, shell->cmd[index]->args[0], NULL, ": command not found");
-		ft_free_all(shell);
+		ft_free_all(&shell);
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
@@ -45,7 +45,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		free(cmd);
-		ft_free_all(shell);
+		ft_free_all(&shell);
 		perror(SHELL_NAME_ERROR);
 		if (errno == ENOENT)
 			exit(127);
@@ -68,12 +68,12 @@ void	ft_child_loop(t_minishell *shell, int index)
 		{
 			if (shell->process == CHILD)
 			{
-				ft_free_all(shell);
+				ft_free_all(&shell);
 				exit(EXIT_SUCCESS);
 			}
 			else
 			{
-				ft_free_all(shell);
+				ft_free_all(&shell);
 				return ;
 			}
 		}

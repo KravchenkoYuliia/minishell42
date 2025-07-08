@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 13:11:33 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:33:14 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_minishell
 
 char	*ft_cut_input(char *cut_me);
 bool	ft_find_heredoc(t_token *token_lst);
-void	ft_init_minishell(t_minishell **shell, char **env);
+void	ft_init_minishell(t_minishell *shell, char **env);
 void	ft_init_for_every_prompt(t_minishell *shell);
 void	ft_checking_input(t_minishell *shell);
 void	ft_add_history_and_expand(t_minishell *shell);
@@ -268,7 +268,7 @@ void		ft_free_env(t_env *head);
 void		ft_free_struct_foreach_cmd(t_cmd_struct **structs);
 void		ft_free_args(char **array);
 void		free_redir_list(t_redirect *head);
-void		ft_free_all(t_minishell *shell);
+void		ft_free_all(t_minishell **shell);
 void	ft_malloc_failed(t_minishell *shell, int nb, char *name);
 void	ft_clear_after_cmd_exec(t_minishell *shell);
 /////////////////

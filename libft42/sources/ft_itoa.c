@@ -3,56 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 15:23:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/04/25 11:24:14 by yukravch         ###   ########.fr       */
+/*   Created: 2024/11/19 09:19:44 by lfournie          #+#    #+#             */
+/*   Updated: 2025/07/08 14:11:10 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static int	ft_strlen_n(int n)
+static int	ft_size(int n)
 {
-	long int	len;
-	long int	n_temp;
+	int	size;
 
-	len = 0;
-	n_temp = n;
-	if (n_temp < 0)
-	{	
-		len++;
-		n_temp *= -1;
-	}
-	while (n_temp != 0)
+	if (n == -2147483648)
+		n += 1;
+	size = 0;
+	if (n == 0)
+		size++;
+	if (n < 0)
 	{
-		n_temp /= 10;
-		len++;
+		n *= -1;
+		size++;
 	}
-	return (len);
+	while (n != 0)
+	{
+		n /= 10;
+		size++;
+	}
+	return (size);
 }
 
 char	*ft_itoa(int n)
 {
-	char		*array;
-	long int	i;
-	long int	n_temp;
+	int		i;
+	char	*dest;
+	int		size;
+	long	n_temp;
 
+	size = ft_size(n);
 	n_temp = n;
-	i = ft_strlen_n(n);
-	if (n == 0)
-		return (ft_strdup("0"));
-	array = (char *)ft_calloc(ft_strlen_n(n) + 1, sizeof(char));
-	if (!array)
-		return (NULL);
 	if (n_temp < 0)
 		n_temp *= -1;
+	dest = ft_calloc(size + 1, sizeof(char));
+	if (!dest)
+		return (0);
+	i = size;
 	while (i > 0)
 	{
-		array[i - 1] = n_temp % 10 + '0';
+		dest[i - 1] = n_temp % 10 + 48;
 		n_temp /= 10;
 		i--;
 	}
 	if (n < 0)
-		array[i] = '-';
-	return (array);
+		dest[i] = '-';
+	return (dest);
 }

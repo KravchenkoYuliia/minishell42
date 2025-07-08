@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 15:14:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:34:36 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_check_infile(t_minishell *shell, char *input)
 		{
 			close(shell->pipe[0]);
 			close(shell->pipe[1]);
-			ft_free_all(shell);
+			ft_free_all(&shell);
 			exit(127);
 		}
 
