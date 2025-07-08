@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 15:33:54 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:14:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg)
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 	}
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	if (shell && ((shell->process == PARENT) || shell->cmd[0]->pipe_flag == 0))
+	(void) shell;
+	//if (shell && ((shell->process == PARENT) || shell->cmd[0]->pipe_flag == 0))
 		write(STDERR_FILENO, "\n", 1);
 }

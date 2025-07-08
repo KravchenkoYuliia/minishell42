@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 15:36:07 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:47:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		line = ft_handle_line(shell, line);
 		if (ft_write_till_limiter(shell, index, line, limiter) == EXIT_FLAG)
 		{
+			close(shell->cmd[index]->heredoc_pipe[1]);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}

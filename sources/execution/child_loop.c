@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 13:18:16 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:16:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
-	
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		free(cmd);

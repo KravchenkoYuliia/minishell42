@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:22:07 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:31:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:10:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	ft_exit_status(t_minishell *shell, int status)
 	if (WIFSIGNALED(status))
 	{
 		status = WTERMSIG(status);
-		status += 128;
-		write(1, "\n", 1);
+		if (status == 2)
+		{
+			status += 128;
+			write(1, "\n", 1);
+		}
 	}
 	else if (WIFEXITED(status))
 		status = WEXITSTATUS(status);

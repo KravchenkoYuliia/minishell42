@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 13:02:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:39:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 	while (index < shell->nb_of_cmd)
 	{
 		if (pipe(shell->cmd[index]->pipe) == -1)
-			write(2, "HERE\n", 5);
+			return ;
+		//	write(2, "HERE\n", 5);
 		pid = fork();
 		if (pid == -1)
 			return ;
 		if (pid == 0)
 		{
 			shell->process = CHILD;
+			//signal(SIGPIPE, SIG_IGN);
 			ft_set_of_sig(shell, CHILD);
 			ft_child_loop(shell, index);
 		}
@@ -59,11 +61,11 @@ void	ft_parent_process(t_minishell *shell)
 	index = 0;
 	pid = 0;
 	shell->process = PARENT;
-	if (shell->heredoc_in_input == true && shell->history)
+	/*if (shell->heredoc_in_input == true && shell->history)
 	{
 		add_history(shell->history);
 		free(shell->history);
-	}
+	}*/
 	shell->save_stdin = dup(STDIN_FILENO);
 	shell->save_stdout = dup(STDOUT_FILENO);
 	if (shell->cmd[0]->pipe_flag == 0 && !shell->cmd[0]->args[0])
