@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 14:46:52 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:33:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
 		shell->cmd[i]->heredoc = 0;
-		shell->cmd[i]->heredoc_pipe[0] = 0;
-		shell->cmd[i]->heredoc_pipe[1] = 0;
+		//shell->cmd[i]->heredoc_pipe[0] = 0;
+		//shell->cmd[i]->heredoc_pipe[1] = 0;
 		shell->cmd[i]->pipe_flag = 0;
 		shell->cmd[i]->input_list = NULL;
 		shell->cmd[i]->output_list = NULL;
+		shell->cmd[i]->pipe[0] = 0;
+		shell->cmd[i]->pipe[1] = 0;
 		i++;
 	}
 }
@@ -77,17 +79,20 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 	temp = shell->token_lst;
 	while (temp)
 	{
-		if (ft_fill_redirection(shell, i_struct, temp) == CTRLC_ALERT)
+		if (!temp->value)
+			temp= temp->next;
+		if (temp && ft_fill_redirection(shell, i_struct, temp) == CTRLC_ALERT)
 			return (CTRLC_ALERT);
-		if (temp->type == WORD)
+		if (temp && temp->type == WORD)
 			i_args = ft_put_word_to_struct(shell, i_struct, i_args, temp);
-		else if (temp->type == PIPE)
+		else if (temp && temp->type == PIPE)
 		{
 			shell->cmd[i_struct]->pipe_flag = 1;
 			i_args = 0;
 			i_struct++;
 		}
-		temp = temp->next;
+		if (temp)
+			temp = temp->next;
 	}
 	return (SUCCESS);
 }

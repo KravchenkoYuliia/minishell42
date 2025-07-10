@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 15:33:14 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:11:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,6 @@ enum e_type
 	CTRLC_OFF,
 };
 
-typedef struct s_cmd_struct
-{
-	int					nb_of_words;
-	char				**args;
-	struct s_redirect	*input_list;
-	struct s_redirect	*output_list;
-	char				*input;
-	char				*output;
-	int					heredoc_pipe[2];
-	int					append;
-	int					heredoc;
-	int					pipe_flag;
-	int					pipe[2];
-}	t_cmd_struct;
-
 typedef struct s_redirect
 {
 	char				*file_name;
@@ -91,6 +76,21 @@ typedef struct s_redirect
 	int					type;
 	struct s_redirect	*next;
 }	t_redirect;
+
+typedef struct s_cmd_struct
+{
+	int					nb_of_words;
+	char				**args;
+	t_redirect			*input_list;
+	t_redirect			*output_list;
+	char				*input;
+	char				*output;
+	//int					heredoc_pipe[2];
+	int					append;
+	int					heredoc;
+	int					pipe_flag;
+	int					pipe[2];
+}	t_cmd_struct;
 
 typedef struct s_env
 {
@@ -108,11 +108,11 @@ typedef struct s_minishell
 	char				**env_execve;
 	t_cmd_struct		**cmd;
 	int					nb_of_cmd;
-	int					pipe[2];
 	int					save_stdin;
 	int					save_stdout;
 	char				*history;
 	bool				heredoc_in_input;
+	int		previous_heredoc_pipe[2];
 	struct sigaction	sig;
 	int	process;
 	bool	quote_lim;
@@ -120,6 +120,10 @@ typedef struct s_minishell
 
 ////////////////////////////
 ////////main////////////////
+
+void close_them_please(t_cmd_struct** cmds);
+void close_it_please(t_cmd_struct* cmds);
+
 
 char	*ft_cut_input(char *cut_me);
 bool	ft_find_heredoc(t_token *token_lst);
@@ -196,7 +200,7 @@ void		ft_handle_shlvl_in_list(t_env *env);
 void		ft_handle_shlvl_in_array(char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
-void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
+void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int pipe_create[2]);
 int		ft_wait_heredoc_child(t_minishell *shell, pid_t pid);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 t_redirect	*ft_lstnew_redirect(void *content, int type);
@@ -208,7 +212,7 @@ int	ft_fill_redirection(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_input_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_output_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_append_to_struct(t_minishell *shell, int i_struct, t_token *temp);
-void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct);
+void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct, int pipe_create[2]);
 int	ft_put_word_to_struct(t_minishell *shell, int i_struct, int i_args, t_token *temp);
 void	ft_fill_heredoc_history(t_minishell *shell, int index);
 void		ft_get_nb_of_cmd(t_minishell *shell);

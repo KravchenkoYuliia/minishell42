@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:44:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 15:19:39 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:57:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_put_word_to_struct(t_minishell *shell,
 		shell->cmd[i_struct]->args[i_args] = NULL;
 	return (i_args);
 }
-
+/*
 void	ft_fill_heredoc_history(t_minishell *shell, int index)
 {
 	char		*line;
@@ -31,4 +31,4 @@ void	ft_fill_heredoc_history(t_minishell *shell, int index)
 		if (!line || line[0] == '\0') 
 			return ;
 		shell->history = ft_strjoin_heredoc(shell->history, line);
-}
+}*/
