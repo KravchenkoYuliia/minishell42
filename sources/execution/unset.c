@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 20:23:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:56:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	ft_unset_or_not_unset(char *env_line, char **args)
 	name = ft_copy_name_inenv(env_line);
 	while (args[i])
 	{
+		//if (ft_strncmp(args[i], "_", 2) == 0)
+		//	return (false);
 		if (!ft_strchr(args[i], '=')
 			&& ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
 		{
@@ -49,8 +51,11 @@ void	ft_unset_head(t_minishell *shell, int index)
 			shell->env = head->next;
 			head = head->next;
 		}
+		else
+			shell->env = NULL;
 		free(ex->line);
 		free(ex);
+
 	}
 }
 
@@ -77,8 +82,13 @@ void	ft_unset_body(char **args, t_env *current,
 		}
 		else
 		{
-			previous = previous->next;
-			current = current->next;
+			if (!current->next)
+				current = NULL;
+			if (previous->next && current && current->next)
+			{
+				previous = previous->next;
+				current = current->next;
+			}
 		}
 	}
 }
@@ -90,14 +100,15 @@ int	ft_unset(t_minishell *shell, int index)
 	t_env	*ex;
 
 	if (shell->cmd[index]->args[0] 
-		&& (!shell->cmd[index]->args[1] 
-			|| (shell->cmd[index]->args[1][0] == '_'
-			&& shell->cmd[index]->args[1][1] == '\0')))
+		&& (!shell->cmd[index]->args[1]))
 		return (SUCCESS);
 	ft_unset_head(shell, index);
 	ex = NULL;
-	previous = shell->env;
-	current = shell->env->next;
-	ft_unset_body(shell->cmd[index]->args, current, previous, ex);
+	if (shell->env)
+	{
+		previous = shell->env;
+		current = shell->env->next;
+		ft_unset_body(shell->cmd[index]->args, current, previous, ex);
+	}
 	return (SUCCESS);
 }
