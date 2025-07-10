@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 20:56:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:58:29 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ bool	ft_unset_or_not_unset(char *env_line, char **args)
 	name = ft_copy_name_inenv(env_line);
 	while (args[i])
 	{
-		//if (ft_strncmp(args[i], "_", 2) == 0)
-		//	return (false);
+		if (ft_strncmp(args[i], "_", 2) == 0)
+			return (false);
 		if (!ft_strchr(args[i], '=')
 			&& ft_strncmp(name, args[i], (ft_strlen(name) + 1)) == 0)
 		{
