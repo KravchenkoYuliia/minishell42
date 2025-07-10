@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 14:09:09 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:03:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	ft_init_minishell(t_minishell *shell, char **env)
 	shell->heredoc_in_input = true;
 	shell->process = PARENT;
 	shell->quote_lim = false;
-	shell->pipe[0] = 0;
-	shell->pipe[1] = 0;
-
+	shell->previous_heredoc_pipe[0] = 0;
 }
 
 char	*ft_cut_input(char *cut_me)

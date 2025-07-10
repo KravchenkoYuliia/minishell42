@@ -6,14 +6,27 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 14:52:53 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:30:11 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	ft_close_fd(t_minishell *shell)
+{
+	int	i;
+
+	i  = 3;
+	(void) shell;
+	while (i < 1024)
+	{
+		close(i);
+	}
+}
+
 void	ft_free_all(t_minishell **shell)
 {
+	//ft_close_fd(*shell);
 	if (!*shell)
 		return ;
 	if ((*shell)->token_lst)
@@ -35,14 +48,12 @@ void	ft_free_all(t_minishell **shell)
 
 void	ft_clear_after_cmd_exec(t_minishell *shell)
 {
+	int	i;
 
-	ft_free_args(shell->env_execve);
+	i = 0;
+
 	ft_free_struct_foreach_cmd(shell->cmd);
 	free_token_list(shell->token_lst);
-	if (shell->pipe[0] > 0)
-		close(shell->pipe[0]);
-	if (shell->pipe[0] > 0)
-		close(shell->pipe[0]);
 	ft_save_std_fileno(shell);
 
 }
