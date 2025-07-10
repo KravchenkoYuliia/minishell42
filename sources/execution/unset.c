@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 14:35:21 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:23:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_unset_head(t_minishell *shell, int index)
 			shell->env = head->next;
 			head = head->next;
 		}
+		free(ex->line);
 		free(ex);
 	}
 }
@@ -71,6 +72,7 @@ void	ft_unset_body(char **args, t_env *current,
 				previous->next = NULL;
 				current = NULL;
 			}
+			free(ex->line);
 			free(ex);
 		}
 		else
