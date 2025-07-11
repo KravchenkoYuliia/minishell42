@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 16:36:28 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:48:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,12 @@ void	ft_child_loop(t_minishell *shell, int index)
 	t_redirect	*temp;
 
 	temp = shell->cmd[index]->input_list;
-	close(shell->save_stdin);
-	close(shell->save_stdout);
+	if (close(shell->save_stdin) == -1 || close(shell->save_stdout) == -1)
+        {
+                ft_syscall_ft_failed(shell, "close");
+                ft_free_all(&shell);
+                exit (EXIT_FAILURE);
+        }
 	ft_redirections(shell, index);
 	if (shell->cmd[index]->args[0])
 	{

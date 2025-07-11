@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:24:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:52:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ bool		ft_name_exists_already(t_env *env, char *name, char *line);
 void		ft_change_valueof_name(t_env *env, char *line);
 char		*ft_find_absolute_path(t_minishell *shell, int index);
 int		ft_parent_process(t_minishell *shell);
-void	ft_creating_child(t_minishell *shell, int index, pid_t pid);
+int	ft_creating_child(t_minishell *shell, int index, pid_t pid);
 int		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
 void	ft_cmd_checking(t_minishell *shell, int index, char *cmd);

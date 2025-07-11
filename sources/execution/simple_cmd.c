@@ -6,17 +6,21 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:33:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:45:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute_child(t_minishell *shell, int index, char *cmd)
+int	ft_execute_child(t_minishell *shell, int index, char *cmd)
 {
 	ft_set_of_sig(shell, CHILD);
-	close(shell->save_stdin);
-	close(shell->save_stdout);
+	if (close(shell->save_stdin) == -1 || close(shell->save_stdout) == -1)
+	{
+		ft_syscall_ft_failed(shell, "close");
+		ft_free_all(&shell);
+		exit (EXIT_FAILURE);
+	}
 	ft_cmd_checking(shell, index, cmd);
 	if (!ft_strchr(shell->cmd[index]->args[0], '/'))
 		cmd = ft_find_absolute_path(shell, index);
@@ -38,6 +42,7 @@ void	ft_execute_child(t_minishell *shell, int index, char *cmd)
                 else
                         exit(126);
 	}
+	return (SUCCESS);
 }
 
 int	ft_simple_cmd(t_minishell *shell, int index)
@@ -53,13 +58,15 @@ int	ft_simple_cmd(t_minishell *shell, int index)
 	if (pid == -1)
 	{
 		ft_syscall_ft_failed(shell, "fork");
+		ft_clear_after_cmd_exec(shell);
 		return (ERROR);
 	}
 	if (pid == 0)
 	{
 		shell->process = CHILD;
 		ft_set_sig_quit(shell, index);
-		ft_execute_child(shell, index, cmd);
+		if (ft_execute_child(shell, index, cmd) == ERROR)
+			return (ERROR);
 	}
 	shell->process = PARENT;
 	ft_set_of_sig(shell, SIGIGN);

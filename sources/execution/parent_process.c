@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:31:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:54:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@ int	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 	return (SUCCESS);
 }
 
-void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
+int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 {
 	while (index < shell->nb_of_cmd)
 	{
 		if (pipe(shell->cmd[index]->pipe) == -1)
-			return ;
+		{
+			ft_syscall_ft_failed(shell, "pipe");
+			ft_clear_after_cmd_exec(shell);
+			return (ERROR);
+		}
 		pid = fork();
 		if (pid == -1)
-			return ;
+			return (ERROR);
 		if (pid == 0)
 		{
 			close(shell->cmd[index]->pipe[0]);
@@ -48,6 +52,7 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 	ft_set_of_sig(shell, SIGIGN);
 	ft_waiting_for_child(shell, index - 1, 10, 0);
 	ft_set_of_sig(shell, PARENT);
+	return (SUCCESS);
 }
 
 int	ft_parent_process(t_minishell *shell)
@@ -79,7 +84,8 @@ int	ft_parent_process(t_minishell *shell)
 	else
 	{
 		shell->process = CHILD;
-		ft_creating_child(shell, index, pid);
+		if (ft_creating_child(shell, index, pid) == ERROR)
+			return (ERROR);
 		close_them_please(shell->cmd);
 	}
 	ft_clear_after_cmd_exec(shell);
