@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 20:00:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:38:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 		exit(127);
 	}
 	if (!ft_strncmp(cmd, "./minishell", 11))
-		ft_handle_shlvl_in_array(shell->env_execve);
+	{
+//		if (shell->cmd[index]->pipe_flag == 1 || shell->cmd[index]->args[1])
+			ft_error_msg(shell, SHELL_NAME, NULL, "NOT asked in the subjet\nHave some mercy for heaven's sake!\n");
+			ft_free_all(&shell);
+			exit(EXIT_SUCCESS);	
+		//ft_handle_shlvl_in_array(shell->env_execve);
+	}
 }
 
 void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
