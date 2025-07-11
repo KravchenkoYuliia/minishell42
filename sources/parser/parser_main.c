@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/03 11:46:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:11:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_token	*ft_parser(char *input, int i)
 		else if (input[i] == 32 || input[i] == 9)
 			i++;
 		else
-			return (parser_err_handler(token_lst, 1), token_lst);
+			return (NULL);
 	}
 	return (token_lst);
 }

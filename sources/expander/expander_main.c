@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/10 08:53:57 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:20:59 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	ft_expand_b(t_minishell **shell, char *var, int index)
 	new_tok_value = ft_update_token((*shell)->token_lst->value, var_value,
 					ft_strlen(var), index);
 	(*shell)->token_lst->value = ft_strdup(new_tok_value);
+	//if (!var_value)
+	//	free((*shell)->token_lst->value);
 	free(var_value);
 	free(new_tok_value);
 }
@@ -118,9 +120,10 @@ void	ft_expander(t_minishell *shl)
 		return ;
 	}
 	head = shl->token_lst;
-	while (shl->token_lst && shl->token_lst->type != HEREDOC)
+	while (shl->token_lst)
 	{
-		while (ft_is_expandable(shl->token_lst->value) != -2)
+		while (ft_is_expandable(shl->token_lst->value) != -2
+			&& shl->token_lst->type != HEREDOC)
 			ft_expand_a(shl, vl_bf, ft_is_expandable(shl->token_lst->value));
 		if (ft_is_splitable(shl->token_lst->value))
 			ft_word_split(&shl);

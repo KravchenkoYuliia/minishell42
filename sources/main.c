@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/10 17:04:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 09:47:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	ft_new_prompt(t_minishell *shell)
 void	ft_add_history_and_expand(t_minishell *shell)
 {
 	add_history(shell->input);
-
+	//free (shell->input);
 	/*if (shell->input && *shell->input
 		&& !ft_find_heredoc(shell->token_lst))
 	{
@@ -55,8 +55,7 @@ bool	ft_parsing_check_error(t_minishell *shell)
 	shell->token_lst = ft_parser(shell->input, 0);
 	if (!shell->token_lst)
 	{
-		ft_error_msg(shell, SHELL_NAME, NULL, "Failed to create tokens");
-		free(shell->input);
+		ft_malloc_failed(shell, ft_strlen(shell->input), "ft_parser");
 		return (true);
 	}
 	return (false);

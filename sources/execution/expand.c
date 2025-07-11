@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 19:41:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:06:36 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_get_result(char *expand_me, int start, char *result)
 	return (result);
 }
 
-char	*ft_getenv_variable(char *expand_me, int start)
+char	*ft_getenv_variable(char *expand_me, int start, int ex_sts)
 {
 	int		i;
 	char	*temp;
@@ -64,7 +64,10 @@ char	*ft_getenv_variable(char *expand_me, int start)
 		temp = ft_strjoin_expand(temp, expand_me[start]);
 		start++;
 	}
-	expanded = getenv(temp);
+	if (expand_me[1] == '?')
+		return(ft_itoa(ex_sts));
+	else
+		expanded = getenv(temp);
 	free(temp);
 	result = ft_strjoin_heredoc(result, expanded);
 	if (result && start < ft_strlen(expand_me))
@@ -89,7 +92,6 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 	char	*line;
 
 	i = 0;
-	(void)shell;
 	line = NULL;
 	if (expand_me[0] != '$')
 	{
@@ -100,7 +102,7 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 		}
 	}
 	if (expand_me[i] == '$')
-		line = ft_strjoin_heredoc(line, ft_getenv_variable(expand_me, i + 1));
+		line = ft_strjoin_heredoc(line, ft_getenv_variable(expand_me, i + 1, shell->exit_status));
 	else
 		line[ft_strlen(line)] = '\0';
 	return (line);

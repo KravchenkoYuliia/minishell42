@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 09:02:37 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 10:21:22 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool	ft_lexer(char *input)
 			|| input[redir_check] == 34
 			|| input[redir_check] == 39)
 		{
-			printf("%s", SHELL_NAME_ERROR);
+			printf("%s: ", SHELL_NAME_ERROR);
 			printf("syntax error near unexpected token 'new_line'\n");
 			return (false);
 		}	

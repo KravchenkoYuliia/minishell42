@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 14:13:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:06:41 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,20 @@ void	ft_word_split(t_minishell **shell)
 
 	i = 1;
 	tab = ft_split((*shell)->token_lst->value, ' ');
+	free ((*shell)->token_lst->value);
 	(*shell)->token_lst->value = ft_strdup(tab[0]);
 	free (tab[0]);
 	head = (*shell)->token_lst;
 	while (tab[i])
 	{
 		splited = new_token_nd(tab[i], WORD, 0);
+		free (tab[i]);
 		splited->next = (*shell)->token_lst->next;
 		(*shell)->token_lst->next = splited;
+		(*shell)->token_lst = splited;
 		i++;
 	}
+	(*shell)->token_lst = head;
 	free (tab);
 }
 

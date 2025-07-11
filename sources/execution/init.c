@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 16:33:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 10:04:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 	(*cmd)[i] = NULL;
 }
 
-void	ft_start_value(t_minishell *shell)
+int	ft_start_value(t_minishell *shell)
 {
 	int	i;
 
@@ -49,9 +49,7 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
 				* (shell->cmd[i]->nb_of_words + 1));
 		if (!shell->cmd[i]->args)
-		{
-			break ;
-		}
+			return(i);
 		shell->cmd[i]->args[0] = NULL;
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
@@ -66,6 +64,7 @@ void	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->pipe[1] = 0;
 		i++;
 	}
+	return (-1);
 }
 
 int	ft_fill_cmd_struct(t_minishell *shell)
@@ -99,10 +98,17 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 
 int	ft_init_struct_foreach_cmd(t_minishell *shell)
 {
+	int	i;
+	
 	ft_get_nb_of_cmd(shell);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
-	ft_start_value(shell);
+	i = ft_start_value(shell);
+	if (i != -1)
+	{
+		ft_malloc_failed(shell, shell->cmd[i]->nb_of_words + 1, "ft_start_value");
+		return (ERROR);
+	}
 	if (ft_fill_cmd_struct(shell) == ERROR)
 		return (ERROR);
 	if (shell->token_lst)

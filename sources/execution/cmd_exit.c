@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 14:43:51 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:54:47 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_ctrl_d(t_minishell *shell)
 	//free (shell);
         rl_clear_history();
 	ft_write_stdout("exit\n");
+	//ft_free_all(&shell);
 	exit(EXIT_SUCCESS);
 }
 
