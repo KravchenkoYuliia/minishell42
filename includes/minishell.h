@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 09:55:48 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:59:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ char	*ft_quotes(char *has_quotes, char *result);
 bool	ft_quote_or_not_quote(char *limiter);
 char	*ft_unquote_limiter(char *unquote_me);
 char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
-
+void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2);
 
 /////////////////
 
