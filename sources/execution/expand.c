@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 16:06:36 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:55:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*ft_strjoin_expand(char *str, char c)
 
 char	*ft_get_result(char *expand_me, int start, char *result)
 {
+
 	while (expand_me[start])
 	{
 		result = ft_strjoin_expand(result, expand_me[start]);
@@ -75,6 +76,8 @@ char	*ft_getenv_variable(char *expand_me, int start, int ex_sts)
 		result = ft_get_result(expand_me, start, result);
 		free(expand_me);
 	}
+	free(expanded);
+	printf("result=%s\nexpanded=%s\n", result, expanded);
 	return (result);
 }
 

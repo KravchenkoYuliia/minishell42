@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 09:43:34 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:01:22 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_unset_head(t_minishell *shell, int index)
 		if (ft_strncmp(ex->line, "_=/usr/bin/env",
 				ft_strlen("_=/usr/bin/env")) == 0)
 				break ;
+		free(ex->line);
 		free(ex);
 
 	}
@@ -80,6 +81,7 @@ void	ft_unset_body(char **args, t_env *current,
 			if (ft_strncmp(ex->line, "_=/usr/bin/env",
 				ft_strlen("_=/usr/bin/env")) == 0)
 				break ;
+			free(ex->line);
 			free(ex);
 		}
 		else
