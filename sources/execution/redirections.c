@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 19:12:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:40:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_redirections(t_minishell *shell, int index)
 		dup2(shell->cmd[index]->pipe[1], STDOUT_FILENO);
 		close(shell->cmd[index]->pipe[1]);
 	}
-	if (shell->cmd[index]->pipe_flag == 0)
+	if (shell->cmd[index]->pipe_flag == 0 && shell->cmd[index]->pipe[1] > 2)
 		close(shell->cmd[index]->pipe[1]);
 	if (shell->cmd[index]->output_list)
 		if (ft_redir_output(shell, index) == ERROR)
