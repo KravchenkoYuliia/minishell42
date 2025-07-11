@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 11:55:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:54:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_get_result(char *expand_me, int start, char *result)
 	return (result);
 }
 
-char	*ft_getenv_variable(char *expand_me, int start, int ex_sts)
+char	*ft_getenv_variable(char *expand_me, int start, int ex_sts, t_env *env)
 {
 	int		i;
 	char	*temp;
@@ -60,15 +60,13 @@ char	*ft_getenv_variable(char *expand_me, int start, int ex_sts)
 	temp = NULL;
 	expanded = NULL;
 	result = NULL;
-	while (expand_me[start] && ft_isalnum(expand_me[start]))
+	while (expand_me[start] && (ft_isalnum(expand_me[start]) 
+		|| expand_me[start] == '?'))
 	{
 		temp = ft_strjoin_expand(temp, expand_me[start]);
 		start++;
 	}
-	if (expand_me[1] == '?')
-		return(ft_itoa(ex_sts));
-	else
-		expanded = getenv(temp);
+	expanded = ft_get_env(temp, env, ex_sts);
 	free(temp);
 	result = ft_strjoin_heredoc(result, expanded);
 	if (result && start < ft_strlen(expand_me))
@@ -77,7 +75,6 @@ char	*ft_getenv_variable(char *expand_me, int start, int ex_sts)
 		free(expand_me);
 	}
 	free(expanded);
-	printf("result=%s\nexpanded=%s\n", result, expanded);
 	return (result);
 }
 
@@ -93,6 +90,7 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 {
 	int		i;
 	char	*line;
+	char	*env_var;
 
 	i = 0;
 	line = NULL;
@@ -105,7 +103,11 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 		}
 	}
 	if (expand_me[i] == '$')
-		line = ft_strjoin_heredoc(line, ft_getenv_variable(expand_me, i + 1, shell->exit_status));
+	{
+		env_var = ft_getenv_variable(expand_me, i + 1, shell->exit_status, shell->env);
+		line = ft_strjoin_heredoc(line, env_var);
+		free (env_var);
+	}
 	else
 		line[ft_strlen(line)] = '\0';
 	return (line);

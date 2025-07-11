@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 09:47:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:33:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_new_prompt(t_minishell *shell)
 	i = 0;
 	if (!shell->input)
 		return (true);
-	if (ft_only_white_space(shell->input) == true)
+	if (ft_only_white_space(shell->input))
 	{
 		shell->exit_status = 0;
 		return (true);

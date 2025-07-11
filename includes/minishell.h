@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 15:07:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:36:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void		parser_err_handler(t_token *token_lst, int err_code);
 int		set_buf_redirs(char *i, int s, char *v_b, int b_s);
 void		ft_if_quotes_b(char *i, int s, char *v_b, int b_s);
 bool		ft_redirs_lim(char c);
+bool	ft_if_symbol(char c);
 /////////////////
 
 //expander

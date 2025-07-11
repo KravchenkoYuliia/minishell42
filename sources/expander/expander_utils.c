@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/10 15:06:41 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:05:45 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_is_expandable(char *value)
 		else if (value[i] == '\"' && !sp_quote)
 			db_quote = !db_quote;
 		if (value[i] == '$' && !(value[i + 1] == '\''
-				|| value[i + 1] == '\"' || value[i + 1] == ' ') && !sp_quote)
+				|| value[i + 1] == '\"' || value[i + 1] == ' ') 
+				&& !sp_quote && (value[i + 1] && value[i + 1] != 32))
 			return (i);
 	}
 	return (-2);

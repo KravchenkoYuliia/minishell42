@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_and_init_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:56:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 16:57:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:41:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,4 @@ bool	ft_only_white_space(char *input)
 	}
 	return (true);
 }
+

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:58:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 13:43:23 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:11:45 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_export_value(t_minishell *shell, int index)
 		if (ft_option_check(shell, index, i) == ERROR)
 			return (ERROR);
 		if (!ft_isalpha(shell->cmd[index]->args[i][0])
-			&& shell->cmd[index]->args[i][0] != '_')
+			&& shell->cmd[index]->args[i][0] != '_' )
 			{
 				printf("%s: export: `%s': not a valid identifier\n",
 					SHELL_NAME_ERROR, shell->cmd[index]->args[i]);

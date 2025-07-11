@@ -6,11 +6,18 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:39:37 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 15:12:36 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:41:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	ft_if_symbol(char c)
+{
+	if (c == 33 || c == 35 || c == 58)
+		return (true);
+	return (false);
+}
 
 bool	ft_redirs_lim(char c)
 {
