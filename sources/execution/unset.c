@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 13:01:22 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:49:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	ft_unset(t_minishell *shell, int index)
 	if (shell->cmd[index]->args[0] 
 		&& (!shell->cmd[index]->args[1]))
 		return (SUCCESS);
+	if (!ft_strncmp("OLDPWD", shell->cmd[index]->args[1], 7))
+		shell->need_to_add_oldpwd = false;
 	ft_unset_head(shell, index);
 	ex = NULL;
 	if (shell->env)

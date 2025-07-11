@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 13:59:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:07:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
+	bool	need_to_add_oldpwd;
 	int				prompt_count;
 	char				*input;
 	t_token				*token_lst;
@@ -221,7 +222,7 @@ void	ft_total_exit(t_minishell *shell);
 void		ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg);
 void		ft_get_nb_of_words(t_minishell *shell);
 void		ft_save_std_fileno(t_minishell *shell);
-void		ft_change_pwd(t_env *env, char *directory);
+void		ft_change_pwd(t_minishell *shell, t_env *env, char *directory);
 bool		ft_is_option(char *args);
 char		*ft_get_home_path(t_env *env);
 int			ft_just_export(t_env *env);
@@ -263,6 +264,8 @@ bool	ft_quote_or_not_quote(char *limiter);
 char	*ft_unquote_limiter(char *unquote_me);
 char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2);
+bool	ft_find_oldpwd_in_env(t_minishell *shell);
+void	ft_export_oldpwd(t_minishell *shell);
 
 /////////////////
 
