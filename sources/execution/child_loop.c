@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 12:38:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:34:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,26 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 		ft_free_all(&shell);
 		exit(127);
 	}
+	if (shell->cmd[index]->args[0][0] == 46)
+	{
+		if (shell->cmd[index]->args[0][1] == 47)
+		{
+			ft_error_msg(shell, SHELL_NAME, NULL, "./: Is a directory");
+			ft_free_all(&shell);
+			exit(126);
+		}
+		else if (shell->cmd[index]->args[0][1] == '\0')
+		{
+			ft_error_msg(shell, SHELL_NAME, NULL, ".: filename argument required\n.: usage: . filename [arguments]");
+			ft_free_all(&shell);
+			exit(2);
+		}
+	}
 	if (!ft_strncmp(cmd, "./minishell", 11))
 	{
-//		if (shell->cmd[index]->pipe_flag == 1 || shell->cmd[index]->args[1])
-			ft_error_msg(shell, SHELL_NAME, NULL, "NOT asked in the subjet\nHave some mercy for heaven's sake!\n");
-			ft_free_all(&shell);
-			exit(EXIT_SUCCESS);	
-		//ft_handle_shlvl_in_array(shell->env_execve);
+		ft_error_msg(shell, SHELL_NAME, NULL, "NOT asked in the subjet\nHave some mercy for heaven's sake!\n");
+		ft_free_all(&shell);
+		exit(EXIT_SUCCESS);	
 	}
 }
 
