@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:40:13 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:24:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,12 +240,12 @@ char		*ft_copy_name_inenv(char *line);
 bool		ft_name_exists_already(t_env *env, char *name, char *line);
 void		ft_change_valueof_name(t_env *env, char *line);
 char		*ft_find_absolute_path(t_minishell *shell, int index);
-void		ft_parent_process(t_minishell *shell);
+int		ft_parent_process(t_minishell *shell);
 void	ft_creating_child(t_minishell *shell, int index, pid_t pid);
-void		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
+int		ft_execute_one_cmd(t_minishell *shell, char *cmd, int index);
 bool	ft_exec_built_in_cmd(t_minishell *shell, int index, char *cmd);
 void	ft_cmd_checking(t_minishell *shell, int index, char *cmd);
-void		ft_simple_cmd(t_minishell *shell, int index);
+int		ft_simple_cmd(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
 void		ft_child_loop(t_minishell *shell, int index);
 void		ft_waiting_for_child(t_minishell *shell, int index, int nb, pid_t pid);
@@ -271,6 +271,7 @@ char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter);
 void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2);
 bool	ft_find_oldpwd_in_env(t_minishell *shell);
 void	ft_export_oldpwd(t_minishell *shell);
+void	ft_syscall_ft_failed(t_minishell *shell, char *cmd);
 
 /////////////////
 

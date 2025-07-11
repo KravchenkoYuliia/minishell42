@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:23:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:33:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_execute_child(t_minishell *shell, int index, char *cmd)
 	}
 }
 
-void	ft_simple_cmd(t_minishell *shell, int index)
+int	ft_simple_cmd(t_minishell *shell, int index)
 {
 	int		status;
 	char	*cmd;
@@ -52,8 +52,8 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_error_msg(shell, SHELL_NAME, NULL, "fork failed in simple cmd");
-		exit(EXIT_FAILURE);
+		ft_syscall_ft_failed(shell, "fork");
+		return (ERROR);
 	}
 	if (pid == 0)
 	{
@@ -65,4 +65,5 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 	ft_set_of_sig(shell, SIGIGN);
 	ft_waiting_for_child(shell, 0, 1, pid);
 	ft_set_of_sig(shell, PARENT);
+	return (SUCCESS);
 }

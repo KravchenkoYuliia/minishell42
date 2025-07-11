@@ -6,18 +6,20 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:32:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:31:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
+int	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 {
 	ft_redirections(shell, index);
 	if (ft_exec_built_in_cmd(shell, index, cmd) == true)
-		return ;
-	ft_simple_cmd(shell, index);
+		return (SUCCESS);
+	if (ft_simple_cmd(shell, index) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
 }
 
 void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
@@ -48,7 +50,7 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 	ft_set_of_sig(shell, PARENT);
 }
 
-void	ft_parent_process(t_minishell *shell)
+int	ft_parent_process(t_minishell *shell)
 {
 	int		index;
 	pid_t	pid;
@@ -69,7 +71,10 @@ void	ft_parent_process(t_minishell *shell)
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
 		if (shell->cmd[0]->args[0])
-			ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0);
+		{
+			if (ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0) == ERROR)
+				return (ERROR);
+		}
 	}
 	else
 	{
@@ -78,4 +83,5 @@ void	ft_parent_process(t_minishell *shell)
 		close_them_please(shell->cmd);
 	}
 	ft_clear_after_cmd_exec(shell);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 14:00:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:26:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 
 minishell: malloc: cannot allocate %zu bytes
 */
+
+void	ft_syscall_ft_failed(t_minishell *shell, char *cmd)
+{
+	ft_putstr_fd("-", STDERR_FILENO);
+	ft_putstr_fd(SHELL_NAME, STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": Resource temporarily unavailable\n", STDERR_FILENO);
+	if (shell)
+		ft_clear_after_cmd_exec(shell);
+}
 
 void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 {

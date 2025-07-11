@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 17:39:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:30:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ bool	ft_execution_check_error(t_minishell *shell)
 	}
 	else if (check == NEW_PROMPT)
 		return (true);
+	else if (check == ERROR)
+	{
+		shell->exit_status = 0;
+		return (true);
+	}
 	return (false);
 }
 

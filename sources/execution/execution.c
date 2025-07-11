@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 15:41:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/04 18:15:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:23:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_execution(t_minishell *shell)
 		return (CTRLC_ALERT);
 	if (g_flag == CTRLC_ALERT)
 		return (CTRLC_ALERT);
-	ft_parent_process(shell);
+	if (ft_parent_process(shell) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
