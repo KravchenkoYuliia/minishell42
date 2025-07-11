@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:54:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:04:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,22 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 		}
 		pid = fork();
 		if (pid == -1)
+		{
+			ft_syscall_ft_failed(shell, "fork");
+			ft_clear_after_cmd_exec(shell);
 			return (ERROR);
+		}
 		if (pid == 0)
 		{
-			close(shell->cmd[index]->pipe[0]);
+			if (close(shell->cmd[index]->pipe[0]) == -1)
+			{
+				close(shell->save_stdin);
+				close(shell->save_stdout);
+				ft_syscall_ft_failed(shell, "close");
+				ft_free_all(&shell);
+				exit(EXIT_FAILURE);
+
+			}
 			shell->process = CHILD;
 			ft_set_sig_quit(shell, index);
 			ft_set_of_sig(shell, CHILD);
@@ -45,7 +57,14 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 		}
 		shell->process = PARENT;
 		close(shell->cmd[index]->pipe[1]);
-		dup2(shell->cmd[index]->pipe[0], STDIN_FILENO);
+		if (dup2(shell->cmd[index]->pipe[0], STDIN_FILENO) == -1)
+		{
+			close(shell->cmd[index]->pipe[0]);
+			ft_syscall_ft_failed(shell, "dup2");
+			ft_free_all(&shell);
+			exit(EXIT_FAILURE);
+		}
+
 		close(shell->cmd[index]->pipe[0]);
 		index++;
 	}
