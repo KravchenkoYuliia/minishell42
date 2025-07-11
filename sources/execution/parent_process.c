@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 19:22:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:32:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 	{
 		if (pipe(shell->cmd[index]->pipe) == -1)
 			return ;
-		//	write(2, "HERE\n", 5);
 		pid = fork();
 		if (pid == -1)
 			return ;
@@ -34,22 +33,18 @@ void	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 		{
 			close(shell->cmd[index]->pipe[0]);
 			shell->process = CHILD;
+			ft_set_sig_quit(shell, index);
 			ft_set_of_sig(shell, CHILD);
 			ft_child_loop(shell, index);
 		}
 		shell->process = PARENT;
-		/*if (shell->cmd[index]->heredoc == 1)
-		{
-			close(shell->cmd[index]->heredoc_pipe[0]);
-			close(shell->cmd[index]->heredoc_pipe[1]);
-		}*/
 		close(shell->cmd[index]->pipe[1]);
 		dup2(shell->cmd[index]->pipe[0], STDIN_FILENO);
 		close(shell->cmd[index]->pipe[0]);
 		index++;
 	}
 	ft_set_of_sig(shell, SIGIGN);
-	ft_waiting_for_child(shell, 10, 0);
+	ft_waiting_for_child(shell, index - 1, 10, 0);
 	ft_set_of_sig(shell, PARENT);
 }
 

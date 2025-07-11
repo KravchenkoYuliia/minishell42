@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 17:01:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:23:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ void	ft_simple_cmd(t_minishell *shell, int index)
 	if (pid == 0)
 	{
 		shell->process = CHILD;
+		ft_set_sig_quit(shell, index);
 		ft_execute_child(shell, index, cmd);
 	}
 	shell->process = PARENT;
 	ft_set_of_sig(shell, SIGIGN);
-	ft_waiting_for_child(shell, 1, pid);
+	ft_waiting_for_child(shell, 0, 1, pid);
 	ft_set_of_sig(shell, PARENT);
 }

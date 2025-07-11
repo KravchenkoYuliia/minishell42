@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 14:11:14 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:36:28 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	ft_copy_env_for_execve(shell);
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
-		write(2, "HERE\n\n", 6);
 		close_it_please(shell->cmd[index]);
 		free(cmd);
 		ft_free_all(&shell);
@@ -91,8 +90,6 @@ void	ft_child_loop(t_minishell *shell, int index)
 			if (shell->process == CHILD)
 			{
 				ft_free_all(&shell);
-				/*close(shell->cmd[index]->heredoc_pipe[0]);
-				close(shell->cmd[index]->heredoc_pipe[1]);*/
 				while (temp)
 				{
 					if (temp->type == HEREDOC)
@@ -107,8 +104,6 @@ void	ft_child_loop(t_minishell *shell, int index)
 			else
 			{
 				ft_free_all(&shell);
-/*				close(shell->cmd[index]->heredoc_pipe[0]);
-				close(shell->cmd[index]->heredoc_pipe[1]);*/
 				return ;
 			}
 		}

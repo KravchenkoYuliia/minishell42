@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:36:34 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:40:13 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ enum e_type
 	NEW_PROMPT,
 	CTRLC_ALERT,
 	CTRLC_OFF,
+	SIG_QUIT,
 };
 
 typedef struct s_redirect
@@ -115,6 +116,7 @@ typedef struct s_minishell
 	bool				heredoc_in_input;
 	int		previous_heredoc_pipe[2];
 	struct sigaction	sig;
+	struct sigaction	sig_quit;
 	int	process;
 	bool	quote_lim;
 	bool	malloc_fail;
@@ -145,6 +147,8 @@ void		ft_ctrl_d(t_minishell *shell);
 void		ft_ctrl_d_heredoc_msg(int line, char *limiter);
 void		ft_ctrl_c_child(int sign);
 void		ft_set_of_sig(t_minishell *shell, int type);
+void		ft_set_sig_quit();
+void		ft_sig_quit(int sign);
 ////////////////////////////////
 
 //lexer
@@ -244,7 +248,7 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd);
 void		ft_simple_cmd(t_minishell *shell, int index);
 void		ft_simple_cmd_withpipe(t_minishell *shell, int index);
 void		ft_child_loop(t_minishell *shell, int index);
-void		ft_waiting_for_child(t_minishell *shell, int nb, pid_t pid);
+void		ft_waiting_for_child(t_minishell *shell, int index, int nb, pid_t pid);
 int		ft_copy_env_for_execve(t_minishell *shell);
 int		ft_malloc_env_for_execve(char ***env, int nb);
 int			ft_count_var_in_env(t_env *env);

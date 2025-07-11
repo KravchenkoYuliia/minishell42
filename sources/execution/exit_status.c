@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:22:07 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/08 17:10:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:26:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_wait_heredoc_child(t_minishell *shell, pid_t pid)
 	return (SUCCESS);
 }
 
-void	ft_exit_status(t_minishell *shell, int status)
+void	ft_exit_status(t_minishell *shell, int index, int status)
 {
 	if (WIFSIGNALED(status))
 	{
@@ -42,13 +42,19 @@ void	ft_exit_status(t_minishell *shell, int status)
 			status += 128;
 			write(1, "\n", 1);
 		}
+		if (status == 3)
+		{
+			status += 128;
+			if (shell && shell->cmd[index]->pipe_flag == 0)
+				write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+		}
 	}
 	else if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	shell->exit_status = status;
 }
 
-void	ft_waiting_for_child(t_minishell *shell, int nb_of_child, pid_t pid)
+void	ft_waiting_for_child(t_minishell *shell, int index, int nb_of_child, pid_t pid)
 {
 	int	status;
 
@@ -56,13 +62,13 @@ void	ft_waiting_for_child(t_minishell *shell, int nb_of_child, pid_t pid)
 	if (nb_of_child == 1)
 	{
 		waitpid(pid, &status, 0);
-		ft_exit_status(shell, status);
+		ft_exit_status(shell, index, status);
 	}
 	else
 	{
 		while (waitpid(-1, &status, 0) != -1)
 		{
-			ft_exit_status(shell, status);
+			ft_exit_status(shell, index, status);
 			continue ;
 		}
 	}

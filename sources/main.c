@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 15:33:39 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:39:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	ft_minishell(t_minishell *shell)
 		ft_init_for_every_prompt(shell);
 		shell->input = readline(SHELL_NAME);
 		ft_checking_input(shell);
-		//shell->input = ft_cut_input(shell->input);
 		if (ft_new_prompt(shell) == true)
 			continue ;
 		if (shell->input && ft_lexer(shell->input))
@@ -116,9 +115,6 @@ int	main(int ac, char **av, char **env)
 	t_minishell		shell;
 
 	(void)av;
-	//shell = malloc(sizeof(t_minishell));
-	//if (!shell)
-	//	exit(EXIT_FAILURE);
 	signal(SIGQUIT, SIG_IGN);
 	if (ac != 1)
 	{
