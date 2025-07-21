@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 20:30:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:10:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	ft_minishell(t_minishell *shell)
 			if (ft_parsing_check_error(shell) == true)
 				continue ;
 			ft_add_history_and_expand(shell);
-
 			if (shell->token_lst && shell->token_lst->value[0])
 			{
 				if (ft_execution_check_error(shell) == true)

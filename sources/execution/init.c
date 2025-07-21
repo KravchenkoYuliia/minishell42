@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 10:04:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:09:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,19 @@ void	ft_malloc_struct_foreach_cmd(t_minishell *shell,
 	i = 0;
 	*cmd = (t_cmd_struct **)malloc(sizeof(t_cmd_struct *) * (nb + 1));
 	if (!*cmd)
-	{
-		printf("Malloc failed in malloc_struct_foreach_cmd\n");
-		ft_total_exit(shell);
-	}
+		ft_malloc_failed(shell, sizeof(t_cmd_struct *), "ft_malloc_struct_foreach_cmd");
 	while (i < nb)
 	{
 		(*cmd)[i] = NULL;
 		(*cmd)[i] = (t_cmd_struct *)malloc(sizeof(t_cmd_struct));
 		if (!(*cmd)[i])
-		{
-			printf("Malloc failed for one of the struct foreach cmd\n");
-			ft_total_exit(shell);
-		}
+			ft_malloc_failed(shell, sizeof(t_cmd_struct), "ft_malloc_struct_foreach_cmd");
 		i++;
 	}
 	(*cmd)[i] = NULL;
 }
 
-int	ft_start_value(t_minishell *shell)
+void	ft_start_value(t_minishell *shell)
 {
 	int	i;
 
@@ -49,7 +43,10 @@ int	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
 				* (shell->cmd[i]->nb_of_words + 1));
 		if (!shell->cmd[i]->args)
-			return(i);
+		{
+			ft_malloc_failed(shell,
+					sizeof(shell->cmd[i]->nb_of_words + 1), "ft_start_value");
+		}
 		shell->cmd[i]->args[0] = NULL;
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
@@ -64,7 +61,6 @@ int	ft_start_value(t_minishell *shell)
 		shell->cmd[i]->pipe[1] = 0;
 		i++;
 	}
-	return (-1);
 }
 
 int	ft_fill_cmd_struct(t_minishell *shell)
@@ -98,17 +94,10 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 
 int	ft_init_struct_foreach_cmd(t_minishell *shell)
 {
-	int	i;
-	
 	ft_get_nb_of_cmd(shell);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
-	i = ft_start_value(shell);
-	if (i != -1)
-	{
-		ft_malloc_failed(shell, shell->cmd[i]->nb_of_words + 1, "ft_start_value");
-		return (ERROR);
-	}
+	ft_start_value(shell);
 	if (ft_fill_cmd_struct(shell) == ERROR)
 		return (ERROR);
 	if (shell->token_lst)

@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 23:04:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:14:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,13 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 			ft_child_loop(shell, index);
 		}
 		shell->process = PARENT;
-		close(shell->cmd[index]->pipe[1]);
+		if (close(shell->cmd[index]->pipe[1]) == -1)
+		{
+			
+			ft_syscall_ft_failed(shell, "close");
+			ft_free_all(&shell);
+			exit(EXIT_FAILURE);
+		}
 		if (dup2(shell->cmd[index]->pipe[0], STDIN_FILENO) == -1)
 		{
 			close(shell->cmd[index]->pipe[0]);
@@ -65,7 +71,12 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 			exit(EXIT_FAILURE);
 		}
 
-		close(shell->cmd[index]->pipe[0]);
+		if (close(shell->cmd[index]->pipe[0]) == -1)
+		{
+			ft_syscall_ft_failed(shell, "close");
+			ft_free_all(&shell);
+			exit(EXIT_FAILURE);
+		}
 		index++;
 	}
 	ft_set_of_sig(shell, SIGIGN);
@@ -88,10 +99,19 @@ int	ft_parent_process(t_minishell *shell)
 		free(shell->history);
 	}*/
 	shell->save_stdin = dup(STDIN_FILENO);
+	if (shell->save_stdin == -1)
+	{
+		ft_syscall_ft_failed(shell, "dup");
+		return (ERROR);
+	}
 	shell->save_stdout = dup(STDOUT_FILENO);
+	if (shell->save_stdout == -1)
+	{
+		ft_syscall_ft_failed(shell, "dup");
+		return (ERROR);
+	}
 	if (shell->cmd[0]->pipe_flag == 0 && !shell->cmd[0]->args[0])
 		ft_redirections(shell, 0);
-	
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
 		if (shell->cmd[0]->args[0])
