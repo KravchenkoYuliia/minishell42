@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 19:45:10 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:01:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,13 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int heredoc
 	while (1)
 	{
 		line = readline("> ");
+		if (g_flag == CTRLC_ALERT)
+		{
+			close_it_please(shell->cmd[index]);
+			close(heredoc_pipe[1]);
+			ft_free_all(&shell);
+			exit(130);
+		}
 		if (!line)
 		{
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, limiter);

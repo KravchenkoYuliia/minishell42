@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:08:13 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:00:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	ft_ctrl_c_child(int sign)
 {
 	if (sign == SIGINT)
 	{
-		write(1, "\n", 1);
 		g_flag = CTRLC_ALERT;
-		exit(CTRLC_ALERT);
+		write(1, "\n", 1);
+		close(STDIN_FILENO);
 	}
 }
 
