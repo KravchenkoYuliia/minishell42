@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 15:54:14 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:45:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		if (g_flag == CTRLC_ALERT)
 		{
 			ft_free_all(&shell);
-			exit(130);
+			exit(CTRLC_ALERT);
 		}
 		if (!line)
 		{

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 16:36:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:45:29 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
+# define CTRLC_ALERT 130
+
 # define SHELL_NAME "toupetishell: "
 # define SHELL_NAME_ERROR "toupetishell"
 
@@ -66,7 +68,6 @@ enum e_type
 	PARENT,
 	SIGIGN,
 	NEW_PROMPT,
-	CTRLC_ALERT,
 	CTRLC_OFF,
 	SIG_QUIT,
 };
