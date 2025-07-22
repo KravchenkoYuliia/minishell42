@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 11:10:15 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:50:51 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	free_token_list(t_token *head)
 	{
 		tmp = head;
 		head = head->next;
-		free(tmp->value);
-		tmp->value = NULL;
+		if (tmp->value)
+		{
+			free(tmp->value);
+			tmp->value = NULL;
+		}	
 		tmp->next = NULL;
 		free(tmp);
 	}
@@ -86,10 +89,13 @@ void	ft_free_struct_foreach_cmd(t_cmd_struct **structs)
 	i = 0;
 	while (structs && structs[i])
 	{
+		//Both those ifs cause a segfault with several funcheck tests and i don't know why 
+		///////////////////////
 		if (structs[i]->pipe[0] > 0)
                 	close(structs[i]->pipe[0]);
 		if (structs[i]->pipe[1] > 0)
                 	close(structs[i]->pipe[1]);
+		///////////////////////
 		if (structs[i]->args)
 			ft_free_args(structs[i]->args);
 		if (structs[i]->input_list)

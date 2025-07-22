@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:45:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:13:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ int	ft_execute_child(t_minishell *shell, int index, char *cmd)
 		cmd = ft_find_absolute_path(shell, index);
 	if (cmd == NULL)
 	{
-		ft_error_msg(shell, shell->cmd[index]->args[0], NULL, ": command not found");
+		ft_error_msg(shell, shell->cmd[index]->args[0], NULL,
+			": command not found");
 		ft_free_all(&shell);
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
-
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		free(cmd);
 		ft_free_all(&shell);
 		perror(SHELL_NAME_ERROR);
 		if (errno == ENOENT)
-                        exit(127);
-                else
-                        exit(126);
+			exit(127);
+		else
+			exit(126);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 17:05:45 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:04:15 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	ft_is_expandable(char *value)
 	sp_quote = false;
 	db_quote = false;
 	i = -1;
+	if (!value)
+		return (-2);
 	if (ft_strchr(value, '$') == NULL)
 		return (-2);
 	while (value[++i])
@@ -82,8 +84,8 @@ int	ft_is_expandable(char *value)
 		else if (value[i] == '\"' && !sp_quote)
 			db_quote = !db_quote;
 		if (value[i] == '$' && !(value[i + 1] == '\''
-				|| value[i + 1] == '\"' || value[i + 1] == ' ') 
-				&& !sp_quote && (value[i + 1] && value[i + 1] != 32))
+				|| value[i + 1] == '\"' || value[i + 1] == ' ')
+			&& !sp_quote && (value[i + 1] && value[i + 1] != 32))
 			return (i);
 	}
 	return (-2);
@@ -91,7 +93,7 @@ int	ft_is_expandable(char *value)
 
 bool	ft_is_unquotable(int type, char *value)
 {
-	if (type == HEREDOC)
+	if (type == HEREDOC || !value)
 		return (false);
 	if (ft_strchr(value, '\'') == 0 && ft_strchr(value, '\"') == 0)
 		return (false);
@@ -104,6 +106,8 @@ bool	ft_is_splitable(char *value)
 	bool	sp_quote;
 	bool	db_quote;
 
+	if (!value)
+		return (false);
 	if (ft_strchr(value, ' ') == NULL || ft_strchr(value, '|') != NULL)
 		return (false);
 	sp_quote = false;

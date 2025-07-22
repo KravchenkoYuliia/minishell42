@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 14:48:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:30:30 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_init_minishell(t_minishell *shell, char **env)
 	shell->quote_lim = false;
 	shell->previous_heredoc_pipe[0] = 0;
 	shell->need_to_add_oldpwd = true;
+	shell->malloc_fail_size = 0;
 }
 
 char	*ft_cut_input(char *cut_me)

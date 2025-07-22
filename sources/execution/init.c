@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/21 17:09:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 08:42:24 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_fill_cmd_struct(t_minishell *shell)
 	while (temp)
 	{
 		if (!temp->value)
-			temp= temp->next;
+			temp = temp->next;
 		if (temp && ft_fill_redirection(shell, i_struct, temp) == CTRLC_ALERT)
 			return (CTRLC_ALERT);
 		if (temp && temp->type == WORD)

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:52:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_token
 	char			*value;
 	int				type;
 	int				incr;
+	bool			val_has_quote;
 	struct s_token	*next;
 }	t_token;
 
@@ -120,6 +121,7 @@ typedef struct s_minishell
 	int	process;
 	bool	quote_lim;
 	bool	malloc_fail;
+	int		malloc_fail_size;
 }	t_minishell;
 
 ////////////////////////////
@@ -178,7 +180,7 @@ void		ft_lstadd_back_tok(t_token **lst, t_token *new);
 void		parser_err_handler(t_token *token_lst, int err_code);
 int		set_buf_redirs(char *i, int s, char *v_b, int b_s);
 void		ft_if_quotes_b(char *i, int s, char *v_b, int b_s);
-bool		ft_redirs_lim(char c);
+bool		rds_lim(char c);
 bool	ft_if_symbol(char c);
 /////////////////
 
@@ -272,7 +274,7 @@ void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2);
 bool	ft_find_oldpwd_in_env(t_minishell *shell);
 void	ft_export_oldpwd(t_minishell *shell);
 void	ft_syscall_ft_failed(t_minishell *shell, char *cmd);
-
+bool	ft_check_var_name(char *name);
 /////////////////
 
 //free_handler

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 20:43:43 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:17:31 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,27 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2)
+void	ft_write_to_stderr(t_minishell *shl, char *msg1, char *arg, char *msg2)
 {
 	write(STDERR_FILENO, SHELL_NAME, ft_strlen(SHELL_NAME));
 	write(STDERR_FILENO, msg1, ft_strlen(msg1));
 	write(STDERR_FILENO, arg, ft_strlen(arg));
 	write(STDERR_FILENO, msg2, ft_strlen(msg2));
 	write(STDERR_FILENO, "\n", 1);
-	(void) shell;
+	(void) shl;
 }
 
-void	ft_error_msg(t_minishell *shell, char *shell_name, char *cmd, char *msg)
+void	ft_error_msg(t_minishell *shl, char *shl_name, char *cmd, char *msg)
 {
-	if (shell_name)
-		write(STDERR_FILENO, shell_name, ft_strlen(shell_name));
+	if (shl_name)
+		write(STDERR_FILENO, shl_name, ft_strlen(shl_name));
 	if (cmd)
 	{
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 	}
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	(void) shell;
+	(void) shl;
 	//if (shell && ((shell->process == PARENT) || shell->cmd[0]->pipe_flag == 0))
-		write(STDERR_FILENO, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 }

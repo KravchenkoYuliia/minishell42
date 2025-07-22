@@ -6,40 +6,39 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:48:16 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/08 15:08:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_buf_redirs(char *input, int start, char *value_buf, int buf_start)
+int	set_buf_redirs(char *ipt, int srt, char *value_buf, int buf_start)
 {
 	bool	in_quote;
 	int		start_bf;
 
-	start_bf = start;
+	start_bf = srt;
 	in_quote = false;
-	while (input[start] == 32 && input[start])
-		start++;
-	if ((input[start] == 34 || input[start] == 39) && !in_quote)
+	while (ipt[srt] == 32 && ipt[srt])
+		srt++;
+	if ((ipt[srt] == 34 || ipt[srt] == 39) && !in_quote)
 	{
 		in_quote = true;
-		value_buf[buf_start++] = input[start++];
+		value_buf[buf_start++] = ipt[srt++];
 	}
-	while (input[start] && (ft_redirs_lim(input[start])
-			|| (!ft_redirs_lim(input[start]) && in_quote)))
+	while (ipt[srt] && (rds_lim(ipt[srt]) || (!rds_lim(ipt[srt]) && in_quote)))
 	{
-		value_buf[buf_start++] = input[start++];
-		if ((input[start] == 34 || input[start] == 39) && in_quote
-			&& (input[start + 1] != 34 && input[start + 1] != 39))
+		value_buf[buf_start++] = ipt[srt++];
+		if ((ipt[srt] == 34 || ipt[srt] == 39) && in_quote
+			&& (ipt[srt + 1] != 34 && ipt[srt + 1] != 39))
 		{
-			value_buf[buf_start++] = input[start++];
+			value_buf[buf_start++] = ipt[srt++];
 			in_quote = false;
 		}
-		if ((!ft_redirs_lim(input[start])) && in_quote)
-			value_buf[buf_start++] = input[start++];
+		if ((!rds_lim(ipt[srt])) && in_quote)
+			value_buf[buf_start++] = ipt[srt++];
 	}
-	return (start - start_bf);
+	return (srt - start_bf);
 }
 
 t_token	*ft_if_heredoc(char *input, int start)

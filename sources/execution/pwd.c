@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:03:56 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 16:27:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:28:15 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_change_oldpwd(t_minishell *shell, t_env *env)
 			if (!ft_find_oldpwd_in_env(shell) && shell->need_to_add_oldpwd)
 				ft_export_oldpwd(shell);
 		}
-		
 		if (oldpwd[0] != '\0' && ft_strncmp(temp->line, "OLDPWD=", 7) == 0)
 		{
 			free(temp->line);

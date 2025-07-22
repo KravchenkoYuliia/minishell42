@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 14:53:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 15:03:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:57:36 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,21 @@ void	ft_export_oldpwd(t_minishell *shell)
 		ft_malloc_failed(shell, ft_strlen("OLDPWD="), "ft_export_oldpwd");
 	new = ft_lstnew_env(line);
 	ft_lstadd_back_env(&shell->env, new);
+}
+
+bool	ft_check_var_name(char *name)
+{
+	int	i;
+
+	if (!ft_isalpha(name[0]) && name[0] != '_')
+		return (false);
+	i = 1;
+	while (name[i] && name[i] != '=')
+	{
+		if (ft_isalnum(name[i]) || name[i] == '_')
+			i++;
+		else
+			return (false);
+	}
+	return (true);
 }

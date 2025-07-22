@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/21 17:12:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:35:31 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_check_infile(t_minishell *shell, char *input)
 			ft_free_all(&shell);
 			exit(127);
 		}
-
 	}
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
@@ -106,15 +105,18 @@ int	ft_redir_output(t_minishell *shell, int index)
 	return (SUCCESS);
 }
 
-void close_them_please(t_cmd_struct** cmds)
+void	close_them_please(t_cmd_struct **cmds)
 {
-	for (size_t i = 0; cmds[i] != NULL; ++i) {
+	for (size_t i = 0; cmds[i] != NULL; ++i)
+	{
 		close_it_please(cmds[i]);
 	}
 }
-void close_it_please(t_cmd_struct* cmds)
+
+void	close_it_please(t_cmd_struct *cmds)
 {
-	for (t_redirect* input = cmds->input_list; input; input = input->next) {
+	for (t_redirect* input = cmds->input_list; input; input = input->next)
+	{
 		if (input->heredoc_pipe[0] > 2)
 			close(input->heredoc_pipe[0]);
 		if (input->heredoc_pipe[1] > 2)

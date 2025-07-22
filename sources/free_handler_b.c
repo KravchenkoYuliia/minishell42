@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 20:26:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:27:02 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ void	ft_free_all(t_minishell **shell)
 	//ft_close_fd(*shell);
 	if (!*shell)
 		return ;
+	//if ((*shell)->history)
+	//	free ((*shell)->history);
+	if ((*shell)->input)
+		free ((*shell)->input);	
 	if ((*shell)->token_lst)
 		free_token_list((*shell)->token_lst);
 	if ((*shell)->env)
@@ -25,10 +29,6 @@ void	ft_free_all(t_minishell **shell)
 		ft_free_args((*shell)->env_execve);
 	if ((*shell)->cmd)
 		ft_free_struct_foreach_cmd((*shell)->cmd);
-	if ((*shell)->history)
-		free ((*shell)->history);
-	if ((*shell)->input)
-		free ((*shell)->input);
 	//free (*shell);
 	shell = NULL;
 	rl_clear_history();

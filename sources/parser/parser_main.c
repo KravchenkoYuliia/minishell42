@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 17:07:36 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_token	*ft_parser(char *input, int i)
 	while (i < ft_strlen(input))
 	{
 		if ((input[i] == 39 || input[i] == 34 || input[i] == 124)
-			|| (ft_redirs_lim(input[i]) && !ft_if_symbol(input[i])))
+			|| (rds_lim(input[i]) && !ft_if_symbol(input[i])))
 			new_token = ft_parsing_a(input, i);
 		else if (input[i] == 60 || input[i] == 62)
 			new_token = ft_parsing_b(input, i);

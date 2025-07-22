@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/10 15:00:57 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:03:34 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	ft_if_quotes_b(char *input, int start, char *value_buf, int buf_start)
 			sp_quote = !sp_quote;
 		else if (input[start] == '\"' && !sp_quote)
 			db_quote = !db_quote;
-		if ((input[start] == '<' || input[start] == '>' 
-			|| input[start] == '|') && (!db_quote && !sp_quote))
+		if ((input[start] == '<' || input[start] == '>'
+				|| input[start] == '|') && (!db_quote && !sp_quote))
 			break ;
 		value_buf[buf_start++] = input[start++];
 	}

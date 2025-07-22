@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:39:37 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 15:41:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_if_symbol(char c)
 	return (false);
 }
 
-bool	ft_redirs_lim(char c)
+bool	rds_lim(char c)
 {
 	if (c == 39 || c == 34 || c == 32 || c == 124 || c == 60 || c == 62)
 		return (false);

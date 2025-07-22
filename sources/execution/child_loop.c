@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:53:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:46:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 	}
 	if (!ft_strncmp(cmd, "./minishell", 11))
 	{
-		ft_error_msg(shell, SHELL_NAME, NULL, "NOT asked in the subjet\nHave some mercy for heaven's sake!");
+		ft_error_msg(shell, SHELL_NAME, NULL,
+			"NOT asked in the subjet\nHave some mercy for heaven's sake!");
 		ft_free_all(&shell);
-		exit(EXIT_SUCCESS);	
+		exit(EXIT_SUCCESS);
 	}
 	if (shell->cmd[index]->args[0][0] == 46)
 	{
-		if (shell->cmd[index]->args[0][1] == 47 && shell->cmd[index]->args[0][2] == '\0')
+		if (shell->cmd[index]->args[0][1] == 47
+			&& shell->cmd[index]->args[0][2] == '\0')
 		{
 			ft_error_msg(shell, SHELL_NAME, NULL, "./: Is a directory");
 			ft_free_all(&shell);
@@ -38,7 +40,8 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 		}
 		else if (shell->cmd[index]->args[0][1] == '\0')
 		{
-			ft_error_msg(shell, SHELL_NAME, NULL, ".: filename argument required\n.: usage: . filename [arguments]");
+			ft_error_msg(shell, SHELL_NAME, NULL,
+				".: filename argument required\n.: usage: . filename [arguments]");
 			ft_free_all(&shell);
 			exit(2);
 		}
@@ -55,7 +58,8 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		cmd = ft_find_absolute_path(shell, index);
 	if (cmd == NULL)
 	{
-		ft_error_msg(shell, shell->cmd[index]->args[0], NULL, ": command not found");
+		ft_error_msg(shell, shell->cmd[index]->args[0], NULL,
+			": command not found");
 		close_it_please(shell->cmd[index]);
 		ft_free_all(&shell);
 		exit(127);
@@ -80,11 +84,11 @@ void	ft_child_loop(t_minishell *shell, int index)
 
 	temp = shell->cmd[index]->input_list;
 	if (close(shell->save_stdin) == -1 || close(shell->save_stdout) == -1)
-        {
-                ft_syscall_ft_failed(shell, "close");
-                ft_free_all(&shell);
-                exit (EXIT_FAILURE);
-        }
+	{
+		ft_syscall_ft_failed(shell, "close");
+		ft_free_all(&shell);
+		exit (EXIT_FAILURE);
+	}
 	ft_redirections(shell, index);
 	if (shell->cmd[index]->args[0])
 	{

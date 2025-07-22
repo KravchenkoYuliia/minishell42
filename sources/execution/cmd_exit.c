@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 13:58:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:16:00 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	ft_ctrl_d_heredoc_msg(int line, char *limiter)
 void	ft_ctrl_d(t_minishell *shell)
 {
 	if (shell->env)
-                ft_free_env(shell->env);
+		ft_free_env(shell->env);
 	//free (shell);
-        rl_clear_history();
+	rl_clear_history();
 	ft_write_stdout("exit\n");
 	//ft_free_all(&shell);
 	exit(EXIT_SUCCESS);
@@ -62,12 +62,14 @@ int	ft_exit(t_minishell *shell, int index)
 		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
 		if (!ft_only_numeric(shell->cmd[index]->args[1]))
 		{
-			ft_write_to_stderr(shell, "exit: ", shell->cmd[index]->args[1], ": numeric argument required");
+			ft_write_to_stderr(shell, "exit: ", shell->cmd[index]->args[1],
+				": numeric argument required");
 			status = 2;
 		}
 		else if (shell->cmd[index]->args[2])
 		{
-			ft_error_msg(shell, SHELL_NAME_ERROR, "exit", ": too many arguments");
+			ft_error_msg(shell, SHELL_NAME_ERROR, "exit",
+				": too many arguments");
 			shell->exit_status = 1;
 			return (1);
 		}

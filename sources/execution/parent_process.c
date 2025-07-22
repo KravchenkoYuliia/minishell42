@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:50:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:46:52 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 				ft_syscall_ft_failed(shell, "close");
 				ft_free_all(&shell);
 				exit(EXIT_FAILURE);
-
 			}
 			shell->process = CHILD;
 			ft_set_sig_quit(shell, index);

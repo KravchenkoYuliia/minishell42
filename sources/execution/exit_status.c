@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:22:07 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 17:26:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:18:32 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,21 @@ void	ft_exit_status(t_minishell *shell, int index, int status)
 	shell->exit_status = status;
 }
 
-void	ft_waiting_for_child(t_minishell *shell, int index, int nb_of_child, pid_t pid)
+void	ft_waiting_for_child(t_minishell *shl, int i, int nb_of_chd, pid_t pid)
 {
 	int	status;
 
 	status = 0;
-	if (nb_of_child == 1)
+	if (nb_of_chd == 1)
 	{
 		waitpid(pid, &status, 0);
-		ft_exit_status(shell, index, status);
+		ft_exit_status(shl, i, status);
 	}
 	else
 	{
 		while (waitpid(-1, &status, 0) != -1)
 		{
-			ft_exit_status(shell, index, status);
+			ft_exit_status(shl, i, status);
 			continue ;
 		}
 	}

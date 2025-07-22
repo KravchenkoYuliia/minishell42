@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 13:50:07 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:01:22 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_check_redirs(char *input)
 				return (i);
 			i++;
 		}
-		else/* if (input[i + 1])*/
+		else
 			i++;
 	}
 	return (-1);

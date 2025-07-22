@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 14:24:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:25:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_change_last_line(t_minishell *shell, t_env **env)
 	temp = *env;
 	content = ft_strdup("_=/usr/bin/env");
 	if (!content)
-		ft_malloc_failed(shell, ft_strlen("_=/usr/bin/env"), "ft_change_last_line");
+		ft_malloc_failed(shell, ft_strlen("_=/usr/bin/env"),
+			"ft_change_last_line");
 	while (temp)
 	{
 		if (temp->line[0] == '_')

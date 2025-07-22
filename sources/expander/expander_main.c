@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 10:15:39 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/11 17:03:04 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:03:46 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char	*ft_unquote(t_minishell **shl, char *value, int i, int j)
 		else if ((*shl)->token_lst->value[i] == '\"' && !sp_quote)
 			db_quote = !db_quote;
 		if ((((*shl)->token_lst->value[i] == '\'' && db_quote)
-			|| ((*shl)->token_lst->value[i] == '\"' && sp_quote))
-			|| ((*shl)->token_lst->value[i] != '\'' 
-			&& (*shl)->token_lst->value[i] != '\"'))
+				|| ((*shl)->token_lst->value[i] == '\"' && sp_quote))
+			|| ((*shl)->token_lst->value[i] != '\''
+				&& (*shl)->token_lst->value[i] != '\"'))
 			value[j++] = (*shl)->token_lst->value[i++];
 		else
 			i++;
@@ -45,8 +45,6 @@ char	*ft_update_token(char *value, char *var_value, int var_len, int index)
 	int		l;
 	char	*new_value;
 
-	if (!var_value)
-		return (NULL);
 	new_value = ft_calloc((ft_strlen(value) + ft_strlen(var_value) + 1), 1);
 	if (!new_value)
 		return (NULL);
@@ -68,13 +66,25 @@ void	ft_expand_b(t_minishell **shell, char *var, int index)
 {
 	char	*var_value;
 	char	*new_tok_value;
-	
+
 	var_value = ft_get_env(var, (*shell)->env, (*shell)->exit_status);
 	new_tok_value = ft_update_token((*shell)->token_lst->value, var_value,
-					ft_strlen(var), index);
-	(*shell)->token_lst->value = ft_strdup(new_tok_value);
-	//if (!var_value)
-	//	free((*shell)->token_lst->value);
+			ft_strlen(var), index);
+	if (!new_tok_value)
+	{
+		(*shell)->malloc_fail_size = ft_strlen((*shell)->token_lst->value)
+			+ ft_strlen(var_value) + 1;
+		(*shell)->malloc_fail = true;
+	}
+	if (!(*shell)->malloc_fail)
+	{
+		(*shell)->token_lst->value = ft_strdup(new_tok_value);
+		if (!(*shell)->token_lst->value)
+		{
+			(*shell)->malloc_fail = true;
+			(*shell)->malloc_fail_size = ft_strlen(new_tok_value);
+		}
+	}
 	free(var_value);
 	free(new_tok_value);
 }
@@ -97,9 +107,9 @@ void	ft_expand_a(t_minishell *shell, char *var, int index)
 		else
 		{
 			j = 0;
-			while (shell->token_lst->value[i] 
-				&& ft_redirs_lim(shell->token_lst->value[i])
-				&& shell->token_lst->value[i] != '$')
+			while (shell->token_lst->value[i]
+				&& (ft_isalpha(shell->token_lst->value[i])
+					|| shell->token_lst->value[i] == '_'))
 				var[j++] = shell->token_lst->value[i++];
 			break ;
 		}
@@ -114,13 +124,9 @@ void	ft_expander(t_minishell *shl)
 
 	vl_bf = ft_calloc(1000000, 1);
 	if (!vl_bf)
-	{	
-		free_token_list(shl->token_lst);
-		shl->token_lst = NULL;
-		return ;
-	}
+		ft_malloc_failed(shl, 1000000, "ft_expander");
 	head = shl->token_lst;
-	while (shl->token_lst)
+	while (!shl->malloc_fail && shl->token_lst)
 	{
 		while (ft_is_expandable(shl->token_lst->value) != -2
 			&& shl->token_lst->type != HEREDOC)
@@ -131,6 +137,8 @@ void	ft_expander(t_minishell *shl)
 			shl->token_lst->value = ft_unquote(&shl, vl_bf, 0, 0);
 		shl->token_lst = shl->token_lst->next;
 	}
-	free(vl_bf);
 	shl->token_lst = head;
+	free(vl_bf);
+	if (shl->malloc_fail)
+		ft_malloc_failed(shl, shl->malloc_fail_size, "ft_expander");
 }

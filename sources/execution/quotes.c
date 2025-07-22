@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:04:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 13:26:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:56:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ char	*ft_unquote_limiter(char *unquote_me)
 {
 	char	*limiter;
 
-	limiter = calloc(sizeof(char), ft_strlen(unquote_me));
+	limiter = ft_calloc(sizeof(char), ft_strlen(unquote_me));
+	if (!limiter)
+		return (NULL);
 	limiter = ft_quotes(unquote_me, limiter);
-	free(unquote_me);
+	//free(unquote_me);
 	return (limiter);
 }
 
