@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/21 17:14:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:50:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_execute_one_cmd(t_minishell *shell, char *cmd, int index)
 {
-	ft_redirections(shell, index);
+	if (ft_redirections(shell, index) == ERROR)
+		return (ERROR);
 	if (ft_exec_built_in_cmd(shell, index, cmd) == true)
 		return (SUCCESS);
 	if (ft_simple_cmd(shell, index) == ERROR)
