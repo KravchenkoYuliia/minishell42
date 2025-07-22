@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 10:46:43 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:23:26 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,12 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	{
 		ft_error_msg(shell, shell->cmd[index]->args[0], NULL,
 			": command not found");
-		close_it_please(shell->cmd[index]);
 		ft_free_all(&shell);
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
-		close_it_please(shell->cmd[index]);
 		free(cmd);
 		ft_free_all(&shell);
 		perror(SHELL_NAME_ERROR);
@@ -80,9 +78,6 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 
 void	ft_child_loop(t_minishell *shell, int index)
 {
-	t_redirect	*temp;
-
-	temp = shell->cmd[index]->input_list;
 	if (close(shell->save_stdin) == -1 || close(shell->save_stdout) == -1)
 	{
 		ft_syscall_ft_failed(shell, "close");
@@ -98,15 +93,6 @@ void	ft_child_loop(t_minishell *shell, int index)
 			if (shell->process == CHILD)
 			{
 				ft_free_all(&shell);
-				while (temp)
-				{
-					if (temp->type == HEREDOC)
-					{
-						if (temp->heredoc_pipe > 0)
-							close(temp->heredoc_pipe[0]);
-					}
-					temp = temp->next;
-				}
 				exit(EXIT_SUCCESS);
 			}
 			else

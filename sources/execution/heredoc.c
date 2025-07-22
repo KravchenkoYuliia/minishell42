@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 11:30:55 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:54:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,25 @@
 
 int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 {
-	pid_t	pid;
-	int		pipe_create[2];
+	const char *fd_name;
 
-	pipe(pipe_create);
+	pid_t	pid;
+	fd_name = ft_itoa(index);
+
 	pid = fork();
 	//if (pid == -1)
 		//smth;
 	if (pid == 0)
 	{
-		if (shell->previous_heredoc_pipe[0] > 0)
-		{
-			close(shell->previous_heredoc_pipe[0]);
-			shell->previous_heredoc_pipe[0] = 0;
-		}
+		shell->heredoc_fd[index] = open(fd_name,
+			O_RDWR | O_CREAT | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		ft_set_of_sig(shell, CHILD);
-		ft_handle_heredoc(shell, limiter, index, pipe_create);
+		ft_handle_heredoc(shell, limiter, index);
 		ft_free_all(&shell);
 		exit(EXIT_SUCCESS);
 	}
-	close(pipe_create[1]);
-	pipe_create[1] = 0;
-	ft_put_heredoc_to_struct(shell, index, pipe_create);
+	ft_put_heredoc_to_struct(shell, index);
 	ft_set_of_sig(shell, SIGIGN);
 	if (ft_wait_heredoc_child(shell, pid) == CTRLC_ALERT)
 		return (CTRLC_ALERT);
@@ -75,17 +72,18 @@ int	ft_line_is_not_limiter(char *line, char *limiter)
 	}
 }
 
-int	ft_write_till_limiter(char *line, char *limiter, int heredoc_pipe[2])
+int	ft_write_till_limiter(t_minishell *shell, char *line, char *limiter, int index)
 {
 	if (ft_line_is_not_limiter(line, limiter) == true)
 	{
-		write(heredoc_pipe[1], line, ft_strlen(line));
-		write(heredoc_pipe[1], "\n", 1);
+		write(shell->heredoc_fd[index], line, ft_strlen(line));
+		write(shell->heredoc_fd[index], "\n", 1);
 		free(line);
 	}
 	else
 	{
 		free(line);
+		close(shell->heredoc_fd[index]);
 		//free(limiter);
 		//close(shell->cmd[index]->heredoc_pipe[1]);
 		//ft_free_struct_foreach_cmd(shell->cmd, 0);
@@ -94,7 +92,7 @@ int	ft_write_till_limiter(char *line, char *limiter, int heredoc_pipe[2])
 	return (ERROR);
 }
 
-void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int heredoc_pipe[2])
+void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 {
 	char	*line;
 	char	*lim_tmp;
@@ -102,21 +100,17 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int heredoc
 	(void) index;
 	line = NULL;
 	lim_tmp = ft_unquote_lim_heredoc(shell, limiter);
-	close(heredoc_pipe[0]);
 	while (1)
 	{
 		line = readline("> ");
 		if (g_flag == CTRLC_ALERT)
 		{
-			close_it_please(shell->cmd[index]);
-			close(heredoc_pipe[1]);
 			ft_free_all(&shell);
 			exit(130);
 		}
 		if (!line)
 		{
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, lim_tmp);
-			close(heredoc_pipe[1]);
 			//free (lim_tmp);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
@@ -127,10 +121,8 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int heredoc
 			continue ;
 		}
 		line = ft_handle_line(shell, line);
-		if (ft_write_till_limiter(line, lim_tmp, heredoc_pipe) == EXIT_FLAG)
+		if (ft_write_till_limiter(shell, line, lim_tmp, index) == EXIT_FLAG)
 		{
-			close_it_please(shell->cmd[index]);
-			close(heredoc_pipe[1]);
 			//free(lim_tmp);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);

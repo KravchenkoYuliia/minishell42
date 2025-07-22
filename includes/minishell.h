@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:36:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ enum e_type
 typedef struct s_redirect
 {
 	char				*file_name;
-	int					heredoc_pipe[2];
+	int				heredoc_fd;
+	char *heredoc_fd_name;
 	int					type;
 	struct s_redirect	*next;
 }	t_redirect;
@@ -113,6 +114,7 @@ typedef struct s_minishell
 	int					nb_of_cmd;
 	int					save_stdin;
 	int					save_stdout;
+	int	*heredoc_fd;
 	char				*history;
 	bool				heredoc_in_input;
 	int		previous_heredoc_pipe[2];
@@ -209,10 +211,11 @@ void		ft_handle_shlvl_in_list(t_env *env);
 void		ft_handle_shlvl_in_array(char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
-void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int pipe_create[2]);
+void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
 int		ft_wait_heredoc_child(t_minishell *shell, pid_t pid);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 t_redirect	*ft_lstnew_redirect(void *content, int type);
+t_redirect      *ft_lstnew_redirect_heredoc(t_minishell *shell, int index);
 t_redirect	*ft_lstlast_redirect(t_redirect *lst);
 void		ft_lstadd_back_redirect(t_redirect **lst, t_redirect *new);
 int			ft_execution(t_minishell *shell);
@@ -221,7 +224,7 @@ int	ft_fill_redirection(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_input_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_output_to_struct(t_minishell *shell, int i_struct, t_token *temp);
 void	ft_put_append_to_struct(t_minishell *shell, int i_struct, t_token *temp);
-void	ft_put_heredoc_to_struct(t_minishell *shell, int i_struct, int pipe_create[2]);
+void	ft_put_heredoc_to_struct(t_minishell *shell, int index);
 int	ft_put_word_to_struct(t_minishell *shell, int i_struct, int i_args, t_token *temp);
 void	ft_fill_heredoc_history(t_minishell *shell, int index);
 void		ft_get_nb_of_cmd(t_minishell *shell);

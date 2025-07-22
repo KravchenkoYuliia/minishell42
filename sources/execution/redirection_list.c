@@ -6,34 +6,38 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:25:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/06/27 14:34:44 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:23:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redirect	*ft_lstnew_redirect(void *content, int type)
+t_redirect	*ft_lstnew_redirect_heredoc(t_minishell *shell, int index)
 {
 	t_redirect	*lst;
-	int			*pipe;
+	char	*fd_name;
 
-	pipe = NULL;
+	fd_name = ft_itoa(index);
 	lst = (t_redirect *)malloc(sizeof(t_redirect));
 	if (!lst)
 		return (NULL);
-	if (type == HEREDOC)
-	{
-		pipe = (int *)content;
-		lst->heredoc_pipe[0] = pipe[0];
-		lst->heredoc_pipe[1] = pipe[1];
-		lst->file_name = NULL;
-	}
-	else if (type == INPUT || type == OUTPUT || type == APPEND)
-	{
-		lst->file_name = content;
-		lst->heredoc_pipe[0] = 0;
-		lst->heredoc_pipe[1] = 0;
-	}
+	lst->heredoc_fd = shell->heredoc_fd[index];
+	lst->heredoc_fd_name = fd_name;
+	lst->file_name = NULL;
+	lst->type = HEREDOC;
+	lst->next = NULL;
+	return (lst);
+}
+
+t_redirect	*ft_lstnew_redirect(void *content, int type)
+{
+	t_redirect	*lst;
+
+	lst = (t_redirect *)malloc(sizeof(t_redirect));
+	if (!lst)
+		return (NULL);
+	lst->file_name = content;
+	lst->heredoc_fd = 0;
 	lst->type = type;
 	lst->next = NULL;
 	return (lst);

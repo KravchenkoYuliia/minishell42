@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/14 10:30:30 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:20:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_init_minishell(t_minishell *shell, char **env)
 	shell->heredoc_in_input = true;
 	shell->process = PARENT;
 	shell->quote_lim = false;
-	shell->previous_heredoc_pipe[0] = 0;
 	shell->need_to_add_oldpwd = true;
 	shell->malloc_fail_size = 0;
 }
@@ -84,6 +83,7 @@ char	*ft_cut_input(char *cut_me)
 void	ft_init_for_every_prompt(t_minishell *shell)
 {
 	shell->heredoc_in_input = true;
+	shell->heredoc_fd = NULL;
 	shell->history = NULL;
 	shell->process = PARENT;
 }
