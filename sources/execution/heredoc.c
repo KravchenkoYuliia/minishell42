@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 08:44:36 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:30:55 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,31 +94,31 @@ int	ft_write_till_limiter(char *line, char *limiter, int heredoc_pipe[2])
 	return (ERROR);
 }
 
-void	ft_handle_heredoc(t_minishell *shl, char *lim, int i, int hdoc_pipe[2])
+void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index, int heredoc_pipe[2])
 {
 	char	*line;
 	char	*lim_tmp;
 
-	(void) i;
+	(void) index;
 	line = NULL;
-	lim_tmp = ft_unquote_lim_heredoc(shl, lim);
-	close(hdoc_pipe[0]);
+	lim_tmp = ft_unquote_lim_heredoc(shell, limiter);
+	close(heredoc_pipe[0]);
 	while (1)
 	{
 		line = readline("> ");
 		if (g_flag == CTRLC_ALERT)
 		{
-			close_it_please(shl->cmd[i]);
-			close(hdoc_pipe[1]);
-			ft_free_all(&shl);
+			close_it_please(shell->cmd[index]);
+			close(heredoc_pipe[1]);
+			ft_free_all(&shell);
 			exit(130);
 		}
 		if (!line)
 		{
-			ft_ctrl_d_heredoc_msg(shl->prompt_count, lim_tmp);
-			close(hdoc_pipe[1]);
-			free (lim_tmp);
-			ft_free_all(&shl);
+			ft_ctrl_d_heredoc_msg(shell->prompt_count, lim_tmp);
+			close(heredoc_pipe[1]);
+			//free (lim_tmp);
+			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
 		if (line[0] < 14 || line[0] == 32)
@@ -126,13 +126,13 @@ void	ft_handle_heredoc(t_minishell *shl, char *lim, int i, int hdoc_pipe[2])
 			free(line);
 			continue ;
 		}
-		line = ft_handle_line(shl, line);
-		if (ft_write_till_limiter(line, lim_tmp, hdoc_pipe) == EXIT_FLAG)
+		line = ft_handle_line(shell, line);
+		if (ft_write_till_limiter(line, lim_tmp, heredoc_pipe) == EXIT_FLAG)
 		{
-			close_it_please(shl->cmd[i]);
-			close(hdoc_pipe[1]);
-			free(lim_tmp);
-			ft_free_all(&shl);
+			close_it_please(shell->cmd[index]);
+			close(heredoc_pipe[1]);
+			//free(lim_tmp);
+			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
 	}

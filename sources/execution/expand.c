@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:27:50 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:32:47 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_get_result(char *expand_me, int start, char *result)
 	return (result);
 }
 
-char	*ft_getenv_variable(char *expand_me, int start, int ex_sts, t_env *env)
+char	*ft_getenv_variable(char *expand_me, int start, int exit_status, t_env *env)
 {
 	int		i;
 	char	*temp;
@@ -65,7 +65,7 @@ char	*ft_getenv_variable(char *expand_me, int start, int ex_sts, t_env *env)
 		temp = ft_strjoin_expand(temp, expand_me[start]);
 		start++;
 	}
-	expanded = ft_get_env(temp, env, ex_sts);
+	expanded = ft_get_env(temp, env, exit_status);
 	free(temp);
 	result = ft_strjoin_heredoc(result, expanded);
 	if (result && start < ft_strlen(expand_me))

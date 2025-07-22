@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:35:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 10:53:17 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	close_them_please(t_cmd_struct **cmds)
 
 void	close_it_please(t_cmd_struct *cmds)
 {
-	for (t_redirect* input = cmds->input_list; input; input = input->next)
+	for (t_redirect *input = cmds->input_list; input; input = input->next)
 	{
 		if (input->heredoc_pipe[0] > 2)
 			close(input->heredoc_pipe[0]);

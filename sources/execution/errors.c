@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:27:48 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/16 14:17:31 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:31:50 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	ft_malloc_failed(t_minishell *shell, int nb, char *name)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_write_to_stderr(t_minishell *shl, char *msg1, char *arg, char *msg2)
+void	ft_write_to_stderr(t_minishell *shell, char *msg1, char *arg, char *msg2)
 {
 	write(STDERR_FILENO, SHELL_NAME, ft_strlen(SHELL_NAME));
 	write(STDERR_FILENO, msg1, ft_strlen(msg1));
 	write(STDERR_FILENO, arg, ft_strlen(arg));
 	write(STDERR_FILENO, msg2, ft_strlen(msg2));
 	write(STDERR_FILENO, "\n", 1);
-	(void) shl;
+	(void) shell;
 }
 
 void	ft_error_msg(t_minishell *shl, char *shl_name, char *cmd, char *msg)
