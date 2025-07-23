@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:25:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:39:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	ft_init_minishell(t_minishell *shell, char **env)
 	ft_fill_env(shell, &shell->env, env);
 	shell->env_execve = NULL;
 	shell->cmd = NULL;
-	shell->history = NULL;
 	shell->nb_of_cmd = 0;
-	shell->heredoc_in_input = true;
 	shell->process = PARENT;
 	shell->quote_lim = false;
 	shell->need_to_add_oldpwd = true;
@@ -80,12 +78,6 @@ char	*ft_cut_input(char *cut_me)
 	return (new_input);
 }
 
-void	ft_init_for_every_prompt(t_minishell *shell)
-{
-	shell->heredoc_in_input = true;
-	shell->history = NULL;
-	shell->process = PARENT;
-}
 
 void	ft_checking_input(t_minishell *shell)
 {

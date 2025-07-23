@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 20:23:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:38:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ typedef struct s_minishell
 	int					save_stdin;
 	int					save_stdout;
 	int	fd;
-	char	*history;
-	bool	heredoc_in_input;
 	struct sigaction	sig;
 	struct sigaction	sig_quit;
 	int	process;
