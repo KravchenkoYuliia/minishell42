@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 21:56:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:15:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@ void	ft_start_value(t_minishell *shell)
 	while (i < shell->nb_of_cmd)
 	{
 		shell->cmd[i]->args = NULL;
-		shell->cmd[i]->args = (char **)malloc(sizeof(char *)
-				* (shell->cmd[i]->nb_of_words + 1));
+		shell->cmd[i]->args = (char **)ft_calloc(sizeof(char *),
+				(shell->cmd[i]->nb_of_words + 1));
 		if (!shell->cmd[i]->args)
 		{
 			ft_malloc_failed(shell,
 					sizeof(shell->cmd[i]->nb_of_words + 1), "ft_start_value");
-		}
+		}/*
 		while (j < shell->cmd[i]->nb_of_words)
 		{
 			shell->cmd[i]->args[j] = NULL;
 			j++;
-		}
+		}*/
 		shell->cmd[i]->input = NULL;
 		shell->cmd[i]->output = NULL;
 		shell->cmd[i]->append = 0;
