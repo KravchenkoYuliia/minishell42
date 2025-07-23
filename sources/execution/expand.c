@@ -6,13 +6,13 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 11:32:47 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:05:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_expand(char *str, char c)
+char	*ft_strjoin_char(char *str, char c)
 {
 	int		i;
 	int		j;
@@ -42,7 +42,7 @@ char	*ft_get_result(char *expand_me, int start, char *result)
 {
 	while (expand_me[start])
 	{
-		result = ft_strjoin_expand(result, expand_me[start]);
+		result = ft_strjoin_char(result, expand_me[start]);
 		start++;
 	}
 	return (result);
@@ -62,7 +62,7 @@ char	*ft_getenv_variable(char *expand_me, int start, int exit_status, t_env *env
 	while (expand_me[start] && (ft_isalnum(expand_me[start])
 			|| expand_me[start] == '?'))
 	{
-		temp = ft_strjoin_expand(temp, expand_me[start]);
+		temp = ft_strjoin_char(temp, expand_me[start]);
 		start++;
 	}
 	expanded = ft_get_env(temp, env, exit_status);
@@ -93,15 +93,15 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 
 	i = 0;
 	line = NULL;
-	if (expand_me[0] != '$')
+	if (expand_me[0] && expand_me[0] != '$')
 	{
 		while (expand_me[i] && expand_me[i] != '$')
 		{
-			line = ft_strjoin_expand(line, expand_me[i]);
+			line = ft_strjoin_char(line, expand_me[i]);
 			i++;
 		}
 	}
-	if (expand_me[i] == '$')
+	if (expand_me[i] && expand_me[i] == '$')
 	{
 		env_var = ft_getenv_variable(expand_me, i + 1,
 				shell->exit_status, shell->env);
@@ -109,6 +109,10 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 		free (env_var);
 	}
 	else
-		line[ft_strlen(line)] = '\0';
+	{
+		
+		if (line)
+			line[ft_strlen(line)] = '\0';
+	}
 	return (line);
 }

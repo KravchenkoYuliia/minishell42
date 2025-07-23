@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 17:45:29 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:37:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ char		*ft_unquote(t_minishell **shl, char *value, int i, int j);
 //execution
 /////////////////
 void		ft_write_stdout(char *msg);
+char	*ft_strjoin_char(char *str, char c);
 void		ft_fill_env(t_minishell *shell, t_env **env_list, char **env);
 t_env		*ft_lstlast_env(t_env *lst);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);

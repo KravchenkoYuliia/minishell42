@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 17:45:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:08:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,17 @@ char	*ft_handle_line(t_minishell *shell, char *line)
 
 int	ft_line_is_not_limiter(char *line, char *limiter)
 {
+	//limiter = ft_strjoin_char(limiter, '\n');
 	if (ft_strlen(line) >= ft_strlen(limiter))
 	{	
-		if (ft_strncmp(line, limiter, ft_strlen(line)) != '\n'
-			&& ft_strncmp(line, limiter, ft_strlen(line)) != 0)
+		if (ft_strncmp(line, limiter, ft_strlen(line)) != 0)
 			return (true);
 		else
 			return (false);
 	}
 	else
 	{
-		if (ft_strncmp(limiter, line, ft_strlen(limiter)) != '\n'
-			&& ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
+		if (ft_strncmp(limiter, line, ft_strlen(limiter)) != 0)
 			return (true);
 		else
 			return (false);
@@ -74,7 +73,8 @@ int	ft_line_is_not_limiter(char *line, char *limiter)
 
 int	ft_write_till_limiter(t_minishell *shell, char *line, char *limiter, int index)
 {
-	if (ft_line_is_not_limiter(line, limiter) == true)
+
+	if (line && ft_line_is_not_limiter(line, limiter) == true)
 	{
 		write(shell->heredoc_fd[index], line, ft_strlen(line));
 		write(shell->heredoc_fd[index], "\n", 1);
@@ -111,19 +111,17 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		if (!line)
 		{
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, lim_tmp);
-			//free (lim_tmp);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
-		if (line[0] < 14 || line[0] == 32)
+		line = ft_handle_line(shell, line);
+		if (!line)
 		{
-			free(line);
+			write(shell->heredoc_fd[index], "\n", 1);
 			continue ;
 		}
-		line = ft_handle_line(shell, line);
 		if (ft_write_till_limiter(shell, line, lim_tmp, index) == EXIT_FLAG)
 		{
-			//free(lim_tmp);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
