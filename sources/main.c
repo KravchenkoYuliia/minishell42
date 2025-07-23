@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/21 17:10:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 21:26:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	ft_execution_check_error(t_minishell *shell)
 		return (true);
 	else if (check == ERROR)
 	{
-		shell->exit_status = 0;
+		shell->exit_status = 1;
 		return (true);
 	}
 	return (false);

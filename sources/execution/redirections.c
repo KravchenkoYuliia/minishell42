@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:46:31 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:54:01 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	ft_redir_output(t_minishell *shell, int index)
 		fd = ft_open_fd(temp);
 		if (fd == -1)
 		{
+			shell->exit_status = 1;
 			perror(SHELL_NAME_ERROR);
 			return (ERROR);
 		}
