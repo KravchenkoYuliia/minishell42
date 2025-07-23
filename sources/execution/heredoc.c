@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:04:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:44:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	fd_name = ft_name_the_heredoc_file(shell, index);
 	if (pid == 0)
 	{
-		printf("fd_name =%s\n", fd_name);
 		shell->fd  = open(fd_name,
 			O_RDWR | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		free(fd_name);
 		/*shell->heredoc_fd[index] = open(fd_name,
 			O_RDWR | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);*/
@@ -147,7 +147,7 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		line = ft_handle_line(shell, line);
 		if (!line)
 		{
-			write(shell->heredoc_fd[index], "\n", 1);
+			write(shell->fd, "\n", 1);
 			continue ;
 		}
 		if (ft_write_till_limiter(shell, line, lim_tmp, index) == EXIT_FLAG)

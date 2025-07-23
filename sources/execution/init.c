@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 16:33:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:24:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	ft_init_struct_foreach_cmd(t_minishell *shell)
 
 	i = 0;
 	ft_get_nb_of_cmd(shell);
-	shell->heredoc_fd = malloc(sizeof(int) * shell->nb_of_cmd);
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
 	ft_start_value(shell);

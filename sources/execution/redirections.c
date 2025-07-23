@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:07:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:46:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ int	ft_redir_input(t_minishell *shell, int index)
 {
 	int			fd;
 	t_redirect	*temp;
-	const char *fd_name;
 
-	fd_name = ft_itoa(index);
 	temp = shell->cmd[index]->input_list;
 	while (temp)
 	{

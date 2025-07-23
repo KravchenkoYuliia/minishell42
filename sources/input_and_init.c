@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:28:16 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 16:20:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:25:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_cut_input(char *cut_me)
 void	ft_init_for_every_prompt(t_minishell *shell)
 {
 	shell->heredoc_in_input = true;
-	shell->heredoc_fd = NULL;
 	shell->history = NULL;
 	shell->process = PARENT;
 }

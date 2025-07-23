@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/22 16:33:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:05:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	ft_free_all(t_minishell **shell)
 		free ((*shell)->input);	
 	if ((*shell)->token_lst)
 		free_token_list((*shell)->token_lst);
-	if ((*shell)->heredoc_fd)
-		free((*shell)->heredoc_fd);
 	if ((*shell)->env)
 		ft_free_env((*shell)->env);
 	if ((*shell)->env_execve)
@@ -36,12 +34,33 @@ void	ft_free_all(t_minishell **shell)
 	rl_clear_history();
 }
 
+void	ft_unlink_heredoc_files(t_minishell *shell)
+{
+	int		i;
+	t_redirect	*temp;
+
+	i = 0;
+	while (i < shell->nb_of_cmd)
+	{
+		temp = shell->cmd[i]->input_list;
+		while (temp)
+		{
+			if (temp->type == HEREDOC)
+			{
+				unlink(temp->file_name);
+			}
+			temp = temp->next;
+		}
+		i++;
+	}
+}
+
 void	ft_clear_after_cmd_exec(t_minishell *shell)
 {
 	int	i;
 
 	i = 0;
-
+	ft_unlink_heredoc_files(shell);
 	ft_free_struct_foreach_cmd(shell->cmd);
 	free_token_list(shell->token_lst);
 	ft_save_std_fileno(shell);
