@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 14:41:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:48:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ void	ft_handle_shlvl_in_array(t_minishell *shell, char **env)
 			if (!newline)
 				free(shell);
 			shlvl = ft_atoi(env[i] + 6);
-			shlvl++;
+			if (shlvl < 999)
+				shlvl++;
+			else
+			{
+				 ft_putstr_fd("toupetishell: warning: shell level (1000) too high, resetting to 1\n", 2);
+				 shlvl = 1;
+			}
 			newline = ft_strjoin(newline, ft_itoa(shlvl));
 			free(env[i]);
 			env[i] = newline;
