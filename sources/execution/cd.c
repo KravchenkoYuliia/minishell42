@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/21 16:59:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 21:40:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,56 @@ int	ft_cd(t_minishell *shell, int index)
 	char	*home_path;
 
 	home_path = NULL;
-	if (!shell->cmd[index]->args[1])
+	if (shell->cmd[index]->args[0] && shell->cmd[index]->args[1] && shell->cmd[index]->args[2])
+        {
+                ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
+		shell->exit_status = 1;
+			if (shell->process == CHILD)
+			{
+				ft_free_all(&shell);
+				exit(ERROR);
+			}
+                return (ERROR);
+        }
+	if (!shell->cmd[index]->args[1] || (shell->cmd[index]->args[1][0] == '~'
+				&& !shell->cmd[index]->args[1][1]))
 	{
 		if (ft_cd_home(shell, directory, home_path) == ERROR)
+		{
+			shell->exit_status = 1;
+			if (shell->process == CHILD)
+			{
+				ft_free_all(&shell);
+				exit(ERROR);
+			}
 			return (ERROR);
+		}
 	}
 	else if (shell->cmd[index]->args[1])
 	{
 		if (ft_cd_somewhere_else(shell, index, directory) == ERROR)
+		{
+			if (shell->process == CHILD)
+			{
+				ft_free_all(&shell);
+				exit(ERROR);
+			}
+			shell->exit_status = 1;
 			return (ERROR);
+		}
 	}
 	if (chdir(directory) != 0)
 	{
 		ft_error_msg(shell, "toupetishell: cd",
 			directory, ": No such file or directory");
+		shell->exit_status = 1;
 		return (ERROR);
 	}
 	ft_bzero(directory, PATH_MAX);
 	if (getcwd(directory, PATH_MAX) == NULL)
 	{
 		ft_syscall_ft_failed(shell, "getcwd");
+		shell->exit_status = 1;
 		return (ERROR);
 	}
 	ft_change_pwd(shell, shell->env, directory);
