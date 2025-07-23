@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:04:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:24:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:20:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	ft_init_struct_foreach_cmd(t_minishell *shell)
 	ft_malloc_struct_foreach_cmd(shell, &shell->cmd, shell->nb_of_cmd);
 	ft_get_nb_of_words(shell);
 	ft_start_value(shell);
-	if (ft_fill_cmd_struct(shell) == ERROR)
-		return (ERROR);
+	if (ft_fill_cmd_struct(shell) == CTRLC_ALERT)
+		return (CTRLC_ALERT);
 	if (shell->token_lst)
 		free_token_list(shell->token_lst);
 	shell->token_lst = NULL;

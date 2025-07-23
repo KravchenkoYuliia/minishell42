@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:25:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:23:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,7 @@ bool	ft_find_oldpwd_in_env(t_minishell *shell);
 void	ft_export_oldpwd(t_minishell *shell);
 void	ft_syscall_ft_failed(t_minishell *shell, char *cmd);
 bool	ft_check_var_name(char *name);
+void	ft_unlink_heredoc_files(t_minishell *shell);
 /////////////////
 
 //free_handler
