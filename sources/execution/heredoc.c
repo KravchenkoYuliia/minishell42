@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:44:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 20:09:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,18 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		line = readline("> ");
 		if (g_flag == CTRLC_ALERT)
 		{
+			if (shell->quote_lim == true)
+				free(lim_tmp);
+			close(shell->fd);
 			ft_free_all(&shell);
 			exit(CTRLC_ALERT);
 		}
 		if (!line)
 		{
 			ft_ctrl_d_heredoc_msg(shell->prompt_count, lim_tmp);
+			if (shell->quote_lim == true)
+				free(lim_tmp);
+			close(shell->fd);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
@@ -152,6 +158,8 @@ void	ft_handle_heredoc(t_minishell *shell, char *limiter, int index)
 		}
 		if (ft_write_till_limiter(shell, line, lim_tmp, index) == EXIT_FLAG)
 		{
+			if (shell->quote_lim == true)
+				free(lim_tmp);
 			ft_free_all(&shell);
 			exit(EXIT_SUCCESS);
 		}
