@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 12:37:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:39:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,8 @@ t_env		*ft_lstlast_env(t_env *lst);
 void		ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env		*ft_lstnew_env(void *content);
 void		ft_print_env(t_env *env);
-void		ft_handle_shlvl_in_list(t_env *env);
-void		ft_handle_shlvl_in_array(char **env);
+void		ft_handle_shlvl(t_minishell *shell, t_env *env);
+void		ft_handle_shlvl_in_array(t_minishell *shell, char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);

@@ -6,13 +6,13 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/10 20:31:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:41:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_handle_shlvl_in_array(char **env)
+void	ft_handle_shlvl_in_array(t_minishell *shell, char **env)
 {
 	int		i;
 	int		shlvl;
@@ -24,6 +24,8 @@ void	ft_handle_shlvl_in_array(char **env)
 		if (!ft_strncmp("SHLVL=", env[i], 6))
 		{
 			newline = ft_strdup("SHLVL=");
+			if (!newline)
+				free(shell);
 			shlvl = ft_atoi(env[i] + 6);
 			shlvl++;
 			newline = ft_strjoin(newline, ft_itoa(shlvl));
@@ -34,7 +36,7 @@ void	ft_handle_shlvl_in_array(char **env)
 	}
 }
 
-void	ft_handle_shlvl_in_list(t_env *env)
+void	ft_handle_shlvl(t_minishell *shell, t_env *env)
 {
 	int		shlvl;
 	char	*newline;
@@ -46,6 +48,9 @@ void	ft_handle_shlvl_in_list(t_env *env)
 		if (!ft_strncmp("SHLVL=", temp->line, 6))
 		{
 			newline = ft_strdup("SHLVL=");
+			if (!newline)
+				free(shell);
+
 			shlvl = ft_atoi(temp->line + 6);
 			shlvl++;
 			newline = ft_strjoin(newline, ft_itoa(shlvl));

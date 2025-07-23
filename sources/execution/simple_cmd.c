@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 16:18:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:39:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_execute_child(t_minishell *shell, int index, char *cmd)
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
+	if (!ft_strncmp(cmd, "./minishell", 11))
+		ft_handle_shlvl_in_array(shell, shell->env_execve);
 	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
 	{
 		free(cmd);

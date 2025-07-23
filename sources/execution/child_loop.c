@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 15:23:26 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:34:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 			": No such file or directory");
 		ft_free_all(&shell);
 		exit(127);
-	}
-	if (!ft_strncmp(cmd, "./minishell", 11))
-	{
-		ft_error_msg(shell, SHELL_NAME, NULL,
-			"NOT asked in the subjet\nHave some mercy for heaven's sake!");
-		ft_free_all(&shell);
-		exit(EXIT_SUCCESS);
 	}
 	if (shell->cmd[index]->args[0][0] == 46)
 	{
@@ -53,6 +46,13 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	char	*cmd;
 
 	cmd = shell->cmd[index]->args[0];
+	if (!ft_strncmp(cmd, "./minishell", 11))
+	{
+		ft_error_msg(shell, SHELL_NAME, NULL,
+			"NOT asked in the subjet\nHave some mercy for heaven's sake!");
+		ft_free_all(&shell);
+		exit(EXIT_SUCCESS);
+	}
 	ft_cmd_checking(shell, index, cmd);
 	if (cmd && !ft_strchr(shell->cmd[index]->args[0], '/'))
 		cmd = ft_find_absolute_path(shell, index);
