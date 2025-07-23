@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 14:39:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:29:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ typedef struct s_cmd_struct
 	t_redirect			*output_list;
 	char				*input;
 	char				*output;
-	//int					heredoc_pipe[2];
 	int					append;
 	int					heredoc;
 	int					pipe_flag;
@@ -116,9 +115,9 @@ typedef struct s_minishell
 	int					save_stdin;
 	int					save_stdout;
 	int	*heredoc_fd;
-	char				*history;
-	bool				heredoc_in_input;
-	int		previous_heredoc_pipe[2];
+	char	*heredoc_name;
+	char	*history;
+	bool	heredoc_in_input;
 	struct sigaction	sig;
 	struct sigaction	sig_quit;
 	int	process;
@@ -213,6 +212,7 @@ void		ft_handle_shlvl(t_minishell *shell, t_env *env);
 void		ft_handle_shlvl_in_array(t_minishell *shell, char **env);
 int			ft_export_forempty_env(t_minishell *shell);	
 int		ft_fork_heredoc(t_minishell *shell, char *limiter, int index);
+char	*ft_name_the_heredoc_file(t_minishell *shell, int index);
 void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
 int		ft_wait_heredoc_child(t_minishell *shell, pid_t pid);
 char		*ft_strjoin_heredoc(char *s1, char *s2);

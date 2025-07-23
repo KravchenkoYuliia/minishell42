@@ -6,24 +6,50 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 14:08:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:14:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*ft_name_the_heredoc_file(t_minishell *shell, int index)
+{
+	int	i;
+	char	*name;
+	char	*path;
+
+	i = 0;
+	(void)index;
+	(void)shell;
+	while (i < INT_MAX)
+	{
+		name = ft_itoa(i);
+		path = ft_strjoin("../temp/", name);
+		if (access(path, F_OK) == -1)
+		{
+			free(name);
+			return (path);
+		}
+		free(path);
+		free(name);
+		i++;
+	}
+	return (NULL);
+}
+
 int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 {
-	const char *fd_name;
+	char *fd_name;
 
 	pid_t	pid;
-	fd_name = ft_itoa(index);
+	//fd_name = ft_itoa(index);
 
 	pid = fork();
 	//if (pid == -1)
 		//smth;
 	if (pid == 0)
 	{
+		fd_name = ft_name_the_heredoc_file(shell, index);
 		shell->heredoc_fd[index] = open(fd_name,
 			O_RDWR | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
