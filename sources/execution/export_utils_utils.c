@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 14:53:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/16 13:57:36 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:01:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_find_oldpwd_in_env(t_minishell *shell)
 	temp = shell->env;
 	while (temp)
 	{
-		if (!ft_strncmp(temp->line, "OLDPWD", 7))
+		if (!ft_strncmp(temp->line, "OLDPWD", 6))
 			return (true);
 		temp = temp->next;
 	}
