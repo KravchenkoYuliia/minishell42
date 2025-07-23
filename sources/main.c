@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/23 21:26:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 22:08:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ bool	ft_new_prompt(t_minishell *shell)
 	}
 	return (false);
 }
-
+/*
 void	ft_add_history_and_expand(t_minishell *shell)
 {
-	add_history(shell->input);
 	//free (shell->input);
-	/*if (shell->input && *shell->input
+	if (shell->input && *shell->input
 		&& !ft_find_heredoc(shell->token_lst))
 	{
 		add_history(shell->input);
@@ -46,9 +45,9 @@ void	ft_add_history_and_expand(t_minishell *shell)
 					* (ft_strlen(shell->input) + 1),
 						"ft_add_history_and_expand");
 		ft_strcpy(shell->history, shell->input);
-	}*/
+	}
 	ft_expander(shell);
-}
+}*/
 
 bool	ft_parsing_check_error(t_minishell *shell)
 {
@@ -94,13 +93,15 @@ void	ft_minishell(t_minishell *shell)
 		ft_init_for_every_prompt(shell);
 		shell->input = readline(SHELL_NAME);
 		ft_checking_input(shell);
+		if (shell->input[0])	
+			add_history(shell->input);
 		if (ft_new_prompt(shell) == true)
 			continue ;
 		if (shell->input && ft_lexer(shell->input))
 		{
 			if (ft_parsing_check_error(shell) == true)
 				continue ;
-			ft_add_history_and_expand(shell);
+			ft_expander(shell);
 			if (shell->token_lst && shell->token_lst->value[0])
 			{
 				if (ft_execution_check_error(shell) == true)
