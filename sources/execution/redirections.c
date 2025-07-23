@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 15:58:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:07:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int	ft_redir_input(t_minishell *shell, int index)
 		}
 		else if (temp->type == HEREDOC)
 		{
-			int fd = open(fd_name, O_RDONLY);
+			int fd = open(temp->file_name, O_RDONLY);
 			dup2(fd, STDIN_FILENO);
+			close(fd);
 		}
 		temp = temp->next;
 	}

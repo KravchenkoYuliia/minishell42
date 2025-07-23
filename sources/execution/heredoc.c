@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 16:14:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:04:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,22 @@ int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 	pid = fork();
 	//if (pid == -1)
 		//smth;
+	fd_name = ft_name_the_heredoc_file(shell, index);
 	if (pid == 0)
 	{
-		fd_name = ft_name_the_heredoc_file(shell, index);
-		shell->heredoc_fd[index] = open(fd_name,
+		printf("fd_name =%s\n", fd_name);
+		shell->fd  = open(fd_name,
 			O_RDWR | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		/*shell->heredoc_fd[index] = open(fd_name,
+			O_RDWR | O_CREAT | O_TRUNC,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);*/
 		ft_set_of_sig(shell, CHILD);
 		ft_handle_heredoc(shell, limiter, index);
 		ft_free_all(&shell);
 		exit(EXIT_SUCCESS);
 	}
-	ft_put_heredoc_to_struct(shell, index);
+	ft_put_heredoc_to_struct(shell, index, fd_name);
 	ft_set_of_sig(shell, SIGIGN);
 	if (ft_wait_heredoc_child(shell, pid) == CTRLC_ALERT)
 		return (CTRLC_ALERT);
@@ -99,17 +103,17 @@ int	ft_line_is_not_limiter(char *line, char *limiter)
 
 int	ft_write_till_limiter(t_minishell *shell, char *line, char *limiter, int index)
 {
-
+	(void)index;
 	if (line && ft_line_is_not_limiter(line, limiter) == true)
 	{
-		write(shell->heredoc_fd[index], line, ft_strlen(line));
-		write(shell->heredoc_fd[index], "\n", 1);
+		write(shell->fd, line, ft_strlen(line));
+		write(shell->fd, "\n", 1);
 		free(line);
 	}
 	else
 	{
 		free(line);
-		close(shell->heredoc_fd[index]);
+		close(shell->fd);
 		//free(limiter);
 		//close(shell->cmd[index]->heredoc_pipe[1]);
 		//ft_free_struct_foreach_cmd(shell->cmd, 0);

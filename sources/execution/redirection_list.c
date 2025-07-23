@@ -6,24 +6,23 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:25:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 16:23:39 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/23 18:04:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redirect	*ft_lstnew_redirect_heredoc(t_minishell *shell, int index)
+t_redirect	*ft_lstnew_redirect_heredoc(t_minishell *shell, int index,
+		char *heredoc_file_name)
 {
+	(void)index;
+	(void)shell;
 	t_redirect	*lst;
-	char	*fd_name;
 
-	fd_name = ft_itoa(index);
 	lst = (t_redirect *)malloc(sizeof(t_redirect));
 	if (!lst)
 		return (NULL);
-	lst->heredoc_fd = shell->heredoc_fd[index];
-	lst->heredoc_fd_name = fd_name;
-	lst->file_name = NULL;
+	lst->file_name = heredoc_file_name;
 	lst->type = HEREDOC;
 	lst->next = NULL;
 	return (lst);
@@ -37,7 +36,6 @@ t_redirect	*ft_lstnew_redirect(void *content, int type)
 	if (!lst)
 		return (NULL);
 	lst->file_name = content;
-	lst->heredoc_fd = 0;
 	lst->type = type;
 	lst->next = NULL;
 	return (lst);
