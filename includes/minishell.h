@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 13:49:51 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:20:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,8 @@ void		ft_save_std_fileno(t_minishell *shell);
 void		ft_change_pwd(t_minishell *shell, t_env *env, char *directory);
 bool		ft_is_option(char *args);
 char		*ft_get_home_path(t_env *env);
+void	ft_if_child(t_minishell *shell, int index, pid_t pid);
+void	ft_check_close_dup(t_minishell *shell, int index);
 int			ft_just_export(t_env *env);
 int			ft_export_value(t_minishell *shell, int index);
 int		ft_option_check(t_minishell *shell, int index, int i);

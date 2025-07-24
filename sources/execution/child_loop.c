@@ -6,11 +6,39 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:24:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:19:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
+{
+	while (index < shell->nb_of_cmd)
+	{
+		if (pipe(shell->cmd[index]->pipe) == -1)
+		{
+			ft_syscall_ft_failed(shell, "pipe");
+			ft_clear_after_cmd_exec(shell);
+			return (ERROR);
+		}
+		pid = fork();
+		if (pid == -1)
+		{
+			ft_syscall_ft_failed(shell, "fork");
+			ft_clear_after_cmd_exec(shell);
+			return (ERROR);
+		}
+		ft_if_child(shell, index, pid);
+		shell->process = PARENT;
+		ft_check_close_dup(shell, index);
+		index++;
+	}
+	ft_set_of_sig(shell, SIGIGN);
+	ft_waiting_for_child(shell, index - 1, 10, 0);
+	ft_set_of_sig(shell, PARENT);
+	return (SUCCESS);
+}
 
 void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 {

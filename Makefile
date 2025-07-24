@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/07/24 11:16:37 by yukravch         ###   ########.fr        #
+#    Updated: 2025/07/24 14:07:33 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC_DIR = sources
 OBJ_DIR = objects
 INC_DIR = -I includes -I libft42/includes
 
-FILES = 	main.c	input_and_init.c input_and_init_utils.c\
+FILES = 	main.c	input_and_init.c \
 			env/copy_env.c env/env_for_execve.c \
 			free_handler_a.c  free_handler_b.c signals.c \
 			lexer/lexer_main.c lexer/lexer_err_handler.c \
