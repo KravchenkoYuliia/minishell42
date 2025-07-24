@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 08:56:41 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 11:40:54 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:45:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_token	*ft_parser(t_minishell *shell, int i)
 	new_token = NULL;
 	while (i < ft_strlen(shell->input))
 	{
-		if ((shell->input[i] == 39 || shell->input[i] == 34 
-			|| shell->input[i] == 124)
+		if ((shell->input[i] == 39 || shell->input[i] == 34
+				|| shell->input[i] == 124)
 			|| (rds_lim(shell->input[i]) && !ft_if_symbol(shell->input[i])))
 			new_token = ft_parsing_a(shell, i);
 		else if (shell->input[i] == 60 || shell->input[i] == 62)

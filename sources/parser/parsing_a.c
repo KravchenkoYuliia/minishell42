@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:37:20 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 11:45:04 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:46:14 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ t_token	*ft_if_command(t_minishell *shell, int start)
 	if (!value_buf)
 		return (NULL);
 	j = 0;
-	while ((shell->input[start] != 39 && shell->input[start] != 34 && shell->input[start] != 124
-			&& shell->input[start] != 60 && shell->input[start] != 62 && shell->input[start] != 32)
+	while ((shell->input[start] != 39 && shell->input[start] != 34
+			&& shell->input[start] != 124 && shell->input[start] != 60
+			&& shell->input[start] != 62 && shell->input[start] != 32)
 		&& shell->input[start])
 		value_buf[j++] = shell->input[start++];
 	if (shell->input[start] == 39 || shell->input[start] == 34)
