@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:51:40 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/16 12:01:22 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:16:54 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ bool	ft_check_pipes(char *input)
 			return (false);
 		if (input[i] == 124 && input[i + 1] == 124)
 			return (false);
+		if (input[i] == 124 && (input[i + 1] == 32 || input[i + 1] == 9))
+		{
+			i++;
+			while (input[i] == 32 || input[i] == 9)
+				i++;
+			if (input[i] == 124)
+				return (false);
+		}
 		i++;
 	}
 	return (true);

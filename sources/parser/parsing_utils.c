@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 08:39:37 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/16 14:03:03 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:58:01 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_token	*new_token_nd(char *value, int type, int incr)
 		return (NULL);
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		return (token);
 	token->value = ft_strdup(value);
 	if (!token->value)
 		return (free(token), NULL);

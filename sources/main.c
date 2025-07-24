@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/23 22:36:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:57:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ bool	ft_new_prompt(t_minishell *shell)
 
 bool	ft_parsing_check_error(t_minishell *shell)
 {
-	shell->token_lst = ft_parser(shell->input, 0);
-	if (!shell->token_lst)
+	shell->token_lst = ft_parser(shell, 0);
+	if (shell->malloc_fail)
 	{
-		ft_malloc_failed(shell, ft_strlen(shell->input), "ft_parser");
+		ft_malloc_failed(shell, shell->malloc_fail_size, "ft_parser");
 		return (true);
 	}
 	return (false);

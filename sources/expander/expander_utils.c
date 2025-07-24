@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 08:45:34 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/16 12:04:15 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:11:27 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*ft_get_env(char *var, t_env *env, int exit_status)
 	t_env	*cursor;
 
 	i = 0;
+	if (exit_status == 13)
+		exit_status = 0;
 	ex_stat = ft_itoa(exit_status);
 	if (var[i] == '?')
 		return (ex_stat);

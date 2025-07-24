@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:30:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:00:57 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_token
 	char			*value;
 	int				type;
 	int				incr;
-	bool			val_has_quote;
 	struct s_token	*next;
 }	t_token;
 
@@ -161,16 +160,26 @@ void		lexer_err_handler(int err_code, char c);
 
 //parser
 /////////////////
-t_token		*ft_parser(char *input, int i);
-t_token		*ft_parsing_a(char *input, int i);
-t_token		*ft_parsing_b(char *input, int i);
-t_token		*ft_if_quotes_a(char *input, int start);
-t_token		*ft_if_command(char *input, int start);
-t_token		*ft_if_pipe(char *input, int start);
-t_token		*ft_if_heredoc(char *input, int start);
-t_token		*ft_if_input(char *input, int start);
-t_token		*ft_if_append(char *input, int start);
-t_token		*ft_if_output(char *input, int start);
+t_token		*ft_parser(t_minishell *shell, int i);
+t_token		*ft_parsing_a(t_minishell *shell, int i);
+t_token		*ft_parsing_b(t_minishell *shell, int i);
+t_token		*ft_if_quotes_a(t_minishell *shell, int start);
+t_token		*ft_if_command(t_minishell *shell, int start);
+t_token		*ft_if_pipe(t_minishell *shell, int start);
+t_token		*ft_if_heredoc(t_minishell *shell, int start);
+t_token		*ft_if_input(t_minishell *shell, int start);
+t_token		*ft_if_append(t_minishell *shell, int start);
+t_token		*ft_if_output(t_minishell *shell, int start);
+t_token		*ft_parser(t_minishell *shell, int i);
+t_token		*ft_parsing_a(t_minishell *shell, int i);
+t_token		*ft_parsing_b(t_minishell *shell, int i);
+t_token		*ft_if_quotes_a(t_minishell *shell, int start);
+t_token		*ft_if_command(t_minishell *shell, int start);
+t_token		*ft_if_pipe(t_minishell *shell, int start);
+t_token		*ft_if_heredoc(t_minishell *shell, int start);
+t_token		*ft_if_input(t_minishell *shell, int start);
+t_token		*ft_if_append(t_minishell *shell, int start);
+t_token		*ft_if_output(t_minishell *shell, int start);
 t_token		*new_token_nd(char *value, int type, int incr);
 t_token		*ft_lstlast_tok(t_token *lst);
 void		ft_lstadd_back_tok(t_token **lst, t_token *new);
