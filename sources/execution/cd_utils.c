@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:03:29 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 16:36:28 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:11:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	ft_liberate_the_child(t_minishell *shell)
 {
 	if (shell->process == CHILD)
-		{
-			ft_free_all(&shell);
-			exit(ERROR);
-		}
+	{
+		ft_free_all(&shell);
+		exit(ERROR);
+	}
 }
 
 void	ft_handle_err_msg(t_minishell *shell, int err_code)
@@ -28,7 +28,7 @@ void	ft_handle_err_msg(t_minishell *shell, int err_code)
 		ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
 	else if (err_code == 2)
 	{
-	ft_error_msg(shell, "toupetishell: cd",
-		shell->directory, ": No such file or directory");
+		ft_error_msg(shell, "toupetishell: cd",
+			shell->directory, ": No such file or directory");
 	}
 }

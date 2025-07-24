@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:09:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,23 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 	return (SUCCESS);
 }
 
-void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
+void	ft_handle_a_dot(t_minishell *shell, int index)
 {
-	if (cmd && ft_strchr(shell->cmd[index]->args[0], '/')
-		&& (access(shell->cmd[index]->args[0], X_OK) == -1))
+	if (shell->cmd[index]->args[0][1] == 47
+		&& shell->cmd[index]->args[0][2] == '\0')
 	{
-		ft_error_msg(shell, SHL_NAME_ERR, shell->cmd[index]->args[0],
-			": No such file or directory");
+		ft_error_msg(shell, SHELL_NAME, NULL, "./: Is a directory");
 		ft_free_all(&shell);
-		exit(127);
+		exit(126);
 	}
-	if (shell->cmd[index]->args[0][0] == 46)
+	else if (shell->cmd[index]->args[0][1] == '\0')
 	{
-		if (shell->cmd[index]->args[0][1] == 47
-			&& shell->cmd[index]->args[0][2] == '\0')
-		{
-			ft_error_msg(shell, SHELL_NAME, NULL, "./: Is a directory");
-			ft_free_all(&shell);
-			exit(126);
-		}
-		else if (shell->cmd[index]->args[0][1] == '\0')
-		{
-			ft_error_msg(shell, SHELL_NAME, NULL,
-				".: filename argument required\n");
-			ft_error_msg(NULL, NULL, NULL,
-				".: usage: . filename [arguments]");
-			ft_free_all(&shell);
-			exit(2);
-		}
+		ft_error_msg(shell, SHELL_NAME, NULL,
+			".: filename argument required\n");
+		ft_error_msg(NULL, NULL, NULL,
+			".: usage: . filename [arguments]");
+		ft_free_all(&shell);
+		exit(2);
 	}
 }
 
@@ -94,19 +83,10 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 		exit(127);
 	}
 	ft_copy_env_for_execve(shell);
-	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
-	{
-		free(cmd);
-		ft_free_all(&shell);
-		perror(SHL_NAME_ERR);
-		if (errno == ENOENT)
-			exit(127);
-		else
-			exit(126);
-	}
+	ft_execve(shell, index, cmd);
 }
 
-void	ft_child_loop(t_minishell *shell, int index)
+void	ft_close_for_chloop(t_minishell *shell)
 {
 	if (close(shell->save_stdin) == -1 || close(shell->save_stdout) == -1)
 	{
@@ -114,6 +94,11 @@ void	ft_child_loop(t_minishell *shell, int index)
 		ft_free_all(&shell);
 		exit (EXIT_FAILURE);
 	}
+}
+
+void	ft_child_loop(t_minishell *shell, int index)
+{
+	ft_close_for_chloop(shell);
 	ft_redirections(shell, index);
 	if (shell->cmd[index]->args[0])
 	{

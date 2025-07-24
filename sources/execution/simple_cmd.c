@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:09:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,18 @@ int	ft_simple_cmd(t_minishell *shell, int index)
 	ft_waiting_for_child(shell, 0, 1, pid);
 	ft_set_of_sig(shell, PARENT);
 	return (SUCCESS);
+}
+
+void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
+{
+	if (cmd && ft_strchr(shell->cmd[index]->args[0], '/')
+		&& (access(shell->cmd[index]->args[0], X_OK) == -1))
+	{
+		ft_error_msg(shell, SHL_NAME_ERR, shell->cmd[index]->args[0],
+			": No such file or directory");
+		ft_free_all(&shell);
+		exit(127);
+	}
+	if (shell->cmd[index]->args[0][0] == 46)
+		ft_handle_a_dot(shell, index);
 }

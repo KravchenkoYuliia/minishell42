@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 16:54:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:10:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_unset_head(t_minishell *shell, int index)
 	}
 }
 
-void	ft_else(t_env **current, t_env **previous)	
+void	ft_else(t_env **current, t_env **previous)
 {
 	if (!(*current)->next)
 			(*current) = NULL;
