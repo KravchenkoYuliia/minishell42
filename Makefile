@@ -6,12 +6,12 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/07/24 16:43:51 by lfournie         ###   ########.fr        #
+#    Updated: 2025/07/24 17:28:03 by lfournie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Werror -Wextra $(INC_DIR) -g3
+CFLAGS = -Wall -Werror -Wextra $(INC_DIR)
 LIBFT = libft42/libft.a
 
 all: $(LIBFT) $(NAME)

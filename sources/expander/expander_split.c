@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:12:49 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 14:29:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:19:39 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	is_quoted(char const *s1, char const set, int index)
 		i++;
 	}
 	if (!sp_quote && !db_quote)
-			return (true);
+		return (true);
 	return (false);
 }
 

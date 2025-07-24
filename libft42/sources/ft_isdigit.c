@@ -6,10 +6,11 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:11:38 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/28 13:10:35 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:27:16 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
 int	ft_isdigit(char c)
 {
