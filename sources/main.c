@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 14:41:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 	{
 		ft_error_msg(&shell,
-			SHELL_NAME_ERROR, av[1], ": No such file or directory");
+			SHL_NAME_ERR, av[1], ": No such file or directory");
 		return (0);
 	}
 	ft_init_minishell(&shell, env);

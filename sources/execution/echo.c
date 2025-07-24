@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:58:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:26:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:44:12 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,27 @@ bool	ft_is_option(char *args)
 	return (true);
 }
 
-int	ft_echo(t_minishell *shell, int index)
+int	ft_echo(t_minishell *shl, int idx)
 {
 	int	i;
 	int	n_flag;
 
 	i = 1;
 	n_flag = 0;
-	if (!shell->cmd[index]->args[1])
+	if (!shl->cmd[idx]->args[1])
 	{
 		printf("\n");
 		return (SUCCESS);
 	}
-	while (shell->cmd[index]->args[i]
-		&& ft_is_option(shell->cmd[index]->args[i]))
+	while (shl->cmd[idx]->args[i] && ft_is_option(shl->cmd[idx]->args[i]))
 	{
 		n_flag = 1;
 		i++;
 	}
-	while (shell->cmd[index]->args[i] != NULL)
+	while (shl->cmd[idx]->args[i] != NULL)
 	{
-		printf("%s", shell->cmd[index]->args[i]);
-		if (shell->cmd[index]->args[i + 1] != NULL)
+		printf("%s", shl->cmd[idx]->args[i]);
+		if (shl->cmd[idx]->args[i + 1] != NULL)
 			printf(" ");
 		i++;
 	}

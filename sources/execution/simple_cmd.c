@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:08:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_execve(t_minishell *shell, int index, char *cmd)
 	{
 		free(cmd);
 		ft_free_all(&shell);
-		perror(SHELL_NAME_ERROR);
+		perror(SHL_NAME_ERR);
 		if (errno == ENOENT)
 			exit(127);
 		else

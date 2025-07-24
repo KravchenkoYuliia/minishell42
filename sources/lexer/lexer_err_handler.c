@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:26:49 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/10 10:26:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lexer_err_handler(int err_code, char c)
 {
-	printf("%s: ", SHELL_NAME_ERROR);
+	printf("%s: ", SHL_NAME_ERR);
 	if (err_code == 1)
 		printf("syntax error: unclosed quotes\n");
 	if (err_code == 2)

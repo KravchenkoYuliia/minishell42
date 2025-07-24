@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:19:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 14:19:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_cmd_checking(t_minishell *shell, int index, char *cmd)
 	if (cmd && ft_strchr(shell->cmd[index]->args[0], '/')
 		&& (access(shell->cmd[index]->args[0], X_OK) == -1))
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR, shell->cmd[index]->args[0],
+		ft_error_msg(shell, SHL_NAME_ERR, shell->cmd[index]->args[0],
 			": No such file or directory");
 		ft_free_all(&shell);
 		exit(127);
@@ -98,7 +98,7 @@ void	ft_simple_cmd_withpipe(t_minishell *shell, int index)
 	{
 		free(cmd);
 		ft_free_all(&shell);
-		perror(SHELL_NAME_ERROR);
+		perror(SHL_NAME_ERR);
 		if (errno == ENOENT)
 			exit(127);
 		else

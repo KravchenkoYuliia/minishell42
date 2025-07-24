@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:10:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:36 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,31 @@ void	ft_ctrl_d(t_minishell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-int	ft_exit(t_minishell *shell, int index)
+int	ft_exit(t_minishell *shl, int index)
 {
 	int	status;
 
-	status = shell->exit_status;
-	if (shell->process == PARENT)
+	status = shl->exit_status;
+	if (shl->process == PARENT)
 		write(1, "exit\n", 5);
-	if (shell->cmd[index]->args[1])
+	if (shl->cmd[index]->args[1])
 	{
-		shell->exit_status = ft_atoi(shell->cmd[index]->args[1]);
-		if (!ft_only_numeric(shell->cmd[index]->args[1]))
+		shl->exit_status = ft_atoi(shl->cmd[index]->args[1]);
+		if (!ft_only_numeric(shl->cmd[index]->args[1]))
 		{
-			ft_write_to_stderr(shell, "exit: ", shell->cmd[index]->args[1],
+			ft_write_to_stderr(shl, "exit: ", shl->cmd[index]->args[1],
 				": numeric argument required");
 			status = 2;
 		}
-		else if (shell->cmd[index]->args[2])
+		else if (shl->cmd[index]->args[2])
 		{
-			ft_error_msg(shell, SHELL_NAME_ERROR, "exit",
-				": too many arguments");
-			shell->exit_status = 1;
+			ft_error_msg(shl, SHL_NAME_ERR, "exit", ": too many arguments");
+			shl->exit_status = 1;
 			return (1);
 		}
-		status = shell->exit_status;
+		status = shl->exit_status;
 	}
-	ft_save_std_fileno(shell);
-	ft_free_all(&shell);
+	ft_save_std_fileno(shl);
+	ft_free_all(&shl);
 	exit((unsigned char)status);
 }

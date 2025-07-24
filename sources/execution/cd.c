@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:19:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_cd_home(t_minishell *shell, char directory[PATH_MAX], char *home_path)
 	home_path = ft_get_home_path(shell->env);
 	if (!home_path)
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR, NULL, ": cd: HOME not set");
+		ft_error_msg(shell, SHL_NAME_ERR, NULL, ": cd: HOME not set");
 		shell->exit_status = 1;
 		return (ERROR);
 	}

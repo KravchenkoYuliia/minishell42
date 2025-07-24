@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 19:42:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/03 13:07:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_option_check(t_minishell *shell, int index, int i)
 	if (shell->cmd[index]->args[i][0] == '-')
 	{
 		printf("%s: export: %s: invalid option\n",
-			SHELL_NAME_ERROR, shell->cmd[index]->args[i]);
+			SHL_NAME_ERR, shell->cmd[index]->args[i]);
 		shell->exit_status = 2;
 		return (ERROR);
 	}

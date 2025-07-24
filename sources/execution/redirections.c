@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 13:54:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_check_infile(t_minishell *shell, char *input)
 
 	if (access(input, F_OK) == -1)
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR,
+		ft_error_msg(shell, SHL_NAME_ERR,
 			input, ": No such file or directory");
 		if (shell->process == PARENT)
 			return (ERROR);
@@ -31,7 +31,7 @@ int	ft_check_infile(t_minishell *shell, char *input)
 	fd = open(input, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR, input, ": Permission denied");
+		ft_error_msg(shell, SHL_NAME_ERR, input, ": Permission denied");
 		return (ERROR);
 	}
 	return (fd);
@@ -101,7 +101,7 @@ int	ft_redir_output(t_minishell *shell, int index)
 		if (fd == -1)
 		{
 			shell->exit_status = 1;
-			perror(SHELL_NAME_ERROR);
+			perror(SHL_NAME_ERR);
 			return (ERROR);
 		}
 		if (dup2(fd, STDOUT_FILENO) == -1)

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:52:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 13:07:16 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_ctrl_c(int sign)
 		rl_redisplay();
 	}
 	else
-		perror(SHELL_NAME_ERROR);
+		perror(SHL_NAME_ERR);
 }
 
 void	ft_ctrl_c_child(int sign)
