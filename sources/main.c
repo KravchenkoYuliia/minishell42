@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 09:26:59 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/24 11:57:43 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:09:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_minishell(t_minishell *shell)
 		shell->process = PARENT;
 		shell->input = readline(SHELL_NAME);
 		ft_checking_input(shell);
-		if (shell->input[0])	
+		if (shell->input[0])
 			add_history(shell->input);
 		if (ft_new_prompt(shell) == true)
 			continue ;
@@ -96,7 +96,8 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	if (ac != 1)
 	{
-		ft_error_msg(&shell, SHELL_NAME_ERROR, av[1], ": No such file or directory");
+		ft_error_msg(&shell,
+			SHELL_NAME_ERROR, av[1], ": No such file or directory");
 		return (0);
 	}
 	ft_init_minishell(&shell, env);
@@ -107,4 +108,3 @@ int	main(int ac, char **av, char **env)
 	ft_minishell(&shell);
 	return (0);
 }
-

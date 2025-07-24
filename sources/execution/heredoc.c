@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:25:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 22:34:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:07:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_name_the_heredoc_file(t_minishell *shell, int index)
 {
-	int	i;
+	int		i;
 	char	*name;
 	char	*path;
 
@@ -39,24 +39,19 @@ char	*ft_name_the_heredoc_file(t_minishell *shell, int index)
 
 int	ft_fork_heredoc(t_minishell *shell, char *limiter, int index)
 {
-	char *fd_name;
-
+	char	*fd_name;
 	pid_t	pid;
-	//fd_name = ft_itoa(index);
 
 	pid = fork();
-	//if (pid == -1)
-		//smth;
+	if (pid == -1)
+		return (ERROR);
 	fd_name = ft_name_the_heredoc_file(shell, index);
 	if (pid == 0)
 	{
-		shell->fd  = open(fd_name,
-			O_RDWR | O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		shell->fd = open(fd_name,
+				O_RDWR | O_CREAT | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		free(fd_name);
-		/*shell->heredoc_fd[index] = open(fd_name,
-			O_RDWR | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);*/
 		ft_set_of_sig(shell, CHILD);
 		ft_handle_heredoc(shell, limiter, index);
 		ft_free_all(&shell);
@@ -84,7 +79,6 @@ char	*ft_handle_line(t_minishell *shell, char *line)
 
 int	ft_line_is_not_limiter(char *line, char *limiter)
 {
-	//limiter = ft_strjoin_char(limiter, '\n');
 	if (ft_strlen(line) >= ft_strlen(limiter))
 	{	
 		if (ft_strncmp(line, limiter, ft_strlen(line)) != 0)
@@ -101,7 +95,8 @@ int	ft_line_is_not_limiter(char *line, char *limiter)
 	}
 }
 
-int	ft_write_till_limiter(t_minishell *shell, char *line, char *limiter, int index)
+int	ft_write_till_limiter(t_minishell *shell,
+		char *line, char *limiter, int index)
 {
 	(void)index;
 	if (line && ft_line_is_not_limiter(line, limiter) == true)
@@ -114,9 +109,6 @@ int	ft_write_till_limiter(t_minishell *shell, char *line, char *limiter, int ind
 	{
 		free(line);
 		close(shell->fd);
-		//free(limiter);
-		//close(shell->cmd[index]->heredoc_pipe[1]);
-		//ft_free_struct_foreach_cmd(shell->cmd, 0);
 		return (EXIT_FLAG);
 	}
 	return (ERROR);

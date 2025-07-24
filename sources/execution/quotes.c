@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:04:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:03:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:12:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ bool	ft_quote_or_not_quote(char *limiter)
 		i++;
 	}
 	return (false);
+}
+
+char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter)
+{
+	shell->quote_lim = ft_quote_or_not_quote(limiter);
+	if (shell->quote_lim == true)
+		limiter = ft_unquote_limiter(limiter);
+	return (limiter);
 }
 
 char	*ft_unquote_limiter(char *unquote_me)

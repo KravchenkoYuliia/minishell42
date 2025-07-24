@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:08:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:15:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,20 @@ char	*ft_getenv_variable(char *expand_me, int start,
 	return (result);
 }
 
-char	*ft_unquote_lim_heredoc(t_minishell *shell, char *limiter)
+int	ft_line_without_dollar(char *expand_me, char **line)
 {
-	shell->quote_lim = ft_quote_or_not_quote(limiter);
-	if (shell->quote_lim == true)
-		limiter = ft_unquote_limiter(limiter);
-	return (limiter);
+	int	i;
+
+	i = 0;
+	if (expand_me[0] && expand_me[0] != '$')
+	{
+		while (expand_me[i] && expand_me[i] != '$')
+		{
+			*line = ft_strjoin_char(*line, expand_me[i]);
+			i++;
+		}
+	}
+	return (i);
 }
 
 char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
@@ -94,14 +102,7 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 
 	i = 0;
 	line = NULL;
-	if (expand_me[0] && expand_me[0] != '$')
-	{
-		while (expand_me[i] && expand_me[i] != '$')
-		{
-			line = ft_strjoin_char(line, expand_me[i]);
-			i++;
-		}
-	}
+	i = ft_line_without_dollar(expand_me, &line);
 	if (expand_me[i] && expand_me[i] == '$')
 	{
 		env_var = ft_getenv_variable(expand_me, i + 1,
