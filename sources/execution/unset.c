@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 16:51:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:54:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,37 +70,33 @@ void	ft_else(t_env **current, t_env **previous)
 	}
 }
 
-void	ft_unset_element(char **args, t_env **current,
-		t_env **previous, t_env **ex)
-{
-	if (ft_unset_or_not_unset((*current)->line, args) == true)
-	{
-		(*ex) = (*current);
-		if ((*current)->next)
-		{
-			(*previous)->next = (*current)->next;
-			(*current) = (*current)->next;
-		}
-		else
-		{
-			(*previous)->next = NULL;
-			(*current) = NULL;
-		}
-		if (ft_strncmp((*ex)->line, "_=/usr/bin/env",
-				ft_strlen("_=/usr/bin/env")) == 0)
-			return ;
-		free((*ex)->line);
-		free((*ex));
-	}
-	else
-		ft_else(current, previous);
-}
-
 void	ft_unset_body(char **args, t_env *current,
 		t_env *previous, t_env *ex)
 {
 	while (current)
-		ft_unset_element(args, &current, &previous, &ex);
+	{
+		if (ft_unset_or_not_unset(current->line, args) == true)
+		{
+			ex = current;
+			if (current->next)
+			{
+				previous->next = current->next;
+				current = current->next;
+			}
+			else
+			{
+				previous->next = NULL;
+				current = NULL;
+			}
+			if (ft_strncmp(ex->line, "_=/usr/bin/env",
+					ft_strlen("_=/usr/bin/env")) == 0)
+				return ;
+			free(ex->line);
+			free(ex);
+		}
+		else
+			ft_else(&current, &previous);
+	}
 }
 
 int	ft_unset(t_minishell *shell, int index)
