@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:43:17 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,65 +51,57 @@ int	ft_cd_somewhere_else(t_minishell *shell,
 	return (SUCCESS);
 }
 
-int	ft_cd(t_minishell *shell, int index)
+static int	ft_cd_b(t_minishell *shell, t_cmd_struct *arg, int index)
 {
-	char	directory[PATH_MAX];
 	char	*home_path;
 
 	home_path = NULL;
-	if (shell->cmd[index]->args[0] && shell->cmd[index]->args[1]
-		&& shell->cmd[index]->args[2])
+	if (!arg->args[1] || (arg->args[1][0] == '~' && !arg->args[1][1]))
 	{
-		ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
-		shell->exit_status = 1;
-		if (shell->process == CHILD)
-		{
-			ft_free_all(&shell);
-			exit(ERROR);
-		}
-		return (ERROR);
-	}
-	if (!shell->cmd[index]->args[1] || (shell->cmd[index]->args[1][0] == '~'
-		&& !shell->cmd[index]->args[1][1]))
-	{
-		if (ft_cd_home(shell, directory, home_path) == ERROR)
+		if (ft_cd_home(shell, shell->directory, home_path) == ERROR)
 		{
 			shell->exit_status = 1;
-			if (shell->process == CHILD)
-			{
-				ft_free_all(&shell);
-				exit(ERROR);
-			}
+			ft_liberate_the_child(shell);
 			return (ERROR);
 		}
 	}
-	else if (shell->cmd[index]->args[1])
+	else if (arg->args[1])
 	{
-		if (ft_cd_somewhere_else(shell, index, directory) == ERROR)
+		if (ft_cd_somewhere_else(shell, index, shell->directory) == ERROR)
 		{
-			if (shell->process == CHILD)
-			{
-				ft_free_all(&shell);
-				exit(ERROR);
-			}
+			ft_liberate_the_child(shell);
 			shell->exit_status = 1;
 			return (ERROR);
 		}
 	}
-	if (chdir(directory) != 0)
+	return (SUCCESS);
+}
+
+int	ft_cd(t_minishell *shell, int index)
+{
+	t_cmd_struct	*arg;
+
+	arg = shell->cmd[index];
+	if (arg->args[0] && arg->args[1] && arg->args[2])
 	{
-		ft_error_msg(shell, "toupetishell: cd",
-			directory, ": No such file or directory");
-		shell->exit_status = 1;
+		ft_handle_err_msg(shell, 1);
+		ft_liberate_the_child(shell);
 		return (ERROR);
 	}
-	ft_bzero(directory, PATH_MAX);
-	if (getcwd(directory, PATH_MAX) == NULL)
+	if (ft_cd_b(shell, arg, index) == ERROR)
+		return (ERROR);
+	if (chdir(shell->directory) != 0)
+	{
+		ft_handle_err_msg(shell, 2);
+		return (ERROR);
+	}
+	ft_bzero(shell->directory, PATH_MAX);
+	if (getcwd(shell->directory, PATH_MAX) == NULL)
 	{
 		ft_syscall_ft_failed(shell, "getcwd");
 		shell->exit_status = 1;
 		return (ERROR);
 	}
-	ft_change_pwd(shell, shell->env, directory);
+	ft_change_pwd(shell, shell->env, shell->directory);
 	return (SUCCESS);
 }

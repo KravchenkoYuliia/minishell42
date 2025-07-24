@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:47:16 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:34:16 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_minishell
 	bool	quote_lim;
 	bool	malloc_fail;
 	int		malloc_fail_size;
+	char	directory[PATH_MAX];
 }	t_minishell;
 
 ////////////////////////////
@@ -291,6 +292,8 @@ void	ft_export_oldpwd(t_minishell *shell);
 void	ft_syscall_ft_failed(t_minishell *shell, char *cmd);
 bool	ft_check_var_name(char *name);
 void	ft_unlink_heredoc_files(t_minishell *shell);
+void 	ft_liberate_the_child(t_minishell *shell);
+void	ft_handle_err_msg(t_minishell *shell, int err_code);
 /////////////////
 
 //free_handler

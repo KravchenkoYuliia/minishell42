@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:47:09 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:49:43 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ int	ft_redir_input(t_minishell *shell, int index)
 		if (temp->type == INPUT)
 		{
 			fd = ft_check_infile(shell, temp->file_name);
-			if (fd < 3)
-				return (ERROR);
-			if (dup2(fd, STDIN_FILENO) == -1 )
-				return (ERROR);
-			if (close(fd) == -1)
+			if (fd < 3 || dup2(fd, STDIN_FILENO) == -1 || close(fd) == -1)
 				return (ERROR);
 		}
 		else if (temp->type == HEREDOC)
