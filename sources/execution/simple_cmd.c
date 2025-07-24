@@ -6,11 +6,25 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:59:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:45:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:08:02 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_execve(t_minishell *shell, int index, char *cmd)
+{
+	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
+	{
+		free(cmd);
+		ft_free_all(&shell);
+		perror(SHELL_NAME_ERROR);
+		if (errno == ENOENT)
+			exit(127);
+		else
+			exit(126);
+	}
+}
 
 int	ft_execute_child(t_minishell *shell, int index, char *cmd)
 {
@@ -34,15 +48,18 @@ int	ft_execute_child(t_minishell *shell, int index, char *cmd)
 	ft_copy_env_for_execve(shell);
 	if (!ft_strncmp(cmd, "./minishell", 11))
 		ft_handle_shlvl_in_array(shell, shell->env_execve);
-	if (execve(cmd, shell->cmd[index]->args, shell->env_execve) != 0)
+	ft_execve(shell, index, cmd);
+	return (SUCCESS);
+}
+
+int	ft_child(t_minishell *shell, pid_t pid, int index, char *cmd)
+{
+	if (pid == 0)
 	{
-		free(cmd);
-		ft_free_all(&shell);
-		perror(SHELL_NAME_ERROR);
-		if (errno == ENOENT)
-			exit(127);
-		else
-			exit(126);
+		shell->process = CHILD;
+		ft_set_sig_quit(shell, index);
+		if (ft_execute_child(shell, index, cmd) == ERROR)
+			return (ERROR);
 	}
 	return (SUCCESS);
 }
@@ -63,13 +80,8 @@ int	ft_simple_cmd(t_minishell *shell, int index)
 		ft_clear_after_cmd_exec(shell);
 		return (ERROR);
 	}
-	if (pid == 0)
-	{
-		shell->process = CHILD;
-		ft_set_sig_quit(shell, index);
-		if (ft_execute_child(shell, index, cmd) == ERROR)
-			return (ERROR);
-	}
+	if (ft_child(shell, pid, index, cmd) == ERROR)
+		return (ERROR);
 	shell->process = PARENT;
 	ft_set_of_sig(shell, SIGIGN);
 	ft_waiting_for_child(shell, 0, 1, pid);
