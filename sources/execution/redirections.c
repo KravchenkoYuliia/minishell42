@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:16:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:46:45 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,18 @@ int	ft_redir_input(t_minishell *shell, int index)
 			fd = ft_check_infile(shell, temp->file_name);
 			if (fd < 3)
 				return (ERROR);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
+			if (dup2(fd, STDIN_FILENO) == -1 )
+				return (ERROR);
+			if (close(fd) == -1)
+				return (ERROR);
 		}
 		else if (temp->type == HEREDOC)
 		{
 			fd = open(temp->file_name, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
+			if (dup2(fd, STDIN_FILENO) == -1)
+				return (ERROR);
+			if (close(fd) == -1)
+				return (ERROR);
 		}
 		temp = temp->next;
 	}
@@ -100,8 +104,10 @@ int	ft_redir_output(t_minishell *shell, int index)
 			perror(SHELL_NAME_ERROR);
 			return (ERROR);
 		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (ERROR);
+		if (close(fd) == -1)
+			return (ERROR);
 		i++;
 		temp = temp->next;
 	}
@@ -117,11 +123,14 @@ int	ft_redirections(t_minishell *shell, int index)
 	}
 	if (shell->cmd[index]->pipe_flag == 1)
 	{
-		dup2(shell->cmd[index]->pipe[1], STDOUT_FILENO);
-		close(shell->cmd[index]->pipe[1]);
+		if (dup2(shell->cmd[index]->pipe[1], STDOUT_FILENO) == -1)
+			return (ERROR);
+		if (close(shell->cmd[index]->pipe[1]) == -1)
+			return (ERROR);
 	}
 	if (shell->cmd[index]->pipe_flag == 0 && shell->cmd[index]->pipe[1] > 2)
-		close(shell->cmd[index]->pipe[1]);
+		if (close(shell->cmd[index]->pipe[1]) == -1)
+			return (ERROR);
 	if (shell->cmd[index]->output_list)
 		if (ft_redir_output(shell, index) == ERROR)
 			return (ERROR);
