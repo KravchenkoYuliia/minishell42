@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:25:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:44:19 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	ft_fill_env(t_minishell *shell, t_env **env_list, char **env)
 	char	*content;
 	t_env	*new;
 
-	i = 0;
+	i = -1;
 	content = NULL;
-	while (env[i])
+	while (env[++i])
 	{
 		content = ft_strdup(env[i]);
 		if (!content)
@@ -86,7 +86,6 @@ void	ft_fill_env(t_minishell *shell, t_env **env_list, char **env)
 			ft_malloc_failed(shell, sizeof(t_env), "ft_fill_env");
 		}
 		ft_lstadd_back_env(env_list, new);
-		i++;
 	}
 	if (!*env_list)
 	{

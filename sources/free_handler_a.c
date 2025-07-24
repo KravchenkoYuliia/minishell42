@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:16:30 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/23 19:05:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:47:25 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	free_redir_list(t_redirect *head)
 	}
 }
 
-void	ft_free_args(char **array) //free **array
+void	ft_free_args(char **array)
 {
 	int	i;
 
@@ -89,13 +89,10 @@ void	ft_free_struct_foreach_cmd(t_cmd_struct **structs)
 	i = 0;
 	while (structs && structs[i])
 	{
-		//Both those ifs cause a segfault with several funcheck tests and i don't know why 
-		///////////////////////
 		if (structs[i]->pipe[0] > 0)
-                	close(structs[i]->pipe[0]);
+			close(structs[i]->pipe[0]);
 		if (structs[i]->pipe[1] > 0)
-                	close(structs[i]->pipe[1]);
-		///////////////////////
+			close(structs[i]->pipe[1]);
 		if (structs[i]->args)
 			ft_free_args(structs[i]->args);
 		if (structs[i]->input_list)
@@ -107,18 +104,3 @@ void	ft_free_struct_foreach_cmd(t_cmd_struct **structs)
 	}
 	free(structs);
 }
-
-/*typedef struct s_cmd_struct
-{
-	int					nb_of_words;
-	char				**args;
-	struct s_redirect	*input_list;
-	struct s_redirect	*output_list;
-	char				*input;
-	char				*output;
-	int					heredoc_pipe[2];
-	int					append;
-	int					heredoc;
-	int					pipe_flag;
-	int					pipe[2];
-}	t_cmd_struct;*/

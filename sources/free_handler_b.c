@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:46:08 by lfournie          #+#    #+#             */
-/*   Updated: 2025/07/23 19:05:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:48:52 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void	ft_free_all(t_minishell **shell)
 {
-	//ft_close_fd(*shell);
 	if (!*shell)
 		return ;
-	//if ((*shell)->history)
-	//	free ((*shell)->history);
 	if ((*shell)->input)
-		free ((*shell)->input);	
+		free ((*shell)->input);
 	if ((*shell)->token_lst)
 		free_token_list((*shell)->token_lst);
 	if ((*shell)->env)
@@ -29,14 +26,13 @@ void	ft_free_all(t_minishell **shell)
 		ft_free_args((*shell)->env_execve);
 	if ((*shell)->cmd)
 		ft_free_struct_foreach_cmd((*shell)->cmd);
-	//free (*shell);
 	shell = NULL;
 	rl_clear_history();
 }
 
 void	ft_unlink_heredoc_files(t_minishell *shell)
 {
-	int		i;
+	int			i;
 	t_redirect	*temp;
 
 	i = 0;
@@ -65,21 +61,3 @@ void	ft_clear_after_cmd_exec(t_minishell *shell)
 	free_token_list(shell->token_lst);
 	ft_save_std_fileno(shell);
 }
-
-/*typedef struct s_minishell
-{
-	int					prompt_count;
-	char				*input;
-	t_token				*token_lst;
-	int					exit_status;
-	t_env				*env;
-	char				**env_execve;
-	t_cmd_struct		**cmd;
-	int					nb_of_cmd;
-	int					pipe[2];
-	int					save_stdin;
-	int					save_stdout;
-	char				*history;
-	bool				heredoc_in_input;
-	struct sigaction	sig;
-}	t_minishell;*/
