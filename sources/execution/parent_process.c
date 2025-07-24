@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:43:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:55:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int	ft_parent_process(t_minishell *shell)
 		return (ERROR);
 	}
 	if (shell->cmd[0]->pipe_flag == 0 && !shell->cmd[0]->args[0])
-		ft_redirections(shell, 0);
+	{
+		if (ft_redirections(shell, 0) == ERROR)
+			return (ERROR);
+	}
 	if (shell->cmd[0]->pipe_flag == 0)
 	{
 		if (shell->cmd[0]->args[0])
