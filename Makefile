@@ -6,7 +6,7 @@
 #    By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/13 09:39:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/07/24 14:45:02 by lfournie         ###   ########.fr        #
+#    Updated: 2025/07/24 15:39:03 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRC_DIR = sources
 OBJ_DIR = objects
 INC_DIR = -I includes -I libft42/includes
 
-FILES = 	main.c	input_and_init.c \
 FILES = 	main.c	input_and_init.c \
 			env/copy_env.c env/env_for_execve.c \
 			free_handler_a.c  free_handler_b.c signals.c \

@@ -6,11 +6,19 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 11:26:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:44:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_shlvl_overflow(int shlvl)
+{
+	ft_putstr_fd("toupetishell: warning: shell ", 2);
+	ft_putstr_fd("level (1000) too high, resetting to 1\n", 2);
+	shlvl = 1;
+	return (shlvl);
+}
 
 void	ft_handle_shlvl_in_array(t_minishell *shell, char **env)
 {
@@ -30,11 +38,7 @@ void	ft_handle_shlvl_in_array(t_minishell *shell, char **env)
 			if (shlvl < 999)
 				shlvl++;
 			else
-			{
-				ft_putstr_fd("toupetishell: warning: shell ", 2);
-				ft_putstr_fd("level (1000) too high, resetting to 1\n", 2);
-				shlvl = 1;
-			}
+				shlvl = ft_shlvl_overflow(shlvl);
 			newline = ft_strjoin(newline, ft_itoa(shlvl));
 			free(env[i]);
 			env[i] = newline;
