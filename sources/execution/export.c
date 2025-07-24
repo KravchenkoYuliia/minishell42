@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:58:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:26:29 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:18:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ int	ft_export_forempty_env(t_minishell *shell)
 	{
 		free(shlvl);
 		free(pwd);
-		ft_malloc_failed(shell, ft_strlen("_=/usr/bin/env"), "ft_export_forempty_env");
+		ft_malloc_failed(shell,
+			ft_strlen("_=/usr/bin/env"), "ft_export_forempty_env");
 	}
 	new = ft_lstnew_env(pwd);
 	if (!new)

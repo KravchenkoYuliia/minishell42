@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:27:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/11 12:59:36 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:21:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char	*ft_find_absolute_path(t_minishell *shell, int index)
 	temp = shell->env;
 	while (temp && ft_strncmp(temp->line, "PATH=", 5) != 0)
 		temp = temp->next;
-	if (temp == NULL)	
+	if (temp == NULL)
 	{	
-		ft_error_msg(shell, SHELL_NAME_ERROR, shell->cmd[index]->args[0], ": No such file or directory");
+		ft_error_msg(shell, SHELL_NAME_ERROR,
+			shell->cmd[index]->args[0], ": No such file or directory");
 		ft_free_all(&shell);
 		exit(127);
 	}

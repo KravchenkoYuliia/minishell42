@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 07:57:40 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 13:05:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:08:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*ft_get_result(char *expand_me, int start, char *result)
 	return (result);
 }
 
-char	*ft_getenv_variable(char *expand_me, int start, int exit_status, t_env *env)
+char	*ft_getenv_variable(char *expand_me, int start,
+		int exit_status, t_env *env)
 {
 	int		i;
 	char	*temp;
@@ -110,7 +111,6 @@ char	*ft_expand_line_heredoc(t_minishell *shell, char *expand_me)
 	}
 	else
 	{
-		
 		if (line)
 			line[ft_strlen(line)] = '\0';
 	}

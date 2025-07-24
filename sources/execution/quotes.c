@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:04:24 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/14 14:56:43 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:03:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*ft_unquote_limiter(char *unquote_me)
 	if (!limiter)
 		return (NULL);
 	limiter = ft_quotes(unquote_me, limiter);
-	//free(unquote_me);
 	return (limiter);
 }
 

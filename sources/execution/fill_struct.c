@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:08:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:03:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:29:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	ft_fill_redirection(t_minishell *shell, int i_struct, t_token *temp)
 	{
 		if (ft_fork_heredoc(shell, temp->value, i_struct) == CTRLC_ALERT)
 			return (CTRLC_ALERT);
-	//	ft_put_heredoc_to_struct(shell, i_struct);
-	//	ft_fill_heredoc_history(shell, i_struct);
 	}
 	return (SUCCESS);
 }
@@ -60,10 +58,11 @@ void	ft_put_append_to_struct(t_minishell *shell, int i_struct, t_token *temp)
 	ft_lstadd_back_redirect(&shell->cmd[i_struct]->output_list, new);
 }
 
-void	ft_put_heredoc_to_struct(t_minishell *shell, int index, char *heredoc_file_name)
+void	ft_put_heredoc_to_struct(t_minishell *shell,
+		int index, char *heredoc_file_name)
 {
 	t_redirect	*new;
 
-	new = ft_lstnew_redirect_heredoc(shell, index, heredoc_file_name);
+	new = ft_lstnew_redirect_heredoc(shell, heredoc_file_name);
 	ft_lstadd_back_redirect(&shell->cmd[index]->input_list, new);
 }

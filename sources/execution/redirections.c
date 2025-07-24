@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 18:22:55 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 20:54:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:16:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	ft_check_infile(t_minishell *shell, char *input)
 
 	if (access(input, F_OK) == -1)
 	{
-		ft_error_msg(shell, SHELL_NAME_ERROR, input, ": No such file or directory");
+		ft_error_msg(shell, SHELL_NAME_ERROR,
+			input, ": No such file or directory");
 		if (shell->process == PARENT)
 			return (ERROR);
 		else
@@ -54,7 +55,7 @@ int	ft_redir_input(t_minishell *shell, int index)
 		}
 		else if (temp->type == HEREDOC)
 		{
-			int fd = open(temp->file_name, O_RDONLY);
+			fd = open(temp->file_name, O_RDONLY);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
@@ -106,26 +107,6 @@ int	ft_redir_output(t_minishell *shell, int index)
 	}
 	return (SUCCESS);
 }
-/*
-void	close_them_please(t_cmd_struct **cmds)
-{
-	for (size_t i = 0; cmds[i] != NULL; ++i)
-	{
-		close_it_please(cmds[i]);
-	}
-}*/
-/*
-void	close_it_please(t_cmd_struct *cmds)
-{
-	for (t_redirect *input = cmds->input_list; input; input = input->next)
-	{
-		if (input->heredoc_pipe[0] > 2)
-			close(input->heredoc_pipe[0]);
-		if (input->heredoc_pipe[1] > 2)
-			close(input->heredoc_pipe[1]);
-	}
-}
-*/
 
 int	ft_redirections(t_minishell *shell, int index)
 {
@@ -144,6 +125,5 @@ int	ft_redirections(t_minishell *shell, int index)
 	if (shell->cmd[index]->output_list)
 		if (ft_redir_output(shell, index) == ERROR)
 			return (ERROR);
-	//close_them_please(shell->cmd);
 	return (SUCCESS);
 }

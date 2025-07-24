@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:22:07 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 11:32:24 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:04:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	ft_exit_status(t_minishell *shell, int index, int status)
 	shell->exit_status = status;
 }
 
-void	ft_waiting_for_child(t_minishell *shell, int index, int nb_of_child, pid_t pid)
+void	ft_waiting_for_child(t_minishell *shell,
+		int index, int nb_of_child, pid_t pid)
 {
 	int	status;
 

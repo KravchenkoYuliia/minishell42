@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 22:38:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:30:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void		ft_handle_heredoc(t_minishell *shell, char *limiter, int index);
 int		ft_wait_heredoc_child(t_minishell *shell, pid_t pid);
 char		*ft_strjoin_heredoc(char *s1, char *s2);
 t_redirect	*ft_lstnew_redirect(void *content, int type);
-t_redirect      *ft_lstnew_redirect_heredoc(t_minishell *shell, int index, char *heredoc_file_name);
+t_redirect      *ft_lstnew_redirect_heredoc(t_minishell *shell, char *heredoc_file_name);
 t_redirect	*ft_lstlast_redirect(t_redirect *lst);
 void		ft_lstadd_back_redirect(t_redirect **lst, t_redirect *new);
 int			ft_execution(t_minishell *shell);

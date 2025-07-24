@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:48:00 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 20:14:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:43:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 		shell->process = PARENT;
 		if (close(shell->cmd[index]->pipe[1]) == -1)
 		{
-			
 			ft_syscall_ft_failed(shell, "close");
 			ft_free_all(&shell);
 			exit(EXIT_FAILURE);
@@ -70,7 +69,6 @@ int	ft_creating_child(t_minishell *shell, int index, pid_t pid)
 			ft_free_all(&shell);
 			exit(EXIT_FAILURE);
 		}
-
 		if (close(shell->cmd[index]->pipe[0]) == -1)
 		{
 			ft_syscall_ft_failed(shell, "close");
@@ -93,11 +91,6 @@ int	ft_parent_process(t_minishell *shell)
 	index = 0;
 	pid = 0;
 	shell->process = PARENT;
-	/*if (shell->heredoc_in_input == true && shell->history)
-	{
-		add_history(shell->history);
-		free(shell->history);
-	}*/
 	shell->save_stdin = dup(STDIN_FILENO);
 	if (shell->save_stdin == -1)
 	{
@@ -116,6 +109,7 @@ int	ft_parent_process(t_minishell *shell)
 	{
 		if (shell->cmd[0]->args[0])
 		{
+
 			if (ft_execute_one_cmd(shell, shell->cmd[0]->args[0], 0) == ERROR)
 			{
 				ft_clear_after_cmd_exec(shell);

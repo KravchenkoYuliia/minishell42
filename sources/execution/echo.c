@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:58:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 11:31:30 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:26:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	ft_echo(t_minishell *shell, int index)
 		printf("\n");
 		return (SUCCESS);
 	}
-	while (shell->cmd[index]->args[i] && ft_is_option(shell->cmd[index]->args[i]))
+	while (shell->cmd[index]->args[i]
+		&& ft_is_option(shell->cmd[index]->args[i]))
 	{
 		n_flag = 1;
 		i++;

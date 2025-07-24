@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 21:40:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:19:54 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,20 @@ int	ft_cd(t_minishell *shell, int index)
 	char	*home_path;
 
 	home_path = NULL;
-	if (shell->cmd[index]->args[0] && shell->cmd[index]->args[1] && shell->cmd[index]->args[2])
-        {
-                ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
+	if (shell->cmd[index]->args[0] && shell->cmd[index]->args[1]
+		&& shell->cmd[index]->args[2])
+	{
+		ft_error_msg(shell, SHELL_NAME, NULL, "cd: too many arguments");
 		shell->exit_status = 1;
-			if (shell->process == CHILD)
-			{
-				ft_free_all(&shell);
-				exit(ERROR);
-			}
-                return (ERROR);
-        }
+		if (shell->process == CHILD)
+		{
+			ft_free_all(&shell);
+			exit(ERROR);
+		}
+		return (ERROR);
+	}
 	if (!shell->cmd[index]->args[1] || (shell->cmd[index]->args[1][0] == '~'
-				&& !shell->cmd[index]->args[1][1]))
+		&& !shell->cmd[index]->args[1][1]))
 	{
 		if (ft_cd_home(shell, directory, home_path) == ERROR)
 		{

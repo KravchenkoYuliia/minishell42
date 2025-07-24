@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:23 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 19:43:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:10:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ void	ft_ctrl_d(t_minishell *shell)
 {
 	if (shell->env)
 		ft_free_env(shell->env);
-	//free (shell);
 	rl_clear_history();
 	ft_write_stdout("exit\n");
-	//ft_free_all(&shell);
 	exit(EXIT_SUCCESS);
 }
 

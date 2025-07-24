@@ -6,22 +6,21 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 10:25:13 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 18:04:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 11:31:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redirect	*ft_lstnew_redirect_heredoc(t_minishell *shell, int index,
+t_redirect	*ft_lstnew_redirect_heredoc(t_minishell *shell,
 		char *heredoc_file_name)
 {
-	(void)index;
-	(void)shell;
 	t_redirect	*lst;
 
 	lst = (t_redirect *)malloc(sizeof(t_redirect));
 	if (!lst)
-		return (NULL);
+		ft_malloc_failed(shell, sizeof(t_redirect),
+			"ft_lstnew_redirect_heredoc");
 	lst->file_name = heredoc_file_name;
 	lst->type = HEREDOC;
 	lst->next = NULL;
