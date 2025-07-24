@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 14:45:08 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:10:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,10 @@ void		ft_change_pwd(t_minishell *shell, t_env *env, char *directory);
 bool		ft_is_option(char *args);
 char		*ft_get_home_path(t_env *env);
 void	ft_if_child(t_minishell *shell, int index, pid_t pid);
+void	ft_export_path_forempty_env(t_minishell *shell, char *pwd);
+void	ft_check_signals(t_minishell *shell, char *lim_tmp, char *line);
+char	*ft_name_the_heredoc_file(t_minishell *shell, int index);
+void	ft_export_shlvl_forempty_env(t_minishell *shell, char *pwd);
 void	ft_check_close_dup(t_minishell *shell, int index);
 int			ft_just_export(t_env *env);
 int			ft_export_value(t_minishell *shell, int index);

@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 14:53:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/23 22:01:20 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:46:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,45 @@ bool	ft_check_var_name(char *name)
 			return (false);
 	}
 	return (true);
+}
+
+void	ft_export_path_forempty_env(t_minishell *shell, char *pwd)
+{
+	char	*env_path;
+	t_env	*new;
+
+	env_path = ft_strdup("_=/usr/bin/env");
+	if (!env_path)
+	{
+		free(pwd);
+		ft_malloc_failed(shell,
+			ft_strlen("_=/usr/bin/env"), "ft_export_forempty_env");
+	}
+	new = ft_lstnew_env(env_path);
+	if (!new)
+	{
+		free(env_path);
+		ft_malloc_failed(shell, sizeof(t_env), "ft_export_forempty_env");
+	}
+	ft_lstadd_back_env(&shell->env, new);
+}
+
+void	ft_export_shlvl_forempty_env(t_minishell *shell, char *pwd)
+{
+	char	*shlvl;
+	t_env	*new;
+
+	shlvl = ft_strdup("SHLVL=1");
+	if (!shlvl)
+	{
+		free(pwd);
+		ft_malloc_failed(shell, ft_strlen("SHLVL=1"), "ft_export_forempty_env");
+	}
+	new = ft_lstnew_env(shlvl);
+	if (!new)
+	{
+		free(shlvl);
+		ft_malloc_failed(shell, sizeof(t_env), "ft_export_forempty_env");
+	}
+	ft_lstadd_back_env(&shell->env, new);
 }
