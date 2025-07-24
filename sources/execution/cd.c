@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:01:09 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 16:43:17 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:01:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int	ft_cd(t_minishell *shell, int index)
 		return (ERROR);
 	}
 	ft_change_pwd(shell, shell->env, shell->directory);
+	shell->exit_status = 0;
 	return (SUCCESS);
 }

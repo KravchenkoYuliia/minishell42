@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:58:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:44:12 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:59:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	ft_echo(t_minishell *shl, int idx)
 	}
 	if (n_flag == 0)
 		printf("\n");
+	shl->exit_status = 0;
 	return (SUCCESS);
 }

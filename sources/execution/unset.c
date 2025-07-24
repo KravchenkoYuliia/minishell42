@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 17:10:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:02:53 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int	ft_unset(t_minishell *shell, int index)
 		current = shell->env->next;
 		ft_unset_body(shell->cmd[index]->args, current, previous, ex);
 	}
+	shell->exit_status = 0;
 	return (SUCCESS);
 }

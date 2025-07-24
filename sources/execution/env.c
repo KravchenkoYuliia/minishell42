@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:17 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 15:44:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:04:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	ft_env(t_minishell *shell, int index)
 	}
 	if (shell->env && shell->process == PARENT)
 		printf("\n");
+	shell->exit_status = 0;
 	return (SUCCESS);
 }
 
