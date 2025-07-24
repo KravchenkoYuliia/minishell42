@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 12:00:57 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:49:51 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void close_them_please(t_cmd_struct** cmds);
 void close_it_please(t_cmd_struct* cmds);
 
 
-char	*ft_cut_input(char *cut_me);
 bool	ft_find_heredoc(t_token *token_lst);
 void	ft_init_minishell(t_minishell *shell, char **env);
 void	ft_init_for_every_prompt(t_minishell *shell);
