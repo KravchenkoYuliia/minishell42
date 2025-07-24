@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:55:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/22 09:29:45 by lfournie         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:51:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,48 @@ void	ft_unset_head(t_minishell *shell, int index)
 	}
 }
 
+void	ft_else(t_env **current, t_env **previous)	
+{
+	if (!(*current)->next)
+			(*current) = NULL;
+	if ((*previous)->next && (*current) && (*current)->next)
+	{
+		(*previous) = (*previous)->next;
+		(*current) = (*current)->next;
+	}
+}
+
+void	ft_unset_element(char **args, t_env **current,
+		t_env **previous, t_env **ex)
+{
+	if (ft_unset_or_not_unset((*current)->line, args) == true)
+	{
+		(*ex) = (*current);
+		if ((*current)->next)
+		{
+			(*previous)->next = (*current)->next;
+			(*current) = (*current)->next;
+		}
+		else
+		{
+			(*previous)->next = NULL;
+			(*current) = NULL;
+		}
+		if (ft_strncmp((*ex)->line, "_=/usr/bin/env",
+				ft_strlen("_=/usr/bin/env")) == 0)
+			return ;
+		free((*ex)->line);
+		free((*ex));
+	}
+	else
+		ft_else(current, previous);
+}
+
 void	ft_unset_body(char **args, t_env *current,
 		t_env *previous, t_env *ex)
 {
 	while (current)
-	{
-		if (ft_unset_or_not_unset(current->line, args) == true)
-		{
-			ex = current;
-			if (current->next)
-			{
-				previous->next = current->next;
-				current = current->next;
-			}
-			else
-			{
-				previous->next = NULL;
-				current = NULL;
-			}
-			if (ft_strncmp(ex->line, "_=/usr/bin/env",
-					ft_strlen("_=/usr/bin/env")) == 0)
-				break ;
-			free(ex->line);
-			free(ex);
-		}
-		else
-		{
-			if (!current->next)
-				current = NULL;
-			if (previous->next && current && current->next)
-			{
-				previous = previous->next;
-				current = current->next;
-			}
-		}
-	}
+		ft_unset_element(args, &current, &previous, &ex);
 }
 
 int	ft_unset(t_minishell *shell, int index)
