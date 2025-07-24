@@ -6,7 +6,7 @@
 /*   By: lfournie <lfournie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:55:30 by yukravch          #+#    #+#             */
-/*   Updated: 2025/07/24 14:20:15 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:45:08 by lfournie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ int			ft_is_expandable(char *value);
 bool		ft_is_unquotable(int type, char *value);
 bool		ft_is_splitable(char *value);
 void		ft_word_split(t_minishell **shell);
+char		**ft_split_exp(char const *s, char c);
 char		*ft_unquote(t_minishell **shl, char *value, int i, int j);
 /////////////////
 
