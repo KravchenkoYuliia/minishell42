@@ -19,7 +19,8 @@
 ---
 
 ## 📚 Learning Outcomes  
-- ⚡ Deep understanding of **Unix processes**  
+- ⚡ Deep understanding of **Unix processes**
+- ⚡ Parent and child processes 
 - ⚡ File descriptors & redirections  
 - ⚡ Command parsing & memory management  
-- ⚡ **Teamwork & Git collaboration**
+- ⚡ Teamwork & Git collaboration
